@@ -1,0 +1,12 @@
+selenium
+beautifulsoup4
+requests
+mysql-connector-python
+pandas
+numpy
+scikit-learn
+imbalanced-learn
+plotly
+dash
+webdriver-manager
+kaggle

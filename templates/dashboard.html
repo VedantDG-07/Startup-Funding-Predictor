@@ -1,5 +1,406 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Dashboard</h1>
+<!-- Dashboard Specific CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+<div class="dashboard-container">
+    <!-- Top Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="dashboard-title mb-1">Dashboard</h2>
+            <p class="text-muted mb-0">Startup Funding Intelligence Overview</p>
+        </div>
+        <div class="date-container text-end">
+            <span id="currentDate" class="fw-medium text-secondary"></span>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Card 1 -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+            <div class="kpi-card card h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-2">Total Startups</h6>
+                            <h3 class="mb-0 fw-bold">12,458</h3>
+                        </div>
+                        <div class="icon-box bg-primary-subtle text-primary">
+                            <i class="bi bi-rocket-takeoff"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-success fw-medium small">
+                        <i class="bi bi-arrow-up"></i> +8% <span class="text-muted fw-normal">vs last month</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+            <div class="kpi-card card h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-2">Total Funding</h6>
+                            <h3 class="mb-0 fw-bold">$5.2B</h3>
+                        </div>
+                        <div class="icon-box bg-success-subtle text-success">
+                            <i class="bi bi-cash-coin"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-success fw-medium small">
+                        <i class="bi bi-arrow-up"></i> +12% <span class="text-muted fw-normal">vs last year</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+            <div class="kpi-card card h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-2">Industries</h6>
+                            <h3 class="mb-0 fw-bold">42</h3>
+                        </div>
+                        <div class="icon-box bg-info-subtle text-info">
+                            <i class="bi bi-building"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-success fw-medium small">
+                        <i class="bi bi-arrow-up"></i> +3 <span class="text-muted fw-normal">new sectors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+            <div class="kpi-card card h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-2">Countries</h6>
+                            <h3 class="mb-0 fw-bold">68</h3>
+                        </div>
+                        <div class="icon-box bg-warning-subtle text-warning">
+                            <i class="bi bi-globe-americas"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-muted fw-medium small">
+                        <span>Active globally</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+            <div class="kpi-card card h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-2">Investors</h6>
+                            <h3 class="mb-0 fw-bold">1,240</h3>
+                        </div>
+                        <div class="icon-box bg-secondary-subtle text-secondary">
+                            <i class="bi bi-person-workspace"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-muted fw-medium small">
+                        <span>Registered angels & VCs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+            <div class="kpi-card card h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-2">Success Rate</h6>
+                            <h3 class="mb-0 fw-bold">72%</h3>
+                        </div>
+                        <div class="icon-box bg-success-subtle text-success">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-muted fw-medium small">
+                        <span>Series A+ reached</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 7 -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+            <div class="kpi-card card h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-2">Failed Startups</h6>
+                            <h3 class="mb-0 fw-bold">18%</h3>
+                        </div>
+                        <div class="icon-box bg-danger-subtle text-danger">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-danger fw-medium small">
+                        <i class="bi bi-arrow-down"></i> High risk sectors
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 8 -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-12">
+            <div class="kpi-card card h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-2">Prediction Acc.</h6>
+                            <h3 class="mb-0 fw-bold">92%</h3>
+                        </div>
+                        <div class="icon-box bg-primary-subtle text-primary">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-muted fw-medium small">
+                        <span>AI model performance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Placeholder Grid -->
+    <div class="row g-4">
+        <!-- 1. Funding Trend Analysis -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card placeholder-card h-100 border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-0">Funding Trend Analysis</h5>
+                    <p class="text-muted small mb-4">Year-wise Startup Funding</p>
+                    
+                    <div id="funding-trend-placeholder" class="chart-placeholder placeholder-glow flex-grow-1 d-flex flex-column align-items-center justify-content-center bg-light rounded text-center p-4">
+                        <i class="bi bi-bar-chart-line placeholder-icon mb-3"></i>
+                        <h6 class="fw-bold text-dark mb-3">Interactive Line Chart Coming Soon</h6>
+                        
+                        <!-- Loading Skeleton Area -->
+                        <div class="w-50 mb-4 d-flex align-items-end justify-content-center" style="height: 60px; gap: 8px;">
+                            <span class="placeholder col-2 rounded bg-primary opacity-25" style="height: 30%;"></span>
+                            <span class="placeholder col-2 rounded bg-primary opacity-50" style="height: 50%;"></span>
+                            <span class="placeholder col-2 rounded bg-primary opacity-75" style="height: 80%;"></span>
+                            <span class="placeholder col-2 rounded bg-primary" style="height: 100%;"></span>
+                        </div>
+                        
+                        <small class="text-muted mt-auto"><i class="bi bi-clock-history me-1"></i>Waiting for Plotly Integration</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Top Industries -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card placeholder-card h-100 border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-0">Top Industries</h5>
+                    <p class="text-muted small mb-4">Funding Distribution by Industry</p>
+                    
+                    <div id="industry-chart-placeholder" class="chart-placeholder placeholder-glow flex-grow-1 d-flex flex-column align-items-center justify-content-center bg-light rounded text-center p-4">
+                        <i class="bi bi-bar-chart-steps placeholder-icon mb-3"></i>
+                        <h6 class="fw-bold text-dark mb-3">Bar Chart Coming Soon</h6>
+                        
+                        <!-- Loading Skeleton Area -->
+                        <div class="w-75 mb-3 d-flex flex-column gap-2">
+                            <span class="placeholder w-100 rounded bg-info opacity-50" style="height: 12px;"></span>
+                            <span class="placeholder w-75 rounded bg-info opacity-50" style="height: 12px;"></span>
+                            <span class="placeholder w-50 rounded bg-info opacity-50" style="height: 12px;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Funding by Country -->
+        <div class="col-md-6">
+            <div class="card placeholder-card h-100 border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-0">Funding by Country</h5>
+                    <p class="text-muted small mb-4">Global Investment Distribution</p>
+                    
+                    <div id="country-map-placeholder" class="chart-placeholder placeholder-glow flex-grow-1 d-flex flex-column align-items-center justify-content-center bg-light rounded text-center p-4">
+                        <i class="bi bi-globe-americas placeholder-icon mb-3"></i>
+                        <h6 class="fw-bold text-dark mb-3">Interactive Map Coming Soon</h6>
+                        
+                        <!-- Loading Skeleton Area -->
+                        <div class="w-50 mx-auto text-center">
+                            <span class="placeholder w-100 rounded-pill bg-success opacity-25" style="height: 8px;"></span>
+                            <span class="placeholder w-75 rounded-pill bg-success opacity-25 mt-2" style="height: 8px;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Startup Status Distribution -->
+        <div class="col-md-6">
+            <div class="card placeholder-card h-100 border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-0">Startup Status Distribution</h5>
+                    <p class="text-muted small mb-4">Active vs Failed Startups</p>
+                    
+                    <div id="status-chart-placeholder" class="chart-placeholder placeholder-glow flex-grow-1 d-flex flex-column align-items-center justify-content-center bg-light rounded text-center p-4">
+                        <i class="bi bi-pie-chart-fill placeholder-icon mb-3"></i>
+                        <h6 class="fw-bold text-dark mb-3">Pie Chart Coming Soon</h6>
+                        
+                        <!-- Loading Skeleton Area -->
+                        <div class="rounded-circle bg-warning opacity-25 mx-auto" style="width: 60px; height: 60px; border: 4px dashed rgba(0,0,0,0.1);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Top Investors -->
+        <div class="col-xl-6">
+            <div class="card placeholder-card h-100 border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-0">Top Investors</h5>
+                    <p class="text-muted small mb-4">Investor Analytics</p>
+                    
+                    <div id="top-investors-placeholder" class="chart-placeholder placeholder-glow flex-grow-1 d-flex flex-column align-items-center justify-content-center bg-light rounded text-center p-4">
+                        <i class="bi bi-table placeholder-icon mb-3"></i>
+                        <h6 class="fw-bold text-dark mb-4">Investor Table Coming Soon</h6>
+                        
+                        <!-- Loading Skeleton Area -->
+                        <div class="w-100">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="placeholder col-4 rounded bg-secondary opacity-50" style="height: 15px;"></span>
+                                <span class="placeholder col-3 rounded bg-secondary opacity-50" style="height: 15px;"></span>
+                                <span class="placeholder col-2 rounded bg-secondary opacity-50" style="height: 15px;"></span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="placeholder col-5 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                                <span class="placeholder col-2 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                                <span class="placeholder col-2 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="placeholder col-3 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                                <span class="placeholder col-4 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                                <span class="placeholder col-2 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Latest Startups -->
+        <div class="col-xl-6">
+            <div class="card placeholder-card h-100 border-0">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-0">Latest Startups</h5>
+                    <p class="text-muted small mb-4">Recently Added Companies</p>
+                    
+                    <div id="latest-startups-placeholder" class="chart-placeholder placeholder-glow flex-grow-1 d-flex flex-column align-items-center justify-content-center bg-light rounded text-center p-4">
+                        <i class="bi bi-building placeholder-icon mb-3"></i>
+                        <h6 class="fw-bold text-dark mb-4">Startup Table Coming Soon</h6>
+                        
+                        <!-- Loading Skeleton Area -->
+                        <div class="w-100">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="placeholder col-4 rounded bg-secondary opacity-50" style="height: 15px;"></span>
+                                <span class="placeholder col-3 rounded bg-secondary opacity-50" style="height: 15px;"></span>
+                                <span class="placeholder col-2 rounded bg-secondary opacity-50" style="height: 15px;"></span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="placeholder col-5 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                                <span class="placeholder col-2 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                                <span class="placeholder col-2 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="placeholder col-3 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                                <span class="placeholder col-4 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                                <span class="placeholder col-2 rounded bg-secondary opacity-25" style="height: 15px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. AI Investment Insights -->
+        <div class="col-12 mt-4">
+            <h5 class="fw-bold mb-0">AI Investment Insights</h5>
+            <p class="text-muted small mb-3">Business Intelligence Recommendations</p>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-xl-3">
+                    <div class="card insight-card border-0 h-100">
+                        <div class="card-body d-flex flex-column align-items-center text-center p-4">
+                            <div class="icon-box bg-primary-subtle text-primary mb-3">
+                                <i class="bi bi-rocket-takeoff"></i>
+                            </div>
+                            <p class="mb-0 fw-medium text-dark">AI startups show increasing investment trends.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="card insight-card border-0 h-100">
+                        <div class="card-body d-flex flex-column align-items-center text-center p-4">
+                            <div class="icon-box bg-success-subtle text-success mb-3">
+                                <i class="bi bi-cash-stack"></i>
+                            </div>
+                            <p class="mb-0 fw-medium text-dark">FinTech continues to dominate funding rounds.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="card insight-card border-0 h-100">
+                        <div class="card-body d-flex flex-column align-items-center text-center p-4">
+                            <div class="icon-box bg-warning-subtle text-warning mb-3">
+                                <i class="bi bi-tree"></i>
+                            </div>
+                            <p class="mb-0 fw-medium text-dark">ClimateTech is rapidly emerging.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="card insight-card border-0 h-100">
+                        <div class="card-body d-flex flex-column align-items-center text-center p-4">
+                            <div class="icon-box bg-info-subtle text-info mb-3">
+                                <i class="bi bi-graph-up-arrow"></i>
+                            </div>
+                            <p class="mb-0 fw-medium text-dark">Seed-stage startups are growing significantly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Failure Prediction -->
+        <div class="col-12 mt-4">
+            <div class="card placeholder-card h-100 border-0">
+                <div class="card-body d-flex flex-column text-center p-5">
+                    <h5 class="card-title fw-bold mb-0">Failure Prediction</h5>
+                    <p class="text-muted small mb-4">Machine Learning Prediction</p>
+                    
+                    <div id="prediction-placeholder" class="chart-placeholder placeholder-glow flex-grow-1 d-flex flex-column align-items-center justify-content-center bg-light rounded p-4 mx-auto w-100" style="max-width: 600px;">
+                        <i class="bi bi-robot placeholder-icon mb-3"></i>
+                        <h6 class="fw-bold text-dark mb-4">Prediction Module Coming Soon</h6>
+                        
+                        <!-- Loading Skeleton Area -->
+                        <div class="w-75 mx-auto">
+                            <span class="placeholder w-100 rounded-pill bg-primary opacity-25 mb-2" style="height: 12px;"></span>
+                            <span class="placeholder w-75 rounded-pill bg-primary opacity-25" style="height: 12px;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Dashboard Specific JS -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endblock %}

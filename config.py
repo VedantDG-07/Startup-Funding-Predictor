@@ -1,10 +1,5 @@
-"""
-Configuration settings for Startup Funding Predictor.
-"""
-import os
-
-# Base paths
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, "data")
-MODELS_DIR = os.path.join(BASE_DIR, "models_saved")
-REPORTS_DIR = os.path.join(BASE_DIR, "reports")
+DB_HOST = "localhost"
+DB_PORT = 3306
+DB_USER = "root"
+DB_PASSWORD = ""
+DB_NAME = "startup_db"

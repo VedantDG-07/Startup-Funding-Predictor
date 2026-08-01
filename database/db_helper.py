@@ -17,11 +17,11 @@ def get_connection():
         )
 
         if connection.is_connected():
-            print("✅ Connected to MySQL Database")
+            print("[+] Connected to MySQL Database")
             return connection
 
     except Error as e:
-        print(f"❌ Database Connection Error: {e}")
+        print(f"[-] Database Connection Error: {e}")
         return None
 
 
@@ -31,4 +31,4 @@ def close_connection(connection):
     """
     if connection and connection.is_connected():
         connection.close()
-        print("🔒 Database Connection Closed")
+        print("[*] Database Connection Closed")

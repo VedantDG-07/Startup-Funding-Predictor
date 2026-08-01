@@ -1,5 +1,273 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h1>Data Mining</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Data Mining</h2>
+        <p class="text-muted mb-0">K-Means Clustering &amp; Apriori Association Rule Mining</p>
+    </div>
+</div>
+
+<!-- Tabs -->
+<ul class="nav nav-pills mb-4 gap-2" id="dmTab">
+    <li class="nav-item"><button class="nav-link active px-4" data-bs-toggle="pill" data-bs-target="#tab-clustering">K-Means Clustering</button></li>
+    <li class="nav-item"><button class="nav-link px-4" data-bs-toggle="pill" data-bs-target="#tab-rules">Association Rules (Apriori)</button></li>
+</ul>
+
+<div class="tab-content">
+
+    <!-- === CLUSTERING TAB === -->
+    <div class="tab-pane fade show active" id="tab-clustering">
+
+        <!-- Cluster KPI Cards -->
+        <div class="row g-4 mb-4" id="cluster-cards">
+            <div class="col-12 text-muted small">Loading cluster profiles...</div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <!-- Cluster Bar Chart -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-1">Cluster Funding &amp; Risk Profiles</h5>
+                        <p class="text-muted small mb-3">Avg Funding and Failure Probability per K-Means cluster</p>
+                        <div id="chart-dm-clusters" style="min-height:320px;"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Cluster Methodology -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>Algorithm Details</h5>
+                        <ul class="list-unstyled mb-0 small">
+                            <li class="mb-3"><strong>Algorithm:</strong> K-Means (k=4, n_init=10, random_state=42)</li>
+                            <li class="mb-3"><strong>Features:</strong><br>
+                                <code>log(total_funding)</code>, <code>funding_rounds</code>,<br>
+                                <code>years_active</code>, <code>log(annual_velocity)</code>
+                            </li>
+                            <li class="mb-3"><strong>Scaler:</strong> StandardScaler (Z-score normalisation)</li>
+                            <li class="mb-3"><strong>Output:</strong> 4 strategic startup segments</li>
+                        </ul>
+                        <hr>
+                        <div class="d-flex flex-column gap-2 mt-3">
+                            <span class="badge bg-primary-subtle text-primary text-wrap text-start px-3 py-2">Early-Stage Seed Venture</span>
+                            <span class="badge bg-success-subtle text-success text-wrap text-start px-3 py-2">High-Growth Scaleup</span>
+                            <span class="badge bg-warning-subtle text-warning text-wrap text-start px-3 py-2">Capital-Intensive Unicorn</span>
+                            <span class="badge bg-info-subtle text-info text-wrap text-start px-3 py-2">Mature Steady Performer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cluster Members Table -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-table me-2 text-primary"></i>Startup Cluster Assignments</h5>
+                <div class="table-responsive" style="max-height:380px; overflow-y:auto;">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light sticky-top">
+                            <tr><th>Startup</th><th>Industry</th><th>Status</th><th>Funding</th><th>Rounds</th><th>Cluster</th><th>Risk Score</th></tr>
+                        </thead>
+                        <tbody id="cluster-table">
+                            <tr><td colspan="7" class="text-center text-muted py-3">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end clustering tab -->
+
+    <!-- === ASSOCIATION RULES TAB === -->
+    <div class="tab-pane fade" id="tab-rules">
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center p-4">
+                    <h3 class="fw-bold text-primary" id="rule-count">--</h3>
+                    <small class="text-muted">Association Rules Mined</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center p-4">
+                    <h3 class="fw-bold text-success" id="rule-top-conf">--</h3>
+                    <small class="text-muted">Max Confidence</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm text-center p-4">
+                    <h3 class="fw-bold text-warning" id="rule-top-lift">--</h3>
+                    <small class="text-muted">Max Lift Value</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <!-- Lift Chart -->
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-1">Top 10 Rules by Lift</h5>
+                        <p class="text-muted small mb-3">Stronger lift = higher co-occurrence significance</p>
+                        <div id="chart-rules-lift" style="min-height:320px;"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Methodology -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>Apriori Methodology</h5>
+                        <table class="table table-sm table-bordered mb-0">
+                            <tbody>
+                                <tr><td class="fw-medium">Algorithm</td><td>Apriori (mlxtend)</td></tr>
+                                <tr><td class="fw-medium">Min Support</td><td>0.05 (5% transaction coverage)</td></tr>
+                                <tr><td class="fw-medium">Min Confidence</td><td>0.30</td></tr>
+                                <tr><td class="fw-medium">Metric</td><td>Confidence → filtered by Lift</td></tr>
+                                <tr><td class="fw-medium">Transactions</td><td>Industry + Country + Status + Stage</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="mt-3 p-3 bg-light rounded small">
+                            <strong>Rule Format:</strong><br>
+                            <code>Antecedent → Consequent</code><br>
+                            <span class="text-muted">e.g. <em>Country:Israel, Status:operating → Industry:Fintech</em></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rules Table -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-3"><i class="bi bi-table me-2 text-primary"></i>All Association Rules</h5>
+                <div class="table-responsive" style="max-height:420px; overflow-y:auto;">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light sticky-top">
+                            <tr>
+                                <th>Antecedent</th>
+                                <th>→</th>
+                                <th>Consequent</th>
+                                <th>Support</th>
+                                <th>Confidence</th>
+                                <th>Lift</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rules-table">
+                            <tr><td colspan="6" class="text-center text-muted py-3">Loading rules...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end rules tab -->
+
+</div>
+
+<script>
+const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
+    font:{family:'Inter,sans-serif',size:12,color:'#555'},showlegend:true};
+const cfg={responsive:true,displayModeBar:false};
+const PALETTE=['#6366f1','#10b981','#f59e0b','#f43f5e'];
+
+function fmt(v){
+    if(!v||v===0) return '$0';
+    if(v>=1e9) return '$'+(v/1e9).toFixed(2)+'B';
+    if(v>=1e6) return '$'+(v/1e6).toFixed(2)+'M';
+    if(v>=1e3) return '$'+(v/1e3).toFixed(1)+'K';
+    return '$'+parseFloat(v).toFixed(0);
+}
+function statusBadge(s){
+    const m={operating:'success',acquired:'primary',closed:'danger',ipo:'warning'};
+    const c=m[s]||'secondary';
+    return `<span class="badge bg-${c}-subtle text-${c} text-capitalize">${s}</span>`;
+}
+
+// Clustering
+fetch('/api/charts/clustering').then(r=>r.json()).then(({data})=>{
+    const clusters = data.clusters || [];
+    if(!clusters.length) return;
+
+    // KPI cards
+    const cardsDiv = document.getElementById('cluster-cards');
+    cardsDiv.innerHTML = clusters.map((c,i)=>`
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-center p-3 border-top border-4" style="border-color:${PALETTE[i]}!important">
+                <h5 class="fw-bold mb-1">${c.startup_count}</h5>
+                <div class="small fw-semibold mb-2">${c.cluster_label}</div>
+                <small class="text-muted">Avg: ${fmt(c.avg_funding_usd)}</small><br>
+                <small class="text-danger">Risk: ${(c.avg_failure_risk*100).toFixed(1)}%</small>
+            </div>
+        </div>
+    `).join('');
+
+    Plotly.newPlot('chart-dm-clusters',[
+        {name:'Avg Funding',type:'bar',x:clusters.map(c=>c.cluster_label),y:clusters.map(c=>c.avg_funding_usd),
+            marker:{color:PALETTE},hovertemplate:'<b>%{x}</b><br>$%{y:,.0f}<extra></extra>'},
+        {name:'Failure Risk %',type:'scatter',mode:'lines+markers',x:clusters.map(c=>c.cluster_label),
+            y:clusters.map(c=>(c.avg_failure_risk*100).toFixed(1)),yaxis:'y2',
+            line:{color:'#f43f5e',width:3},marker:{size:8,color:'#f43f5e'},
+            hovertemplate:'<b>%{x}</b><br>Risk: %{y}%<extra></extra>'}
+    ],{...layout,barmode:'group',xaxis:{tickangle:-10},
+        yaxis:{title:'Avg Funding (USD)',tickformat:'$.2s'},
+        yaxis2:{title:'Failure Risk (%)',overlaying:'y',side:'right',range:[0,100]},
+        legend:{orientation:'h',y:-0.25},margin:{t:20,r:60,b:80,l:60}},cfg);
+});
+
+fetch('/api/startups').then(r=>r.json()).then(({data})=>{
+    const tbody = document.getElementById('cluster-table');
+    tbody.innerHTML = data.map(s=>`
+        <tr>
+            <td class="fw-medium">${s.name}</td>
+            <td><small class="text-muted">${s.industry}</small></td>
+            <td>${statusBadge(s.operating_status)}</td>
+            <td class="text-success fw-medium">${fmt(s.total_funding_usd)}</td>
+            <td>${s.funding_rounds_count}</td>
+            <td><small class="text-primary">${s.cluster_label||'—'}</small></td>
+            <td>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="progress flex-grow-1" style="height:6px;">
+                        <div class="progress-bar ${parseFloat(s.failure_probability)>0.5?'bg-danger':'bg-success'}" style="width:${(parseFloat(s.failure_probability)*100).toFixed(0)}%"></div>
+                    </div>
+                    <small>${(parseFloat(s.failure_probability)*100).toFixed(1)}%</small>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+});
+
+// Association Rules
+fetch('/api/charts/association_rules').then(r=>r.json()).then(({data})=>{
+    document.getElementById('rule-count').textContent = data.length;
+    if(data.length){
+        document.getElementById('rule-top-conf').textContent = (data[0].confidence*100).toFixed(1)+'%';
+        document.getElementById('rule-top-lift').textContent = data[0].lift.toFixed(2)+'x';
+    }
+
+    const top10 = data.slice(0,10);
+    Plotly.newPlot('chart-rules-lift',[{
+        type:'bar', orientation:'h',
+        y:top10.map(r=>r.antecedent_str+' → '+r.consequent_str).map(s=>s.length>35?s.substring(0,35)+'…':s),
+        x:top10.map(r=>r.lift),
+        marker:{color:'#6366f1'},
+        hovertemplate:'<b>%{y}</b><br>Lift: %{x:.3f}<extra></extra>'
+    }],{...layout,showlegend:false,xaxis:{title:'Lift'},yaxis:{automargin:true},margin:{t:10,r:20,b:50,l:220}},cfg);
+
+    const tbody = document.getElementById('rules-table');
+    tbody.innerHTML = data.map(r=>`
+        <tr>
+            <td><small class="text-primary">${r.antecedent_str}</small></td>
+            <td><i class="bi bi-arrow-right text-muted"></i></td>
+            <td><small class="text-success fw-medium">${r.consequent_str}</small></td>
+            <td><span class="badge bg-secondary-subtle text-secondary">${(r.support*100).toFixed(1)}%</span></td>
+            <td><span class="badge bg-info-subtle text-info">${(r.confidence*100).toFixed(1)}%</span></td>
+            <td><span class="badge ${r.lift>=2?'bg-success':'bg-primary'}-subtle text-${r.lift>=2?'success':'primary'}">${r.lift.toFixed(3)}x</span></td>
+        </tr>
+    `).join('');
+});
+</script>
+
 {% endblock %}

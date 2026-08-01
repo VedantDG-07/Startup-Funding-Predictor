@@ -1,5 +1,184 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h1>Prediction</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">Risk Profiling</h2>
+        <p class="text-muted mb-0">K-Means Cluster-Based Failure Risk Assessment</p>
+    </div>
+</div>
+
+<!-- Risk Legend -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-danger">
+            <h4 class="fw-bold text-danger" id="pred-high">--</h4>
+            <small class="text-muted">High Risk (&gt;60%)</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-warning">
+            <h4 class="fw-bold text-warning" id="pred-medium">--</h4>
+            <small class="text-muted">Medium Risk (30–60%)</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-success">
+            <h4 class="fw-bold text-success" id="pred-low">--</h4>
+            <small class="text-muted">Low Risk (&lt;30%)</small>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-primary">
+            <h4 class="fw-bold text-primary" id="pred-total">--</h4>
+            <small class="text-muted">Total Profiled</small>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Risk Distribution Chart -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-1">Risk Score Distribution</h5>
+                <p class="text-muted small mb-3">Failure probability across all startups</p>
+                <div id="chart-pred-hist" style="min-height:300px;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Cluster Risk Comparison -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-1">Avg Failure Risk by Cluster</h5>
+                <p class="text-muted small mb-3">Which strategic segment carries highest risk?</p>
+                <div id="chart-pred-cluster-risk" style="min-height:300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Methodology Card -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+        <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>Risk Profiling Methodology</h5>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded h-100">
+                    <h6 class="fw-bold mb-2"><i class="bi bi-diagram-3 me-2 text-primary"></i>Clustering (K-Means)</h6>
+                    <p class="text-muted small mb-0">Startups segmented into 4 strategic clusters using funding magnitude, rounds, age, and velocity. Each cluster receives a derived risk profile.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded h-100">
+                    <h6 class="fw-bold mb-2"><i class="bi bi-percent me-2 text-danger"></i>Failure Probability Score</h6>
+                    <p class="text-muted small mb-0">Score = <code>1 − (total_funding / max_funding)</code> for active startups. Closed startups receive 0.80–0.95. Acquired/IPO receive 0.05–0.15.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded h-100">
+                    <h6 class="fw-bold mb-2"><i class="bi bi-shield-check me-2 text-success"></i>Risk Interpretation</h6>
+                    <p class="text-muted small mb-0"><strong>&gt;60%</strong> → High Risk (underfunded, early-stage)<br><strong>30–60%</strong> → Medium Risk (moderate traction)<br><strong>&lt;30%</strong> → Low Risk (well-funded, scaling)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Full Risk Table -->
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+        <h5 class="fw-bold mb-3"><i class="bi bi-table me-2 text-primary"></i>Startup Risk Profiles</h5>
+        <div class="table-responsive" style="max-height:420px; overflow-y:auto;">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light sticky-top">
+                    <tr><th>Startup</th><th>Industry</th><th>Country</th><th>Status</th><th>Cluster</th><th>Failure Risk</th><th>Risk Level</th></tr>
+                </thead>
+                <tbody id="pred-table">
+                    <tr><td colspan="7" class="text-center text-muted py-3">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
+    font:{family:'Inter,sans-serif',size:12,color:'#555'},showlegend:false};
+const cfg={responsive:true,displayModeBar:false};
+const PALETTE=['#6366f1','#10b981','#f59e0b','#f43f5e'];
+
+function riskLabel(p){
+    if(p>0.6) return ['danger','High Risk'];
+    if(p>0.3) return ['warning','Medium Risk'];
+    return ['success','Low Risk'];
+}
+function statusBadge(s){
+    const m={operating:'success',acquired:'primary',closed:'danger',ipo:'warning'};
+    const c=m[s]||'secondary';
+    return `<span class="badge bg-${c}-subtle text-${c} text-capitalize">${s}</span>`;
+}
+
+fetch('/api/startups').then(r=>r.json()).then(({data})=>{
+    let high=0, med=0, low=0;
+    data.forEach(s=>{
+        const p=parseFloat(s.failure_probability)||0;
+        if(p>0.6) high++;
+        else if(p>0.3) med++;
+        else low++;
+    });
+    document.getElementById('pred-high').textContent = high;
+    document.getElementById('pred-medium').textContent = med;
+    document.getElementById('pred-low').textContent = low;
+    document.getElementById('pred-total').textContent = data.length;
+
+    // Histogram of failure probabilities
+    Plotly.newPlot('chart-pred-hist',[{
+        type:'histogram', x:data.map(s=>parseFloat(s.failure_probability)||0),
+        nbinsx:20, marker:{color:'#6366f1',opacity:0.8},
+        hovertemplate:'Risk: %{x:.2f}<br>Count: %{y}<extra></extra>'
+    }],{...layout,xaxis:{title:'Failure Probability',range:[0,1]},
+        yaxis:{title:'Number of Startups'},margin:{t:20,r:20,b:50,l:50}},cfg);
+
+    // Full table
+    const tbody = document.getElementById('pred-table');
+    const sorted=[...data].sort((a,b)=>parseFloat(b.failure_probability)-parseFloat(a.failure_probability));
+    tbody.innerHTML = sorted.map(s=>{
+        const p=parseFloat(s.failure_probability)||0;
+        const [cls,label]=riskLabel(p);
+        return `<tr>
+            <td class="fw-medium">${s.name}</td>
+            <td><small class="text-muted">${s.industry}</small></td>
+            <td>${s.country||'—'}</td>
+            <td>${statusBadge(s.operating_status)}</td>
+            <td><small class="text-primary">${s.cluster_label||'—'}</small></td>
+            <td>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="progress flex-grow-1" style="height:6px;">
+                        <div class="progress-bar bg-${cls}" style="width:${(p*100).toFixed(0)}%"></div>
+                    </div>
+                    <small class="text-${cls}">${(p*100).toFixed(1)}%</small>
+                </div>
+            </td>
+            <td><span class="badge bg-${cls}-subtle text-${cls}">${label}</span></td>
+        </tr>`;
+    }).join('');
+});
+
+fetch('/api/charts/clustering').then(r=>r.json()).then(({data})=>{
+    const clusters=data.clusters||[];
+    Plotly.newPlot('chart-pred-cluster-risk',[{
+        type:'bar',
+        x:clusters.map(c=>c.cluster_label),
+        y:clusters.map(c=>(c.avg_failure_risk*100).toFixed(1)),
+        marker:{color:PALETTE},
+        text:clusters.map(c=>(c.avg_failure_risk*100).toFixed(1)+'%'),
+        textposition:'outside',
+        hovertemplate:'<b>%{x}</b><br>Risk: %{y}%<extra></extra>'
+    }],{...layout,xaxis:{tickangle:-10},yaxis:{title:'Avg Failure Risk (%)',range:[0,100]},
+        margin:{t:30,r:20,b:80,l:50}},cfg);
+});
+</script>
+
 {% endblock %}

@@ -12,7 +12,8 @@ endpoints = [
     '/api/charts/text_mining',
     '/api/charts/clustering',
     '/api/charts/association_rules',
-    '/api/startups'
+    '/api/startups',
+    '/api/etl/runs'
 ]
 
 all_ok = True

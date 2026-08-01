@@ -83,10 +83,21 @@ def generate_seed_data(num_startups: int = 60, num_investors: int = 30):
         logging.error("Database connection failed. Ensure MySQL is running.")
         return
 
-    logging.info(f"Starting seed data population into startup_db...")
-    log_id = log_scraping_activity("kaggle_seed_loader", "local_seed", "in_progress", 0)
-
     try:
+        # Check if already seeded
+        cursor = connection.cursor()
+        cursor.execute("SELECT COUNT(*) FROM startups")
+        existing_count = cursor.fetchone()[0]
+        cursor.close()
+        
+        if existing_count > 0:
+            logging.info(f"Database already contains {existing_count} startups. Skipping initial seeding.")
+            close_connection(connection)
+            return
+            
+        logging.info(f"Starting seed data population into startup_db...")
+        log_id = log_scraping_activity("kaggle_seed_loader", "local_seed", "in_progress", 0)
+
         # 1. Insert Investors
         investor_ids = []
         investor_names = [

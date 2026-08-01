@@ -7,6 +7,9 @@ for Plotly.js charts, executive scorecards, text mining wordclouds, and DMBI ins
 from flask import Flask, render_template, jsonify
 from analysis.analytics_engine import AnalyticsEngine
 from data_mining.association_rules import AssociationRuleMiner
+import threading
+from etl.pipeline import run_pipeline
+from database.db_helper import get_connection, close_connection
 
 app = Flask(__name__)
 analytics_engine = AnalyticsEngine()
@@ -60,6 +63,11 @@ def insights():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/etl_monitor')
+def etl_monitor():
+    return render_template('etl_monitor.html')
+
 
 
 # =============================================================================
@@ -129,6 +137,68 @@ def api_startups_table():
     """
     startups = analytics_engine.get_startups_table_data()
     return jsonify({"status": "success", "data": startups})
+
+# Track background task status in memory
+etl_background_status = {"running": False, "last_result": None}
+
+@app.route('/api/etl/run', methods=['POST', 'GET'])
+def api_etl_run():
+    """
+    Triggers the ETL pipeline in a non-blocking background thread.
+    """
+    global etl_background_status
+    if etl_background_status["running"]:
+        return jsonify({"status": "error", "message": "ETL pipeline is already running in background."})
+        
+    def worker():
+        global etl_background_status
+        try:
+            res = run_pipeline(source="web_dashboard")
+            etl_background_status["last_result"] = res
+        except Exception as e:
+            etl_background_status["last_result"] = {"status": "failed", "error": str(e)}
+        finally:
+            etl_background_status["running"] = False
+
+    etl_background_status["running"] = True
+    etl_background_status["last_result"] = None
+    thread = threading.Thread(target=worker)
+    thread.start()
+    
+    return jsonify({"status": "success", "message": "ETL pipeline triggered in background."})
+
+@app.route('/api/etl/runs', methods=['GET'])
+def api_etl_runs():
+    """
+    Fetches the history of all ETL pipeline executions and current status.
+    """
+    global etl_background_status
+    conn = get_connection()
+    runs = []
+    if conn:
+        try:
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM etl_runs ORDER BY run_id DESC LIMIT 50")
+            runs = cursor.fetchall()
+            cursor.close()
+        except Exception as e:
+            app.logger.error(f"Error fetching ETL runs: {e}")
+        finally:
+            close_connection(conn)
+            
+    # Serialize datetime columns
+    for r in runs:
+        if r.get("started_at"):
+            r["started_at"] = r["started_at"].strftime("%Y-%m-%d %H:%M:%S")
+        if r.get("completed_at") and r["completed_at"] is not None:
+            r["completed_at"] = r["completed_at"].strftime("%Y-%m-%d %H:%M:%S")
+            
+    return jsonify({
+        "status": "success", 
+        "data": runs,
+        "active_run": etl_background_status
+    })
+
 
 
 if __name__ == '__main__':

@@ -1,0 +1,197 @@
+/* Sidebar Colors & Variables */
+:root {
+    --sidebar-bg: #111827;
+    --sidebar-card: #1F2937;
+    --sidebar-primary: #3B82F6;
+    --sidebar-hover: #2563EB;
+    --sidebar-highlight: rgba(59, 130, 246, 0.15);
+    --sidebar-text: #ffffff;
+    --sidebar-muted: #9CA3AF;
+    --sidebar-width-expanded: 260px;
+    --sidebar-width-collapsed: 75px;
+    --sidebar-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f3f4f6;
+}
+
+/* Base Classes */
+.text-primary-custom { color: var(--sidebar-primary) !important; }
+.text-muted-custom { color: var(--sidebar-muted) !important; }
+.bg-dark-custom { background-color: var(--sidebar-bg) !important; }
+.hover-primary:hover { color: var(--sidebar-primary) !important; }
+
+/* Sidebar Layout */
+.sidebar {
+    width: var(--sidebar-width-expanded);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1045;
+    transition: var(--sidebar-transition);
+    overflow-x: hidden;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+/* Collapsed State */
+.sidebar.collapsed {
+    width: var(--sidebar-width-collapsed);
+}
+
+.sidebar.collapsed .nav-text,
+.sidebar.collapsed .brand-info,
+.sidebar.collapsed .footer-content > div:last-child {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    display: none !important;
+}
+
+.sidebar.collapsed .sidebar-header {
+    justify-content: center !important;
+}
+
+.sidebar.collapsed .sidebar-header button {
+    margin-left: 0 !important;
+}
+
+.sidebar.collapsed .brand-info h5 i {
+    margin-right: 0 !important;
+}
+
+/* Sidebar Links */
+.sidebar-link {
+    color: var(--sidebar-text);
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: var(--sidebar-transition);
+    border-left: 4px solid transparent;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar-link i {
+    font-size: 1.2rem;
+    min-width: 24px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.sidebar-link .nav-text {
+    transition: opacity 0.2s ease;
+}
+
+/* Hover Effect */
+.sidebar-link:hover {
+    background-color: var(--sidebar-highlight);
+    color: var(--sidebar-text);
+    border-left: 4px solid rgba(59, 130, 246, 0.5);
+}
+.sidebar-link:hover i {
+    transform: scale(1.1);
+}
+
+/* Active State */
+.sidebar-link.active {
+    background-color: var(--sidebar-hover) !important;
+    border-left: 4px solid var(--sidebar-primary) !important;
+    color: var(--sidebar-text) !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Custom Scrollbar */
+.sidebar-body::-webkit-scrollbar { width: 5px; }
+.sidebar-body::-webkit-scrollbar-track { background: transparent; }
+.sidebar-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+.sidebar-body:hover::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); }
+
+/* Toggle Button */
+.sidebar-toggler-desktop {
+    background: transparent;
+    border: none;
+    color: var(--sidebar-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+    outline: none;
+}
+.sidebar-toggler-desktop:hover { color: var(--sidebar-text); }
+
+/* Responsive Behavior */
+@media (max-width: 991.98px) {
+    /* Tablet */
+    .sidebar { width: var(--sidebar-width-collapsed); }
+    .sidebar:hover { width: var(--sidebar-width-expanded); }
+    
+    .sidebar:hover .nav-text,
+    .sidebar:hover .brand-info,
+    .sidebar:hover .footer-content > div:last-child {
+        opacity: 1;
+        visibility: visible;
+        width: auto;
+        display: flex !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile */
+    .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-width-expanded) !important;
+    }
+    .sidebar.show { transform: translateX(0); }
+    
+    .sidebar .nav-text,
+    .sidebar .brand-info,
+    .sidebar .footer-content > div:last-child {
+        opacity: 1 !important;
+        visibility: visible !important;
+        width: auto !important;
+        display: flex !important;
+    }
+}
+
+/* Mobile Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.sidebar-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+/* ========================================= */
+/* Responsive Typography & Accessibility     */
+/* ========================================= */
+
+/* Fluid Typography */
+html {
+    font-size: 16px;
+}
+@media (max-width: 991.98px) {
+    html { font-size: 15px; }
+}
+@media (max-width: 767.98px) {
+    html { font-size: 14px; }
+}
+
+/* Touch Friendly Targets (Min 44px height for a11y) */
+button, .btn, .sidebar-link, .nav-link {
+    min-height: 44px;
+}

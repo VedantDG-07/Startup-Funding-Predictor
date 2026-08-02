@@ -19,6 +19,7 @@ routes = [
     ('/prediction',      'Failure Prediction'),
     ('/insights',        'BI Insights'),
     ('/about',           'About'),
+    ('/etl_monitor',     'ETL Monitor'),
 ]
 
 print("=" * 62)

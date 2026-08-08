@@ -1,28 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Page Header -->
+<div class="hud-page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1">Transformation</h2>
-        <p class="text-muted mb-0">Encoding, Scaling &amp; Data Representation for Mining Pipelines</p>
+        <h2 class="hud-title mb-1" style="font-size:1.4rem;">
+            <span class="hud-text-primary">DATA</span> TRANSFORMATION
+        </h2>
+        <p class="hud-muted mb-0 small">Encoding, Scaling &amp; Data Representation for Mining Pipelines</p>
+    </div>
+    <div class="hud-status-pill">
+        <span class="hud-dot hud-dot-green"></span>
+        <span class="small">TRANSFORMS APPLIED</span>
     </div>
 </div>
 
-<div class="row g-4 mb-4">
+<!-- Transform Cards -->
+<div class="row g-3 mb-4">
     {% set transforms = [
-        ('bi-123','bg-primary-subtle text-primary','Label Encoding','Categorical string columns like <code>operating_status</code>, <code>investor_type</code>, and <code>round_type</code> encoded to ordinal integers for downstream numeric pipelines.'),
-        ('bi-arrows-angle-contract','bg-success-subtle text-success','StandardScaler (Z-score)','Applied to <code>log_total_funding</code>, <code>funding_rounds_count</code>, <code>years_active</code>, and <code>log_velocity</code> before K-Means to prevent feature dominance.'),
-        ('bi-calculator','bg-warning-subtle text-warning','Log Transformation','<code>log1p()</code> applied to heavily right-skewed funding distributions. Reduces outlier influence and aligns feature scale for distance-based algorithms.'),
-        ('bi-toggle-on','bg-info-subtle text-info','Binary Flag Encoding','Status fields converted to binary integer flags (<code>is_closed</code>, <code>is_acquired</code>, <code>is_ipo</code>, <code>is_operating</code>) for efficient Boolean filtering in BI queries.')
+        ('bi-123','var(--hud-primary)','rgba(0,229,255,0.06)','Label Encoding','Categorical string columns like <code class="hud-code">operating_status</code>, <code class="hud-code">investor_type</code>, and <code class="hud-code">round_type</code> encoded to ordinal integers for downstream numeric pipelines.'),
+        ('bi-arrows-angle-contract','#00FFB2','rgba(0,255,178,0.05)','StandardScaler (Z-score)','Applied to <code class="hud-code">log_total_funding</code>, <code class="hud-code">funding_rounds_count</code>, <code class="hud-code">years_active</code>, and <code class="hud-code">log_velocity</code> before K-Means to prevent feature dominance.'),
+        ('bi-calculator','#FFC857','rgba(255,200,87,0.05)','Log Transformation','<code class="hud-code">log1p()</code> applied to heavily right-skewed funding distributions. Reduces outlier influence and aligns feature scale for distance-based algorithms.'),
+        ('bi-toggle-on','#7C3AED','rgba(124,58,237,0.05)','Binary Flag Encoding','Status fields converted to binary integer flags (<code class="hud-code">is_closed</code>, <code class="hud-code">is_acquired</code>, <code class="hud-code">is_ipo</code>, <code class="hud-code">is_operating</code>) for efficient Boolean filtering in BI queries.')
     ] %}
-    {% for icon, cls, title, desc in transforms %}
+    {% for icon, color, bg, title, desc in transforms %}
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4 d-flex gap-4">
-                <div class="icon-box {{ cls }} flex-shrink-0"><i class="bi {{ icon }} fs-4"></i></div>
+        <div class="hud-card h-100 p-4" style="border-color:{{ color }}33; background:{{ bg }};">
+            <div class="hud-corner hud-corner-tl" style="border-color:{{ color }};"></div>
+            <div class="d-flex gap-4">
+                <div class="hud-icon-circle flex-shrink-0" style="background:{{ bg }}; border:1px solid {{ color }}44; width:48px; height:48px; display:flex; align-items:center; justify-content:center; border-radius:12px;">
+                    <i class="bi {{ icon }} fs-4" style="color:{{ color }};"></i>
+                </div>
                 <div>
-                    <h6 class="fw-bold mb-2">{{ title }}</h6>
-                    <p class="text-muted small mb-0">{{ desc }}</p>
+                    <h6 class="fw-bold mb-2" style="color:var(--hud-text);">{{ title }}</h6>
+                    <p class="hud-muted small mb-0">{{ desc }}</p>
                 </div>
             </div>
         </div>
@@ -31,44 +42,78 @@
 </div>
 
 <!-- Before / After Table -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-arrow-left-right me-2 text-primary"></i>Before &amp; After Transformation</h5>
-        <div class="table-responsive">
-            <table class="table table-bordered table-sm align-middle mb-0">
-                <thead class="table-light">
-                    <tr><th>Column</th><th>Raw Value Example</th><th>Transformation</th><th>Result Example</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>operating_status</code></td><td><code>"operating"</code></td><td>Label Encode</td><td><code>2</code></td></tr>
-                    <tr><td><code>total_funding_usd</code></td><td><code>16,000,000</code></td><td>log1p()</td><td><code>16.59</code></td></tr>
-                    <tr><td><code>annual_funding_velocity</code></td><td><code>3,204,680</code></td><td>log1p() + StandardScaler</td><td><code>+1.24σ</code></td></tr>
-                    <tr><td><code>round_type</code></td><td><code>"series_a"</code></td><td>Label Encode</td><td><code>4</code></td></tr>
-                    <tr><td><code>founding_year</code></td><td><code>2016</code></td><td>Derive years_active</td><td><code>10</code></td></tr>
-                    <tr><td><code>investor_type</code></td><td><code>"vc"</code></td><td>Label Encode</td><td><code>3</code></td></tr>
-                    <tr><td><code>is_closed</code></td><td><code>status == 'closed'</code></td><td>Boolean cast → int</td><td><code>1 / 0</code></td></tr>
-                </tbody>
-            </table>
-        </div>
+<div class="hud-card p-4 mb-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-arrow-left-right me-2 hud-text-primary"></i>BEFORE &amp; AFTER TRANSFORMATION
+    </div>
+    <div class="table-responsive hud-table-wrapper">
+        <table class="table hud-table align-middle mb-0">
+            <thead>
+                <tr><th>COLUMN</th><th>RAW VALUE EXAMPLE</th><th>TRANSFORMATION</th><th>RESULT EXAMPLE</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="hud-code">operating_status</code></td>
+                    <td><code class="hud-code">"operating"</code></td>
+                    <td><span class="hud-tag">Label Encode</span></td>
+                    <td><code class="hud-code" style="color:#00E5FF;">2</code></td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">total_funding_usd</code></td>
+                    <td><code class="hud-code">16,000,000</code></td>
+                    <td><span class="hud-tag">log1p()</span></td>
+                    <td><code class="hud-code" style="color:#00FFB2;">16.59</code></td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">annual_funding_velocity</code></td>
+                    <td><code class="hud-code">3,204,680</code></td>
+                    <td><span class="hud-tag">log1p() + StandardScaler</span></td>
+                    <td><code class="hud-code" style="color:#FFC857;">+1.24σ</code></td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">round_type</code></td>
+                    <td><code class="hud-code">"series_a"</code></td>
+                    <td><span class="hud-tag">Label Encode</span></td>
+                    <td><code class="hud-code" style="color:#00E5FF;">4</code></td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">founding_year</code></td>
+                    <td><code class="hud-code">2016</code></td>
+                    <td><span class="hud-tag">Derive years_active</span></td>
+                    <td><code class="hud-code" style="color:#7C3AED;">10</code></td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">investor_type</code></td>
+                    <td><code class="hud-code">"vc"</code></td>
+                    <td><span class="hud-tag">Label Encode</span></td>
+                    <td><code class="hud-code" style="color:#00E5FF;">3</code></td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">is_closed</code></td>
+                    <td><code class="hud-code">status == 'closed'</code></td>
+                    <td><span class="hud-tag">Boolean cast → int</span></td>
+                    <td><code class="hud-code" style="color:#FF4D6D;">1 / 0</code></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- Feature Correlation Heatmap -->
-<div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-1">Feature Correlation Matrix</h5>
-        <p class="text-muted small mb-3">Pearson correlation between engineered numeric features</p>
-        <div id="chart-correlation" style="min-height:380px;"></div>
+<!-- Correlation Heatmap -->
+<div class="hud-card p-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-2">
+        <i class="bi bi-grid me-2 hud-text-primary"></i>FEATURE CORRELATION MATRIX
     </div>
+    <p class="hud-muted small mb-3">Pearson correlation between engineered numeric features</p>
+    <div id="chart-correlation" style="min-height:380px;"></div>
 </div>
-
-<style>
-.icon-box{width:52px;height:52px;min-width:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;}
-</style>
 
 <script>
-// Correlation heatmap - use known domain correlations
-const features = ['total_funding','years_active','rounds_count','funding_per_round','annual_velocity','log_funding'];
+const features = ['total_funding', 'years_active', 'rounds_count', 'funding_per_round', 'annual_velocity', 'log_funding'];
 const corrMatrix = [
     [1.00, 0.28, 0.74, 0.63, 0.89, 0.97],
     [0.28, 1.00, 0.18, 0.10, -0.12, 0.25],
@@ -78,20 +123,33 @@ const corrMatrix = [
     [0.97, 0.25, 0.72, 0.64, 0.90, 1.00]
 ];
 
-Plotly.newPlot('chart-correlation',[{
-    type:'heatmap', z:corrMatrix,
-    x:features, y:features,
-    colorscale:'RdBu', zmin:-1, zmax:1,
-    hoverongaps:false,
-    hovertemplate:'<b>%{x}</b> vs <b>%{y}</b><br>Correlation: %{z:.3f}<extra></extra>',
-    text:corrMatrix.map(row=>row.map(v=>v.toFixed(2))),
-    texttemplate:'%{text}', showscale:true
-}],{
-    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
-    font:{family:'Inter,sans-serif',size:11,color:'#555'},
-    margin:{t:20,r:20,b:60,l:120},
-    xaxis:{tickangle:-20}, yaxis:{automargin:true}
-},{responsive:true,displayModeBar:false});
+// Custom HUD colorscale: negative=danger, zero=surface, positive=primary
+const hudColorscale = [
+    [0, '#FF4D6D'],
+    [0.5, '#0D1224'],
+    [1, '#00E5FF']
+];
+
+Plotly.newPlot('chart-correlation', [{
+    type: 'heatmap', z: corrMatrix,
+    x: features, y: features,
+    colorscale: hudColorscale,
+    zmin: -1, zmax: 1,
+    hoverongaps: false,
+    hovertemplate: '<b>%{x}</b> vs <b>%{y}</b><br>Correlation: %{z:.3f}<extra></extra>',
+    text: corrMatrix.map(row => row.map(v => v.toFixed(2))),
+    texttemplate: '%{text}',
+    textfont: { color: '#FFFFFF', size: 11 },
+    showscale: true,
+    colorbar: { tickfont: { color: '#94A3B8' }, outlinecolor: 'rgba(0,229,255,0.2)' }
+}], {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: 'Inter,sans-serif', size: 11, color: '#94A3B8' },
+    margin: { t: 20, r: 80, b: 80, l: 130 },
+    xaxis: { tickangle: -20, gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+    yaxis: { automargin: true, color: '#94A3B8' }
+}, { responsive: true, displayModeBar: false });
 </script>
 
 {% endblock %}

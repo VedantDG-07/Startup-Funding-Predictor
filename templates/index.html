@@ -3,51 +3,72 @@
 
 <div class="container-fluid px-0">
 
-    <!-- Hero Section -->
-    <div class="rounded-4 mb-5 p-5 text-white" style="background: linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#06b6d4 100%);">
-        <div class="row align-items-center">
+    <!-- Hero AI Command Center Banner -->
+    <div class="rounded-4 mb-5 p-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, rgba(13, 18, 36, 0.95) 0%, rgba(124, 58, 237, 0.25) 50%, rgba(0, 229, 255, 0.25) 100%); border: 1px solid var(--hud-border); box-shadow: 0 10px 40px rgba(0,229,255,0.15);">
+        <!-- Animated Corner Accents -->
+        <div style="position: absolute; top: 0; left: 0; width: 40px; height: 40px; border-top: 3px solid var(--hud-primary); border-left: 3px solid var(--hud-primary);"></div>
+        <div style="position: absolute; bottom: 0; right: 0; width: 40px; height: 40px; border-bottom: 3px solid var(--hud-primary); border-right: 3px solid var(--hud-primary);"></div>
+
+        <div class="row align-items-center position-relative z-2">
             <div class="col-lg-7">
-                <span class="badge bg-white text-primary fw-semibold mb-3 px-3 py-2 rounded-pill">
-                    <i class="bi bi-bar-chart-fill me-1"></i> DMBI Analytics Platform
-                </span>
-                <h1 class="display-4 fw-bold mb-3">StartupIQ</h1>
-                <p class="lead mb-4 opacity-90">
-                    Startup Funding Intelligence &amp; Business Analytics Platform.<br>
-                    Powered by Data Mining, NLP Text Mining, K-Means Clustering, and Apriori Association Rules.
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary-subtle px-3 py-2">
+                        <i class="bi bi-cpu-fill me-1"></i> DMBI INTELLIGENCE ENGINE V2.0
+                    </span>
+                    <span class="badge bg-success-subtle px-3 py-2">
+                        <span class="hud-pulse-dot me-1"></span> LIVE MONITORING
+                    </span>
+                </div>
+                <h1 class="display-4 fw-black mb-3" style="color: #FFFFFF; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 20px var(--hud-primary-glow);">
+                    STARTUP<span style="color: var(--hud-primary);">IQ</span>
+                </h1>
+                <p class="lead mb-4" style="color: var(--hud-muted); font-weight: 400; line-height: 1.6;">
+                    Enterprise Startup Funding Intelligence & Market Diagnostic Command Center.<br>
+                    Powered by Data Mining, NLP Sentiment Scoring, K-Means Clustering, and Apriori Association Rules.
                 </p>
+
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="/dashboard" class="btn btn-white btn-lg shadow-sm fw-semibold px-4">
-                        <i class="bi bi-speedometer2 me-2"></i>Open Dashboard
+                    <a href="/dashboard" class="btn btn-primary btn-lg shadow-lg">
+                        <i class="bi bi-speedometer2 me-2"></i>Launch BI Dashboard
                     </a>
-                    <a href="/data_collection" class="btn btn-outline-light btn-lg px-4">
-                        <i class="bi bi-database me-2"></i>View Pipeline
+                    <a href="/prediction" class="btn btn-outline-primary btn-lg">
+                        <i class="bi bi-shield-shaded me-2"></i>Run Risk Predictor
+                    </a>
+                    <a href="/etl_monitor" class="btn btn-outline-light btn-lg" style="border-color: rgba(255,255,255,0.2);">
+                        <i class="bi bi-activity me-2"></i>ETL Telemetry
                     </a>
                 </div>
             </div>
+
+            <!-- Live HUD Statistics Scorecard Tiles -->
             <div class="col-lg-5 text-center mt-4 mt-lg-0">
                 <div class="row g-3">
                     <div class="col-6">
-                        <div class="bg-white bg-opacity-10 rounded-3 p-3 text-center border border-white border-opacity-25">
-                            <h2 class="fw-bold mb-0" id="hero-startups">--</h2>
-                            <small class="opacity-75">Startups Tracked</small>
+                        <div class="p-3 text-center rounded-3 hud-card" style="border: 1px solid var(--hud-border);">
+                            <div class="text-primary mb-1"><i class="bi bi-rocket-takeoff-fill fs-4"></i></div>
+                            <h2 class="fw-black mb-0 text-white" id="hero-startups">--</h2>
+                            <small class="text-muted text-uppercase" style="font-size: 0.7rem; font-family: 'Orbitron', sans-serif;">Startups Tracked</small>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="bg-white bg-opacity-10 rounded-3 p-3 text-center border border-white border-opacity-25">
-                            <h2 class="fw-bold mb-0" id="hero-funding">--</h2>
-                            <small class="opacity-75">Capital Mapped</small>
+                        <div class="p-3 text-center rounded-3 hud-card" style="border: 1px solid var(--hud-border);">
+                            <div class="text-success mb-1"><i class="bi bi-cash-stack fs-4"></i></div>
+                            <h2 class="fw-black mb-0 text-white" id="hero-funding">--</h2>
+                            <small class="text-muted text-uppercase" style="font-size: 0.7rem; font-family: 'Orbitron', sans-serif;">Capital Mapped</small>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="bg-white bg-opacity-10 rounded-3 p-3 text-center border border-white border-opacity-25">
-                            <h2 class="fw-bold mb-0" id="hero-investors">--</h2>
-                            <small class="opacity-75">Investors Profiled</small>
+                        <div class="p-3 text-center rounded-3 hud-card" style="border: 1px solid var(--hud-border);">
+                            <div class="text-warning mb-1"><i class="bi bi-person-badge-fill fs-4"></i></div>
+                            <h2 class="fw-black mb-0 text-white" id="hero-investors">--</h2>
+                            <small class="text-muted text-uppercase" style="font-size: 0.7rem; font-family: 'Orbitron', sans-serif;">Investors Profiled</small>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="bg-white bg-opacity-10 rounded-3 p-3 text-center border border-white border-opacity-25">
-                            <h2 class="fw-bold mb-0" id="hero-rounds">--</h2>
-                            <small class="opacity-75">Funding Rounds</small>
+                        <div class="p-3 text-center rounded-3 hud-card" style="border: 1px solid var(--hud-border);">
+                            <div class="text-info mb-1"><i class="bi bi-diagram-3-fill fs-4"></i></div>
+                            <h2 class="fw-black mb-0 text-white" id="hero-rounds">--</h2>
+                            <small class="text-muted text-uppercase" style="font-size: 0.7rem; font-family: 'Orbitron', sans-serif;">Funding Rounds</small>
                         </div>
                     </div>
                 </div>
@@ -55,30 +76,36 @@
         </div>
     </div>
 
-    <!-- Pipeline Cards -->
-    <h5 class="fw-bold mb-1 mt-2">Project Pipeline</h5>
-    <p class="text-muted small mb-4">End-to-end Data Mining &amp; Business Intelligence workflow</p>
+    <!-- Pipeline Workflow Cards -->
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+            <h4 class="fw-bold mb-1 text-white" style="font-family: 'Orbitron', sans-serif;">SYSTEM PIPELINE MODULES</h4>
+            <p class="text-muted small mb-0">End-to-end Data Mining &amp; Business Intelligence Workflow Architecture</p>
+        </div>
+        <span class="badge bg-primary-subtle">12 MODULES OPERATIONAL</span>
+    </div>
+
     <div class="row g-4 mb-5">
         {% set pipeline = [
-            ('bi-cloud-arrow-down','bg-primary-subtle text-primary','/data_collection','Data Collection','Web scraping of public startup portals and Kaggle funding datasets into MySQL.'),
-            ('bi-funnel','bg-success-subtle text-success','/preprocessing','Preprocessing','Null imputation, outlier handling, type normalization and feature engineering.'),
-            ('bi-arrow-left-right','bg-info-subtle text-info','/transformation','Transformation','Encoding, scaling, log transforms and derived metric construction.'),
-            ('bi-graph-up','bg-warning-subtle text-warning','/eda','Exploratory Analysis','Statistical profiling, correlation heatmaps, and distribution analysis.'),
-            ('bi-chat-quote','bg-danger-subtle text-danger','/text_mining','Text Mining','TF-IDF keyword extraction, sentiment scoring and WordCloud visualization.'),
-            ('bi-diagram-3','bg-secondary-subtle text-secondary','/data_mining','Data Mining','K-Means clustering and Apriori association rule mining.'),
-            ('bi-lightbulb','bg-primary-subtle text-primary','/insights','BI Insights','Executive investment recommendations and pattern-driven findings.'),
-            ('bi-speedometer2','bg-success-subtle text-success','/dashboard','BI Dashboard','Interactive Plotly dashboard with live KPIs, charts and tables.')
+            ('bi-cloud-arrow-down-fill','bg-primary-subtle text-primary','/data_collection','Data Ingestion','Real-time web scraping of startup directories & TechCrunch/HN feeds into MySQL.'),
+            ('bi-funnel-fill','bg-success-subtle text-success','/preprocessing','Data Cleaning','Imputation of missing values, outlier detection, and schema standardization.'),
+            ('bi-arrow-repeat','bg-info-subtle text-info','/transformation','Transformation','Feature scaling, categorical encoding, derived metrics, and log normalization.'),
+            ('bi-search-heart-fill','bg-warning-subtle text-warning','/eda','Exploratory Analysis','Statistical profiling, correlation heatmaps, and distribution analysis.'),
+            ('bi-file-earmark-code-fill','bg-danger-subtle text-danger','/text_mining','NLP Text Mining','TF-IDF keyword extraction, sentiment scoring, and description text corpus.'),
+            ('bi-diagram-3-fill','bg-secondary-subtle text-secondary','/data_mining','Data Mining','K-Means clustering and Apriori association rule mining.'),
+            ('bi-lightbulb-fill','bg-primary-subtle text-primary','/insights','AI Insights','Pattern-driven investment recommendations and market intelligence.'),
+            ('bi-speedometer','bg-success-subtle text-success','/dashboard','BI Dashboard','Interactive Plotly executive command center with dynamic charts & tables.')
         ] %}
         {% for icon, cls, href, title, desc in pipeline %}
         <div class="col-md-6 col-xl-3">
             <a href="{{ href }}" class="text-decoration-none">
-                <div class="card border-0 shadow-sm h-100 pipeline-card">
+                <div class="card h-100 pipeline-card">
                     <div class="card-body p-4">
                         <div class="icon-box {{ cls }} mb-3">
                             <i class="bi {{ icon }} fs-4"></i>
                         </div>
-                        <h6 class="fw-bold text-dark mb-2">{{ title }}</h6>
-                        <p class="text-muted small mb-0">{{ desc }}</p>
+                        <h6 class="fw-bold text-white mb-2" style="font-family: 'Orbitron', sans-serif;">{{ title }}</h6>
+                        <p class="text-muted small mb-0" style="line-height: 1.5;">{{ desc }}</p>
                     </div>
                 </div>
             </a>
@@ -86,35 +113,29 @@
         {% endfor %}
     </div>
 
-    <!-- Tech Stack -->
-    <h5 class="fw-bold mb-1">Technology Stack</h5>
-    <p class="text-muted small mb-4">Libraries and frameworks powering StartupIQ</p>
+    <!-- Tech Stack Command Grid -->
+    <h4 class="fw-bold mb-1 text-white" style="font-family: 'Orbitron', sans-serif;">TECHNOLOGY STACK ARCHITECTURE</h4>
+    <p class="text-muted small mb-4">Enterprise libraries, machine learning algorithms, and frameworks</p>
     <div class="row g-3">
         {% set techs = [
-            ('Python 3.11','bi-code-square','text-primary'),('Flask','bi-server','text-success'),
-            ('MySQL','bi-database-fill','text-warning'),('Pandas / NumPy','bi-table','text-info'),
-            ('Scikit-learn','bi-cpu','text-danger'),('mlxtend (Apriori)','bi-diagram-3','text-secondary'),
-            ('NLTK / spaCy','bi-chat-text','text-primary'),('TF-IDF','bi-search','text-success'),
-            ('Plotly.js','bi-bar-chart-fill','text-warning'),('Bootstrap 5','bi-grid','text-info'),
-            ('BeautifulSoup','bi-globe','text-danger'),('Selenium','bi-robot','text-secondary')
+            ('Python 3.11','bi-code-square','text-primary'),('Flask Framework','bi-server','text-success'),
+            ('MySQL DB','bi-database-fill','text-warning'),('Pandas / NumPy','bi-table','text-info'),
+            ('Scikit-learn','bi-cpu-fill','text-danger'),('mlxtend (Apriori)','bi-diagram-3','text-secondary'),
+            ('NLTK / spaCy','bi-chat-text-fill','text-primary'),('TF-IDF Engine','bi-search','text-success'),
+            ('Plotly.js HUD','bi-bar-chart-fill','text-warning'),('Bootstrap 5','bi-grid-fill','text-info'),
+            ('BeautifulSoup 4','bi-globe','text-danger'),('Web Scraper Engine','bi-robot','text-secondary')
         ] %}
         {% for name, icon, cls in techs %}
         <div class="col-6 col-md-4 col-lg-2">
-            <div class="card border-0 bg-light text-center p-3 h-100">
+            <div class="card text-center p-3 h-100 hud-card">
                 <i class="bi {{ icon }} {{ cls }} fs-4 mb-2"></i>
-                <small class="fw-medium text-dark">{{ name }}</small>
+                <small class="fw-medium text-white" style="font-size: 0.8rem; font-family: 'Inter', sans-serif;">{{ name }}</small>
             </div>
         </div>
         {% endfor %}
     </div>
 
 </div>
-
-<style>
-.pipeline-card { transition: transform .2s, box-shadow .2s; }
-.pipeline-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.10) !important; }
-.icon-box { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; }
-</style>
 
 <script>
 fetch('/api/kpis').then(r=>r.json()).then(({data})=>{

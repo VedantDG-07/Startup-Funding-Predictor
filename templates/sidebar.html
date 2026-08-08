@@ -1,108 +1,110 @@
-<!-- Sidebar Component -->
-<nav id="sidebar" class="sidebar bg-dark-custom text-white d-flex flex-column">
+<!-- Futuristic HUD Floating Glass Sidebar -->
+<nav id="sidebar" class="sidebar text-white d-flex flex-column">
     <!-- Sidebar Header -->
-    <div class="sidebar-header d-flex align-items-center justify-content-between p-3 border-bottom" style="border-color: #374151 !important;">
+    <div class="sidebar-header d-flex align-items-center justify-content-between">
         <div class="brand-info d-flex flex-column overflow-hidden">
-            <h5 class="mb-0 text-truncate fw-bold d-flex align-items-center">
-                <i class="bi bi-bar-chart-fill text-primary-custom me-2 fs-4"></i>StartupIQ
+            <h5 class="mb-0 text-truncate fw-bold d-flex align-items-center brand-title">
+                <i class="bi bi-cpu-fill text-primary me-2 fs-4 brand-icon"></i>STARTUP<span style="color: var(--hud-primary);">IQ</span>
             </h5>
-            <small class="text-muted-custom text-truncate mt-1" style="font-size: 0.75rem;">Startup Funding Intelligence</small>
+            <div class="d-flex align-items-center gap-1 mt-1">
+                <span class="hud-pulse-dot"></span>
+                <small class="brand-subtitle" style="font-size: 0.68rem;">AI COMMAND CENTER</small>
+            </div>
         </div>
         <button id="desktopSidebarToggle" class="sidebar-toggler-desktop d-none d-md-block ms-2" title="Toggle Sidebar">
-            <i class="bi bi-list fs-4"></i>
+            <i class="bi bi-layout-sidebar-reverse fs-5" style="color: var(--hud-primary);"></i>
         </button>
         <button id="sidebarToggle" class="btn btn-link text-white p-0 d-md-none ms-2" title="Close Sidebar">
             <i class="bi bi-x-lg fs-5"></i>
         </button>
     </div>
 
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar Navigation Links -->
     <div class="sidebar-body flex-grow-1 overflow-y-auto py-3">
-        <ul class="nav nav-pills flex-column mb-auto px-3 gap-2">
+        <ul class="nav nav-pills flex-column mb-auto px-3 gap-1">
             <li class="nav-item">
                 <a href="{{ url_for('index')|default('/') }}" class="nav-link sidebar-link active" title="Home">
-                    <i class="bi bi-house-door"></i>
+                    <i class="bi bi-grid-1x2-fill"></i>
                     <span class="ms-3 nav-text">Home</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('data_collection')|default('#') }}" class="nav-link sidebar-link" title="Data Collection">
-                    <i class="bi bi-cloud-download"></i>
-                    <span class="ms-3 nav-text">Data Collection</span>
+                    <i class="bi bi-cloud-arrow-down-fill"></i>
+                    <span class="ms-3 nav-text">Data Ingestion</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('preprocessing')|default('#') }}" class="nav-link sidebar-link" title="Data Cleaning">
-                    <i class="bi bi-magic"></i>
+                    <i class="bi bi-filter-square-fill"></i>
                     <span class="ms-3 nav-text">Data Cleaning</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('transformation')|default('#') }}" class="nav-link sidebar-link" title="Data Transformation">
-                    <i class="bi bi-arrow-left-right"></i>
-                    <span class="ms-3 nav-text">Data Transformation</span>
+                    <i class="bi bi-arrow-repeat"></i>
+                    <span class="ms-3 nav-text">Transformation</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('eda')|default('#') }}" class="nav-link sidebar-link" title="Exploratory Analysis">
-                    <i class="bi bi-search"></i>
+                    <i class="bi bi-search-heart-fill"></i>
                     <span class="ms-3 nav-text">Exploratory Analysis</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('text_mining')|default('#') }}" class="nav-link sidebar-link" title="Text Mining">
-                    <i class="bi bi-file-text"></i>
-                    <span class="ms-3 nav-text">Text Mining</span>
+                    <i class="bi bi-file-earmark-code-fill"></i>
+                    <span class="ms-3 nav-text">NLP Text Mining</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('data_mining')|default('#') }}" class="nav-link sidebar-link" title="Data Mining">
-                    <i class="bi bi-diagram-3"></i>
+                    <i class="bi bi-diagram-3-fill"></i>
                     <span class="ms-3 nav-text">Data Mining</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('prediction')|default('#') }}" class="nav-link sidebar-link" title="Failure Prediction">
-                    <i class="bi bi-graph-down-arrow"></i>
-                    <span class="ms-3 nav-text">Failure Prediction</span>
+                    <i class="bi bi-shield-shaded"></i>
+                    <span class="ms-3 nav-text">Failure Diagnostic</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('dashboard')|default('#') }}" class="nav-link sidebar-link" title="Dashboard">
-                    <i class="bi bi-speedometer2"></i>
-                    <span class="ms-3 nav-text">Dashboard</span>
+                    <i class="bi bi-speedometer"></i>
+                    <span class="ms-3 nav-text">BI Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('insights')|default('#') }}" class="nav-link sidebar-link" title="Investment Insights">
-                    <i class="bi bi-lightbulb"></i>
-                    <span class="ms-3 nav-text">Investment Insights</span>
+                    <i class="bi bi-lightbulb-fill"></i>
+                    <span class="ms-3 nav-text">AI Insights</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('about')|default('#') }}" class="nav-link sidebar-link" title="About">
-                    <i class="bi bi-info-circle"></i>
-                    <span class="ms-3 nav-text">About</span>
+                    <i class="bi bi-info-circle-fill"></i>
+                    <span class="ms-3 nav-text">Platform Specs</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('etl_monitor')|default('#') }}" class="nav-link sidebar-link" title="ETL Monitor">
                     <i class="bi bi-activity"></i>
-                    <span class="ms-3 nav-text">ETL Monitor</span>
+                    <span class="ms-3 nav-text">ETL Telemetry</span>
                 </a>
             </li>
         </ul>
     </div>
 
-    <!-- Sidebar Footer -->
-    <div class="sidebar-footer p-3 border-top mt-auto" style="border-color: #374151 !important;">
+    <!-- Sidebar Footer Badge -->
+    <div class="sidebar-footer p-3 border-top mt-auto">
         <div class="d-flex align-items-center justify-content-between footer-content">
-            <a href="#" target="_blank" class="text-white text-decoration-none hover-primary" title="GitHub">
-                <i class="bi bi-github fs-5"></i>
+            <a href="https://github.com" target="_blank" class="text-white text-decoration-none" title="GitHub System Repository">
+                <i class="bi bi-github fs-5" style="color: var(--hud-primary);"></i>
             </a>
             <div class="text-end" style="font-size: 0.75rem;">
-                <div class="text-muted-custom fw-semibold">v1.0</div>
-                <div class="text-white">&copy; StartupIQ</div>
+                <span class="badge bg-primary-subtle px-2 py-1">HUD v2.0 ACTIVE</span>
             </div>
         </div>
     </div>

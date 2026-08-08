@@ -5,34 +5,37 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 
 <div class="dashboard-container">
-    <!-- Top Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Top Telemetry Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">
         <div>
-            <h2 class="dashboard-title mb-1">Executive BI Dashboard</h2>
-            <p class="text-muted mb-0">Startup Funding Intelligence & Market Analytics</p>
+            <div class="d-flex align-items-center gap-2">
+                <h2 class="dashboard-title mb-0">Executive BI Dashboard</h2>
+                <span class="badge bg-primary-subtle py-1 px-2">LIVE TELEMETRY</span>
+            </div>
+            <p class="text-muted mb-0 small mt-1">Startup Funding Intelligence &amp; Market Diagnostic Telemetry</p>
         </div>
-        <div class="date-container text-end">
-            <span id="currentDate" class="fw-medium text-secondary"></span>
+        <div class="date-container text-md-end">
+            <span id="currentDate" class="fw-semibold text-primary" style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;"></span>
         </div>
     </div>
 
-    <!-- KPI Cards -->
+    <!-- KPI Scorecard Cards -->
     <div class="row g-4 mb-4">
         <!-- Total Startups -->
         <div class="col-xl-3 col-lg-3 col-md-6 col-12">
-            <div class="kpi-card card h-100 border-0 shadow-sm">
+            <div class="kpi-card card h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
-                            <h6 class="text-muted mb-2">Total Startups</h6>
-                            <h3 id="kpi-total-startups" class="mb-0 fw-bold">--</h3>
+                            <span class="text-muted text-uppercase fw-semibold" style="font-size: 0.7rem; font-family: 'Orbitron', sans-serif;">Total Startups</span>
+                            <h3 id="kpi-total-startups" class="mb-0 mt-2">--</h3>
                         </div>
                         <div class="icon-box bg-primary-subtle text-primary">
-                            <i class="bi bi-rocket-takeoff fs-4"></i>
+                            <i class="bi bi-rocket-takeoff-fill"></i>
                         </div>
                     </div>
-                    <div class="mt-3 text-success fw-medium small">
-                        <i class="bi bi-check-circle me-1"></i> <span class="text-muted">Active Ingestion</span>
+                    <div class="mt-3 text-success fw-medium small d-flex align-items-center gap-1">
+                        <span class="hud-pulse-dot me-1"></span> <span class="text-muted">Live Database Ingestion</span>
                     </div>
                 </div>
             </div>
@@ -40,19 +43,19 @@
 
         <!-- Total Capital Raised -->
         <div class="col-xl-3 col-lg-3 col-md-6 col-12">
-            <div class="kpi-card card h-100 border-0 shadow-sm">
+            <div class="kpi-card card h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
-                            <h6 class="text-muted mb-2">Total Capital Raised</h6>
-                            <h3 id="kpi-total-funding" class="mb-0 fw-bold">--</h3>
+                            <span class="text-muted text-uppercase fw-semibold" style="font-size: 0.7rem; font-family: 'Orbitron', sans-serif;">Total Capital Raised</span>
+                            <h3 id="kpi-total-funding" class="mb-0 mt-2">--</h3>
                         </div>
                         <div class="icon-box bg-success-subtle text-success">
-                            <i class="bi bi-cash-coin fs-4"></i>
+                            <i class="bi bi-cash-stack"></i>
                         </div>
                     </div>
-                    <div class="mt-3 text-success fw-medium small">
-                        <i class="bi bi-graph-up me-1"></i> <span class="text-muted">Global Aggregate</span>
+                    <div class="mt-3 text-success fw-medium small d-flex align-items-center gap-1">
+                        <i class="bi bi-graph-up-arrow text-success me-1"></i> <span class="text-muted">Global Aggregate</span>
                     </div>
                 </div>
             </div>
@@ -60,19 +63,19 @@
 
         <!-- Success Rate -->
         <div class="col-xl-3 col-lg-3 col-md-6 col-12">
-            <div class="kpi-card card h-100 border-0 shadow-sm">
+            <div class="kpi-card card h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
-                            <h6 class="text-muted mb-2">Success Rate (Acquired/IPO)</h6>
-                            <h3 id="kpi-success-rate" class="mb-0 fw-bold">--</h3>
+                            <span class="text-muted text-uppercase fw-semibold" style="font-size: 0.7rem; font-family: 'Orbitron', sans-serif;">Success Rate (Acquired/IPO)</span>
+                            <h3 id="kpi-success-rate" class="mb-0 mt-2">--</h3>
                         </div>
                         <div class="icon-box bg-info-subtle text-info">
-                            <i class="bi bi-trophy fs-4"></i>
+                            <i class="bi bi-trophy-fill"></i>
                         </div>
                     </div>
-                    <div class="mt-3 text-info fw-medium small">
-                        <i class="bi bi-award me-1"></i> <span class="text-muted">High Growth Cohort</span>
+                    <div class="mt-3 text-info fw-medium small d-flex align-items-center gap-1">
+                        <i class="bi bi-award-fill text-info me-1"></i> <span class="text-muted">High Growth Cohort</span>
                     </div>
                 </div>
             </div>
@@ -80,90 +83,108 @@
 
         <!-- Failure Rate -->
         <div class="col-xl-3 col-lg-3 col-md-6 col-12">
-            <div class="kpi-card card h-100 border-0 shadow-sm">
+            <div class="kpi-card card h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
-                            <h6 class="text-muted mb-2">Failure Rate (Closed)</h6>
-                            <h3 id="kpi-failure-rate" class="mb-0 fw-bold">--</h3>
+                            <span class="text-muted text-uppercase fw-semibold" style="font-size: 0.7rem; font-family: 'Orbitron', sans-serif;">Failure Rate (Closed)</span>
+                            <h3 id="kpi-failure-rate" class="mb-0 mt-2">--</h3>
                         </div>
                         <div class="icon-box bg-danger-subtle text-danger">
-                            <i class="bi bi-exclamation-triangle fs-4"></i>
+                            <i class="bi bi-exclamation-triangle-fill"></i>
                         </div>
                     </div>
-                    <div class="mt-3 text-danger fw-medium small">
-                        <i class="bi bi-shield-alert me-1"></i> <span class="text-muted">Risk Assessment</span>
+                    <div class="mt-3 text-danger fw-medium small d-flex align-items-center gap-1">
+                        <i class="bi bi-shield-exclamation text-danger me-1"></i> <span class="text-muted">Risk Diagnostics</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Main Analytics Grid -->
-    <div class="row g-4">
-        <!-- 1. Industry Funding Distribution (Plotly Bar Chart) -->
-        <div class="col-xl-8 col-lg-7">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold mb-0">Industry Capital Allocation</h5>
-                    <p class="text-muted small mb-3">Total Deployed Funding by Industry Sector</p>
-                    <div id="chart-industry" style="min-height: 380px;" class="w-100"></div>
+    <!-- Charts Grid Row 1 -->
+    <div class="row g-4 mb-4">
+        <!-- Industry Funding Distribution -->
+        <div class="col-xl-7 col-lg-6 col-12">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-bar-chart-line-fill me-2 text-primary"></i>Industry Funding Distribution</span>
+                    <span class="badge bg-primary-subtle">USD AGGREGATE</span>
+                </div>
+                <div class="card-body p-3">
+                    <div id="chart-industry" style="min-height: 340px;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. Funding Stage Breakdown (Plotly Pie Chart) -->
-        <div class="col-xl-4 col-lg-5">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold mb-0">Funding Stage Distribution</h5>
-                    <p class="text-muted small mb-3">Round Types & Capital Concentration</p>
-                    <div id="chart-stages" style="min-height: 380px;" class="w-100"></div>
+        <!-- Funding Stage Breakdown -->
+        <div class="col-xl-5 col-lg-6 col-12">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-pie-chart-fill me-2 text-info"></i>Funding Stage Distribution</span>
+                    <span class="badge bg-info-subtle">ROUND TYPE</span>
+                </div>
+                <div class="card-body p-3">
+                    <div id="chart-stages" style="min-height: 340px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Grid Row 2 -->
+    <div class="row g-4 mb-4">
+        <!-- K-Means Clusters & Risk Profiles -->
+        <div class="col-xl-7 col-lg-6 col-12">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-diagram-3-fill me-2 text-warning"></i>K-Means Clusters vs Failure Risk</span>
+                    <span class="badge bg-warning-subtle">ML CLUSTERING</span>
+                </div>
+                <div class="card-body p-3">
+                    <div id="chart-clusters" style="min-height: 340px;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 3. K-Means Strategic Clusters (Plotly Bar Chart) -->
-        <div class="col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold mb-0">Data Mining: K-Means Clusters</h5>
-                    <p class="text-muted small mb-3">Startup Market Segmentation & Risk Profiling</p>
-                    <div id="chart-clusters" style="min-height: 350px;" class="w-100"></div>
+        <!-- NLP Corpus Sentiment -->
+        <div class="col-xl-5 col-lg-6 col-12">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-chat-left-quote-fill me-2 text-success"></i>NLP Text Mining Sentiment</span>
+                    <span class="badge bg-success-subtle">CORPUS ANALYTICS</span>
+                </div>
+                <div class="card-body p-3">
+                    <div id="chart-sentiment" style="min-height: 340px;"></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- 4. Text Mining Sentiment Breakdown (Plotly Donut Chart) -->
-        <div class="col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold mb-0">Text Mining: NLP Sentiment</h5>
-                    <p class="text-muted small mb-3">Description Sentiment Polarity Analysis</p>
-                    <div id="chart-sentiment" style="min-height: 350px;" class="w-100"></div>
+    <!-- Tables Grid Row 3 -->
+    <div class="row g-4 mb-4">
+        <!-- Top Institutional Investors Table -->
+        <div class="col-xl-6 col-12">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-person-lines-fill me-2 text-primary"></i>Top Institutional Investors</span>
+                    <span class="badge bg-primary-subtle">CAPITAL DEPLOYED</span>
                 </div>
-            </div>
-        </div>
-
-        <!-- 5. Top Investor Portfolios Table -->
-        <div class="col-xl-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold mb-0">Top Active Investors</h5>
-                    <p class="text-muted small mb-3">Portfolio Size & Deployed Capital</p>
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0" id="table-investors">
-                            <thead class="table-light">
+                        <table class="table table-hover mb-0" id="table-investors">
+                            <thead>
                                 <tr>
                                     <th>Investor Name</th>
                                     <th>Type</th>
                                     <th>Country</th>
-                                    <th>Startups</th>
-                                    <th>Total Deployed</th>
+                                    <th>Portfolio</th>
+                                    <th>Capital Deployed</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td colspan="5" class="text-center text-muted py-3">Loading investor analytics...</td></tr>
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted"><i class="bi bi-arrow-repeat spin me-2"></i>Loading investor telemetry...</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -171,91 +192,40 @@
             </div>
         </div>
 
-        <!-- 6. Startup Portfolio Explorer Table -->
-        <div class="col-xl-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold mb-0">Startup Portfolio Explorer</h5>
-                    <p class="text-muted small mb-3">High Capital Ventures & Segment Cluster</p>
-                    <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
-                        <table class="table table-hover align-middle mb-0" id="table-startups">
-                            <thead class="table-light sticky-top">
+        <!-- Active Startups Portfolio Table -->
+        <div class="col-xl-6 col-12">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-building-gear me-2 text-accent" style="color: var(--hud-accent);"></i>Tracked Startups Telemetry</span>
+                    <span class="badge bg-success-subtle">RECENT RECORDED</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0" id="table-startups">
+                            <thead>
                                 <tr>
-                                    <th>Startup</th>
+                                    <th>Startup Name</th>
                                     <th>Industry</th>
                                     <th>Status</th>
-                                    <th>Funding ($)</th>
-                                    <th>Cluster</th>
+                                    <th>Total Funding</th>
+                                    <th>Cluster Profile</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td colspan="5" class="text-center text-muted py-3">Loading startup catalog...</td></tr>
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted"><i class="bi bi-arrow-repeat spin me-2"></i>Loading startup portfolio...</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- 7. Strategic Business Insights Cards -->
-        <div class="col-12 mt-4">
-            <h5 class="fw-bold mb-1">Executive Business Intelligence Insights</h5>
-            <p class="text-muted small mb-3">Automated Pattern Mining & Strategic Recommendations</p>
-
-            <div class="row g-4">
-                <div class="col-md-6 col-xl-3">
-                    <div class="card insight-card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="icon-box bg-primary-subtle text-primary mb-3">
-                                <i class="bi bi-cpu fs-4"></i>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-2">Fintech & AI Sector Dominance</h6>
-                            <p class="mb-0 text-muted small">Fintech and AI represent over 45% of total capital deployed across early to series B rounds.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-xl-3">
-                    <div class="card insight-card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="icon-box bg-success-subtle text-success mb-3">
-                                <i class="bi bi-diagram-3 fs-4"></i>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-2">Investor Syndicate Rules</h6>
-                            <p class="mb-0 text-muted small">Apriori rules confirm high co-investment confidence (>75%) between tier-1 VCs and seed accelerators.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-xl-3">
-                    <div class="card insight-card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="icon-box bg-warning-subtle text-warning mb-3">
-                                <i class="bi bi-lightning-charge fs-4"></i>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-2">Funding Velocity Correlation</h6>
-                            <p class="mb-0 text-muted small">Startups raising follow-on rounds within 18 months exhibit a 3.4x higher acquisition rate.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-xl-3">
-                    <div class="card insight-card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="icon-box bg-info-subtle text-info mb-3">
-                                <i class="bi bi-chat-quote fs-4"></i>
-                            </div>
-                            <h6 class="fw-bold text-dark mb-2">Text Mining Sentiment Impact</h6>
-                            <p class="mb-0 text-muted small">Positive description sentiment correlates strongly with higher valuation multiples at Series A.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
+
 </div>
 
-<!-- Dashboard Specific JS -->
+<!-- Include Dashboard JS Script -->
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
 {% endblock %}

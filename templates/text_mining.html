@@ -1,182 +1,220 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Page Header -->
+<div class="hud-page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1">Text Mining &amp; NLP Analysis</h2>
-        <p class="text-muted mb-0">TF-IDF Keyword Extraction, Sentiment Analysis &amp; Word Frequency Visualization</p>
+        <h2 class="hud-title mb-1" style="font-size:1.4rem;">
+            <span class="hud-text-primary">TEXT MINING</span> &amp; NLP
+        </h2>
+        <p class="hud-muted mb-0 small">TF-IDF Keyword Extraction, Sentiment Analysis &amp; Word Frequency Visualization</p>
+    </div>
+    <div class="hud-status-pill">
+        <span class="hud-dot hud-dot-green"></span>
+        <span class="small">NLP ENGINE ACTIVE</span>
     </div>
 </div>
 
 <!-- Sentiment KPI Cards -->
-<div class="row g-4 mb-4" id="sentiment-cards">
+<div class="row g-3 mb-4" id="sentiment-cards">
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-success">
-            <h3 class="fw-bold text-success" id="sent-positive">--</h3>
-            <div class="text-muted">Positive Sentiment</div>
-            <small class="text-success"><i class="bi bi-emoji-smile me-1"></i>Optimistic descriptions</small>
+        <div class="hud-card text-center p-4" style="border-color:rgba(0,255,178,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#00FFB2;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#00FFB2;"></div>
+            <h3 class="metric-number mb-1" style="color:#00FFB2;" id="sent-positive">--</h3>
+            <div class="hud-label mb-1">POSITIVE SENTIMENT</div>
+            <small style="color:#00FFB2;"><i class="bi bi-emoji-smile me-1"></i>Optimistic descriptions</small>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-warning">
-            <h3 class="fw-bold text-warning" id="sent-neutral">--</h3>
-            <div class="text-muted">Neutral Sentiment</div>
-            <small class="text-warning"><i class="bi bi-emoji-neutral me-1"></i>Balanced descriptions</small>
+        <div class="hud-card text-center p-4" style="border-color:rgba(255,200,87,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FFC857;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#FFC857;"></div>
+            <h3 class="metric-number mb-1" style="color:#FFC857;" id="sent-neutral">--</h3>
+            <div class="hud-label mb-1">NEUTRAL SENTIMENT</div>
+            <small style="color:#FFC857;"><i class="bi bi-emoji-neutral me-1"></i>Balanced descriptions</small>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-danger">
-            <h3 class="fw-bold text-danger" id="sent-negative">--</h3>
-            <div class="text-muted">Negative Sentiment</div>
-            <small class="text-danger"><i class="bi bi-emoji-frown me-1"></i>Risk-indicating language</small>
+        <div class="hud-card text-center p-4" style="border-color:rgba(255,77,109,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FF4D6D;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#FF4D6D;"></div>
+            <h3 class="metric-number mb-1" style="color:#FF4D6D;" id="sent-negative">--</h3>
+            <div class="hud-label mb-1">NEGATIVE SENTIMENT</div>
+            <small style="color:#FF4D6D;"><i class="bi bi-emoji-frown me-1"></i>Risk-indicating language</small>
         </div>
     </div>
 </div>
 
-<div class="row g-4 mb-4">
-    <!-- Sentiment Donut -->
+<!-- Sentiment + Word Frequency Charts -->
+<div class="row g-3 mb-4">
     <div class="col-md-5">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Sentiment Distribution</h5>
-                <p class="text-muted small mb-3">Polarity breakdown across all startup descriptions</p>
-                <div id="chart-tm-sentiment" style="min-height:300px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-pie-chart me-2 hud-text-primary"></i>SENTIMENT DISTRIBUTION
             </div>
+            <p class="hud-muted small mb-3">Polarity breakdown across all startup descriptions</p>
+            <div id="chart-tm-sentiment" style="min-height:300px;"></div>
         </div>
     </div>
-    <!-- Word Frequency Bar -->
     <div class="col-md-7">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Top 15 High-Frequency Terms</h5>
-                <p class="text-muted small mb-3">Most prominent terms across all startup descriptions (TF-IDF weighted)</p>
-                <div id="chart-tm-words" style="min-height:300px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-bar-chart me-2 hud-text-primary"></i>TOP 15 HIGH-FREQUENCY TERMS
             </div>
+            <p class="hud-muted small mb-3">Most prominent terms across all startup descriptions (TF-IDF weighted)</p>
+            <div id="chart-tm-words" style="min-height:300px;"></div>
         </div>
     </div>
 </div>
 
-<!-- WordCloud (CSS visual) + Methodology -->
-<div class="row g-4 mb-4">
+<!-- Word Cloud + Methodology -->
+<div class="row g-3 mb-4">
     <div class="col-md-7">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Word Frequency Cloud</h5>
-                <p class="text-muted small mb-3">Visual prominence reflects term importance across corpus</p>
-                <div id="wordcloud-container" class="d-flex flex-wrap gap-2 align-items-center p-3 bg-light rounded" style="min-height:200px;">
-                    <span class="text-muted small">Loading word cloud...</span>
-                </div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-cloud me-2 hud-text-primary"></i>WORD FREQUENCY CLOUD
+            </div>
+            <p class="hud-muted small mb-3">Visual prominence reflects term importance across corpus</p>
+            <div id="wordcloud-container" class="d-flex flex-wrap gap-2 align-items-center p-3" style="min-height:200px; background:rgba(0,229,255,0.03); border:1px solid var(--hud-border); border-radius:8px;">
+                <span class="hud-muted small">Loading word cloud...</span>
             </div>
         </div>
     </div>
     <div class="col-md-5">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>NLP Methodology</h5>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-3 d-flex gap-3">
-                        <span class="badge bg-primary-subtle text-primary px-2 py-2 mt-1">1</span>
-                        <div><strong>Text Cleaning</strong><br><small class="text-muted">Lowercasing, punctuation removal, whitespace normalisation via regex</small></div>
-                    </li>
-                    <li class="mb-3 d-flex gap-3">
-                        <span class="badge bg-success-subtle text-success px-2 py-2 mt-1">2</span>
-                        <div><strong>TF-IDF Vectorisation</strong><br><small class="text-muted">scikit-learn <code>TfidfVectorizer</code> — bigrams, 50 max features, English stopwords removed</small></div>
-                    </li>
-                    <li class="mb-3 d-flex gap-3">
-                        <span class="badge bg-warning-subtle text-warning px-2 py-2 mt-1">3</span>
-                        <div><strong>Lexicon Sentiment Scoring</strong><br><small class="text-muted">Rule-based polarity using curated positive/negative business vocabulary</small></div>
-                    </li>
-                    <li class="mb-3 d-flex gap-3">
-                        <span class="badge bg-info-subtle text-info px-2 py-2 mt-1">4</span>
-                        <div><strong>Keyword &amp; Topic Extraction</strong><br><small class="text-muted">Top-5 TF-IDF terms per document stored to <code>text_analysis</code> table</small></div>
-                    </li>
-                </ul>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-4">
+                <i class="bi bi-cpu me-2 hud-text-primary"></i>NLP METHODOLOGY
             </div>
+            <ul class="list-unstyled mb-0">
+                <li class="mb-3 d-flex gap-3">
+                    <span class="hud-step-badge flex-shrink-0" style="color:var(--hud-primary); border-color:var(--hud-primary);">01</span>
+                    <div><strong style="color:var(--hud-text);">Text Cleaning</strong><br><small class="hud-muted">Lowercasing, punctuation removal, whitespace normalisation via regex</small></div>
+                </li>
+                <li class="mb-3 d-flex gap-3">
+                    <span class="hud-step-badge flex-shrink-0" style="color:#00FFB2; border-color:#00FFB2;">02</span>
+                    <div><strong style="color:var(--hud-text);">TF-IDF Vectorisation</strong><br><small class="hud-muted">scikit-learn <code class="hud-code">TfidfVectorizer</code> — bigrams, 50 max features, English stopwords removed</small></div>
+                </li>
+                <li class="mb-3 d-flex gap-3">
+                    <span class="hud-step-badge flex-shrink-0" style="color:#FFC857; border-color:#FFC857;">03</span>
+                    <div><strong style="color:var(--hud-text);">Lexicon Sentiment Scoring</strong><br><small class="hud-muted">Rule-based polarity using curated positive/negative business vocabulary</small></div>
+                </li>
+                <li class="d-flex gap-3">
+                    <span class="hud-step-badge flex-shrink-0" style="color:#7C3AED; border-color:#7C3AED;">04</span>
+                    <div><strong style="color:var(--hud-text);">Keyword &amp; Topic Extraction</strong><br><small class="hud-muted">Top-5 TF-IDF terms per document stored to <code class="hud-code">text_analysis</code> table</small></div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
 
-<!-- Startups with Sentiment Table -->
-<div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-table me-2 text-primary"></i>Startup Sentiment Profiles</h5>
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
-                    <tr><th>Startup</th><th>Industry</th><th>Sentiment</th><th>Score</th><th>Cluster</th></tr>
-                </thead>
-                <tbody id="tm-table">
-                    <tr><td colspan="5" class="text-center text-muted py-3">Loading...</td></tr>
-                </tbody>
-            </table>
-        </div>
+<!-- Sentiment Profile Table -->
+<div class="hud-card p-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-table me-2 hud-text-primary"></i>STARTUP SENTIMENT PROFILES
+    </div>
+    <div class="table-responsive hud-table-wrapper">
+        <table class="table hud-table align-middle mb-0">
+            <thead>
+                <tr><th>STARTUP</th><th>INDUSTRY</th><th>SENTIMENT</th><th>SCORE</th><th>CLUSTER</th></tr>
+            </thead>
+            <tbody id="tm-table">
+                <tr><td colspan="5" class="text-center hud-muted py-4">
+                    <div class="hud-spinner mx-auto mb-2"></div>Loading...
+                </td></tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-    font:{family:'Inter,sans-serif',size:12,color:'#555'},showlegend:true};
-const cfg={responsive:true,displayModeBar:false};
-const colorMap={positive:'#10b981',neutral:'#f59e0b',negative:'#f43f5e'};
+const hudLayout = {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: 'Inter,sans-serif', size: 12, color: '#94A3B8' },
+    showlegend: true
+};
+const hudCfg = { responsive: true, displayModeBar: false };
+const colorMap = { positive: '#00FFB2', neutral: '#FFC857', negative: '#FF4D6D' };
 
-fetch('/api/charts/text_mining').then(r=>r.json()).then(({data})=>{
+fetch('/api/charts/text_mining').then(r => r.json()).then(({ data }) => {
     const sd = data.sentiment_distribution || [];
     const wf = data.word_cloud_frequencies || {};
 
-    // Fill KPI cards
-    sd.forEach(d=>{
-        const el = document.getElementById('sent-'+d.sentiment_label);
-        if(el) el.textContent = d.count;
+    sd.forEach(d => {
+        const el = document.getElementById('sent-' + d.sentiment_label);
+        if (el) el.textContent = d.count;
     });
 
-    // Sentiment donut
-    Plotly.newPlot('chart-tm-sentiment',[{
-        type:'pie', hole:0.5,
-        labels:sd.map(d=>d.sentiment_label), values:sd.map(d=>d.count),
-        marker:{colors:sd.map(d=>colorMap[d.sentiment_label]||'#6366f1')},
-        textinfo:'label+percent',
-        hovertemplate:'<b>%{label}</b><br>Count: %{value}<extra></extra>'
-    }],{...layout,margin:{t:10,r:10,b:10,l:10},legend:{orientation:'h',y:-0.15}},cfg);
+    Plotly.newPlot('chart-tm-sentiment', [{
+        type: 'pie', hole: 0.5,
+        labels: sd.map(d => d.sentiment_label.toUpperCase()),
+        values: sd.map(d => d.count),
+        marker: { colors: sd.map(d => colorMap[d.sentiment_label] || '#00E5FF'), line: { color: '#050816', width: 2 } },
+        textinfo: 'label+percent',
+        textfont: { color: '#FFFFFF' },
+        hovertemplate: '<b>%{label}</b><br>Count: %{value}<extra></extra>'
+    }], {
+        ...hudLayout,
+        margin: { t: 10, r: 10, b: 10, l: 10 },
+        legend: { orientation: 'h', y: -0.15, font: { color: '#94A3B8' } }
+    }, hudCfg);
 
-    // Word frequency bar (top 15)
-    const wordEntries = Object.entries(wf).sort((a,b)=>b[1]-a[1]).slice(0,15);
-    Plotly.newPlot('chart-tm-words',[{
-        type:'bar', orientation:'h',
-        y:wordEntries.map(e=>e[0]), x:wordEntries.map(e=>e[1]),
-        marker:{color:'#6366f1'},
-        hovertemplate:'<b>%{y}</b><br>Frequency: %{x}<extra></extra>'
-    }],{...layout,showlegend:false,xaxis:{title:'Frequency'},yaxis:{automargin:true},margin:{t:10,r:20,b:40,l:130}},cfg);
+    const wordEntries = Object.entries(wf).sort((a, b) => b[1] - a[1]).slice(0, 15);
+    Plotly.newPlot('chart-tm-words', [{
+        type: 'bar', orientation: 'h',
+        y: wordEntries.map(e => e[0]),
+        x: wordEntries.map(e => e[1]),
+        marker: { color: 'rgba(0,229,255,0.7)', line: { color: '#00E5FF', width: 1 } },
+        hovertemplate: '<b>%{y}</b><br>Frequency: %{x}<extra></extra>'
+    }], {
+        ...hudLayout,
+        showlegend: false,
+        xaxis: { title: 'Frequency', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { automargin: true, color: '#94A3B8' },
+        margin: { t: 10, r: 20, b: 40, l: 130 }
+    }, hudCfg);
 
-    // WordCloud CSS-based visual
     const container = document.getElementById('wordcloud-container');
     container.innerHTML = '';
     const maxFreq = Math.max(...Object.values(wf));
-    const sizes = [0.8,1.0,1.2,1.5,1.8,2.2,2.6,3.0];
-    const shades = ['#6366f1','#8b5cf6','#06b6d4','#10b981','#f59e0b','#f43f5e','#a78bfa','#34d399'];
-    wordEntries.slice(0,30).forEach(([word, freq],i)=>{
-        const ratio = freq/maxFreq;
-        const sizeIdx = Math.min(Math.floor(ratio*sizes.length), sizes.length-1);
+    const sizes = [0.7, 0.9, 1.1, 1.4, 1.7, 2.1, 2.5, 2.9];
+    const shades = ['#00E5FF', '#7C3AED', '#00FFB2', '#FFC857', '#FF4D6D', '#A78BFA', '#34D399', '#FB923C'];
+    wordEntries.slice(0, 30).forEach(([word, freq], i) => {
+        const ratio = freq / maxFreq;
+        const sizeIdx = Math.min(Math.floor(ratio * sizes.length), sizes.length - 1);
         const colorIdx = i % shades.length;
         const span = document.createElement('span');
         span.textContent = word;
-        span.style.cssText = `font-size:${sizes[sizeIdx]}rem;color:${shades[colorIdx]};font-weight:${ratio>0.6?'700':'500'};cursor:default;`;
+        span.style.cssText = `font-size:${sizes[sizeIdx]}rem;color:${shades[colorIdx]};font-weight:${ratio > 0.6 ? '700' : '500'};cursor:default;letter-spacing:0.05em;`;
         span.title = `Frequency: ${freq}`;
         container.appendChild(span);
     });
 });
 
-fetch('/api/startups').then(r=>r.json()).then(({data})=>{
+fetch('/api/startups').then(r => r.json()).then(({ data }) => {
     const tbody = document.getElementById('tm-table');
-    const sentColor={positive:'success',neutral:'warning',negative:'danger'};
-    tbody.innerHTML = data.slice(0,15).map(s=>`
-        <tr>
-            <td class="fw-medium">${s.name}</td>
-            <td><span class="badge bg-secondary-subtle text-secondary">${s.industry}</span></td>
-            <td><span class="badge bg-${sentColor[s.sentiment_label]||'secondary'}-subtle text-${sentColor[s.sentiment_label]||'secondary'} text-capitalize">${s.sentiment_label||'—'}</span></td>
-            <td><span class="text-muted small">${s.sentiment_score!=null?parseFloat(s.sentiment_score).toFixed(4):'—'}</span></td>
-            <td><small class="text-primary">${s.cluster_label||'—'}</small></td>
-        </tr>
-    `).join('');
+    const sentColor = { positive: '#00FFB2', neutral: '#FFC857', negative: '#FF4D6D' };
+    tbody.innerHTML = data.slice(0, 15).map(s => {
+        const col = sentColor[s.sentiment_label] || '#94A3B8';
+        return `<tr>
+            <td class="fw-medium" style="color:var(--hud-text);">${s.name}</td>
+            <td><span class="hud-tag">${s.industry}</span></td>
+            <td><span class="hud-badge text-uppercase" style="color:${col}; border-color:${col};">${s.sentiment_label || '—'}</span></td>
+            <td><span class="hud-muted small">${s.sentiment_score != null ? parseFloat(s.sentiment_score).toFixed(4) : '—'}</span></td>
+            <td><span class="hud-tag" style="color:var(--hud-primary); border-color:var(--hud-primary);">${s.cluster_label || '—'}</span></td>
+        </tr>`;
+    }).join('');
 });
 </script>
 

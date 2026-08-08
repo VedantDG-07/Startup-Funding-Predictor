@@ -1,162 +1,192 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Page Header -->
+<div class="hud-page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1">Data Collection</h2>
-        <p class="text-muted mb-0">Web Scraping Pipeline &amp; Ingestion Audit Log</p>
+        <h2 class="hud-title mb-1" style="font-size:1.4rem;">
+            <span class="hud-text-primary">DATA</span> COLLECTION
+        </h2>
+        <p class="hud-muted mb-0 small">Web Scraping Pipeline &amp; Ingestion Audit Log</p>
+    </div>
+    <div class="hud-status-pill">
+        <span class="hud-dot hud-dot-green"></span>
+        <span class="small">PIPELINE READY</span>
     </div>
 </div>
 
 <!-- Summary Cards -->
-<div class="row g-4 mb-4">
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <div class="icon-box bg-primary-subtle text-primary mx-auto mb-3"><i class="bi bi-rocket-takeoff fs-4"></i></div>
-            <h4 class="fw-bold" id="dc-startups">--</h4>
-            <small class="text-muted">Startups Collected</small>
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-icon-circle mb-3" style="background:rgba(0,229,255,0.1); margin:0 auto;">
+                <i class="bi bi-rocket-takeoff fs-4 hud-text-primary"></i>
+            </div>
+            <h4 class="metric-number hud-text-primary mb-1" id="dc-startups">--</h4>
+            <div class="hud-label">STARTUPS COLLECTED</div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <div class="icon-box bg-success-subtle text-success mx-auto mb-3"><i class="bi bi-cash-coin fs-4"></i></div>
-            <h4 class="fw-bold" id="dc-rounds">--</h4>
-            <small class="text-muted">Funding Rounds</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-icon-circle mb-3" style="background:rgba(0,255,178,0.1); margin:0 auto;">
+                <i class="bi bi-cash-coin fs-4" style="color:#00FFB2;"></i>
+            </div>
+            <h4 class="metric-number mb-1" style="color:#00FFB2;" id="dc-rounds">--</h4>
+            <div class="hud-label">FUNDING ROUNDS</div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <div class="icon-box bg-info-subtle text-info mx-auto mb-3"><i class="bi bi-person-workspace fs-4"></i></div>
-            <h4 class="fw-bold" id="dc-investors">--</h4>
-            <small class="text-muted">Investors Profiled</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-icon-circle mb-3" style="background:rgba(124,58,237,0.1); margin:0 auto;">
+                <i class="bi bi-person-workspace fs-4" style="color:#7C3AED;"></i>
+            </div>
+            <h4 class="metric-number mb-1" style="color:#7C3AED;" id="dc-investors">--</h4>
+            <div class="hud-label">INVESTORS PROFILED</div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <div class="icon-box bg-warning-subtle text-warning mx-auto mb-3"><i class="bi bi-link-45deg fs-4"></i></div>
-            <h4 class="fw-bold" id="dc-links">--</h4>
-            <small class="text-muted">Investment Links</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-icon-circle mb-3" style="background:rgba(255,200,87,0.1); margin:0 auto;">
+                <i class="bi bi-link-45deg fs-4" style="color:#FFC857;"></i>
+            </div>
+            <h4 class="metric-number mb-1" style="color:#FFC857;" id="dc-links">--</h4>
+            <div class="hud-label">INVESTMENT LINKS</div>
         </div>
     </div>
 </div>
 
-<!-- Pipeline Architecture -->
-<div class="row g-4 mb-4">
+<!-- Data Sources & Schema -->
+<div class="row g-3 mb-4">
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-3"><i class="bi bi-diagram-2 me-2 text-primary"></i>Data Sources</h5>
-                <div class="list-group list-group-flush">
-                    <div class="list-group-item px-0 border-0 d-flex align-items-start gap-3">
-                        <span class="badge bg-success-subtle text-success px-2 py-2 mt-1">LIVE</span>
-                        <div>
-                            <div class="fw-semibold">Kaggle / Synthetic Dataset Loader</div>
-                            <small class="text-muted">60 startups, 30 investors, 151 funding rounds via <code>database/load_kaggle.py</code></small>
-                        </div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-4">
+                <i class="bi bi-diagram-2 me-2 hud-text-primary"></i>DATA SOURCES
+            </div>
+            <div class="d-flex flex-column gap-3">
+                <div class="hud-source-item d-flex align-items-start gap-3">
+                    <span class="hud-badge flex-shrink-0 mt-1" style="color:#00FFB2; border-color:#00FFB2;">LIVE</span>
+                    <div>
+                        <div class="fw-semibold mb-1" style="color:var(--hud-text);">Kaggle / Synthetic Dataset Loader</div>
+                        <small class="hud-muted">60 startups, 30 investors, 151 funding rounds via <code class="hud-code">database/load_kaggle.py</code></small>
                     </div>
-                    <div class="list-group-item px-0 border-0 d-flex align-items-start gap-3">
-                        <span class="badge bg-primary-subtle text-primary px-2 py-2 mt-1">READY</span>
-                        <div>
-                            <div class="fw-semibold">Web Scraper (Requests + BeautifulSoup)</div>
-                            <small class="text-muted">Public startup pages scraped via <code>scraping/scraper.py</code> with audit logging</small>
-                        </div>
+                </div>
+                <div style="height:1px; background:var(--hud-border);"></div>
+                <div class="hud-source-item d-flex align-items-start gap-3">
+                    <span class="hud-badge flex-shrink-0 mt-1" style="color:#00E5FF; border-color:#00E5FF;">READY</span>
+                    <div>
+                        <div class="fw-semibold mb-1" style="color:var(--hud-text);">Web Scraper (Requests + BeautifulSoup)</div>
+                        <small class="hud-muted">Public startup pages scraped via <code class="hud-code">scraping/scraper.py</code> with audit logging</small>
                     </div>
-                    <div class="list-group-item px-0 border-0 d-flex align-items-start gap-3">
-                        <span class="badge bg-secondary-subtle text-secondary px-2 py-2 mt-1">EXT</span>
-                        <div>
-                            <div class="fw-semibold">Selenium Browser Automation</div>
-                            <small class="text-muted">JavaScript-rendered startup portals; extends <code>scraping/scraper.py</code> pipeline</small>
-                        </div>
+                </div>
+                <div style="height:1px; background:var(--hud-border);"></div>
+                <div class="hud-source-item d-flex align-items-start gap-3">
+                    <span class="hud-badge flex-shrink-0 mt-1" style="color:#94A3B8; border-color:#94A3B8;">EXT</span>
+                    <div>
+                        <div class="fw-semibold mb-1" style="color:var(--hud-text);">Selenium Browser Automation</div>
+                        <small class="hud-muted">JavaScript-rendered startup portals; extends <code class="hud-code">scraping/scraper.py</code> pipeline</small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-3"><i class="bi bi-database me-2 text-success"></i>MySQL Schema Overview</h5>
-                <div class="table-responsive">
-                    <table class="table table-sm align-middle mb-0">
-                        <thead class="table-light">
-                            <tr><th>Table</th><th>Purpose</th><th>Records</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><code>startups</code></td><td>Core company profiles</td><td id="schema-startups">--</td></tr>
-                            <tr><td><code>investors</code></td><td>VC / Angel profiles</td><td id="schema-investors">--</td></tr>
-                            <tr><td><code>funding_rounds</code></td><td>Financing events</td><td id="schema-rounds">--</td></tr>
-                            <tr><td><code>startup_investors</code></td><td>M:N junction</td><td>297</td></tr>
-                            <tr><td><code>text_analysis</code></td><td>NLP outputs</td><td>60</td></tr>
-                            <tr><td><code>predictions</code></td><td>Cluster assignments</td><td>60</td></tr>
-                            <tr><td><code>scraping_logs</code></td><td>Pipeline audit</td><td>Auto</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-4">
+                <i class="bi bi-database me-2 hud-text-primary"></i>MYSQL SCHEMA OVERVIEW
+            </div>
+            <div class="table-responsive hud-table-wrapper">
+                <table class="table hud-table table-sm align-middle mb-0">
+                    <thead>
+                        <tr><th>TABLE</th><th>PURPOSE</th><th>RECORDS</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code class="hud-code">startups</code></td><td class="hud-muted">Core company profiles</td><td id="schema-startups" class="hud-text-primary fw-medium">--</td></tr>
+                        <tr><td><code class="hud-code">investors</code></td><td class="hud-muted">VC / Angel profiles</td><td id="schema-investors" class="hud-text-primary fw-medium">--</td></tr>
+                        <tr><td><code class="hud-code">funding_rounds</code></td><td class="hud-muted">Financing events</td><td id="schema-rounds" class="hud-text-primary fw-medium">--</td></tr>
+                        <tr><td><code class="hud-code">startup_investors</code></td><td class="hud-muted">M:N junction</td><td class="hud-text-primary fw-medium">297</td></tr>
+                        <tr><td><code class="hud-code">text_analysis</code></td><td class="hud-muted">NLP outputs</td><td class="hud-text-primary fw-medium">60</td></tr>
+                        <tr><td><code class="hud-code">predictions</code></td><td class="hud-muted">Cluster assignments</td><td class="hud-text-primary fw-medium">60</td></tr>
+                        <tr><td><code class="hud-code">scraping_logs</code></td><td class="hud-muted">Pipeline audit</td><td class="hud-muted">Auto</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Scraping Architecture Diagram (text-based) -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-arrow-down-circle me-2 text-primary"></i>Ingestion Pipeline Flow</h5>
-        <div class="d-flex flex-wrap gap-2 align-items-center fs-6">
-            <span class="badge bg-primary px-3 py-2 rounded-pill">Public Web Pages</span>
-            <i class="bi bi-arrow-right text-muted"></i>
-            <span class="badge bg-info px-3 py-2 rounded-pill">Requests / Selenium</span>
-            <i class="bi bi-arrow-right text-muted"></i>
-            <span class="badge bg-success px-3 py-2 rounded-pill">BeautifulSoup Parser</span>
-            <i class="bi bi-arrow-right text-muted"></i>
-            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">insert_data.py</span>
-            <i class="bi bi-arrow-right text-muted"></i>
-            <span class="badge bg-danger px-3 py-2 rounded-pill">MySQL startup_db</span>
-            <i class="bi bi-arrow-right text-muted"></i>
-            <span class="badge bg-secondary px-3 py-2 rounded-pill">scraping_logs audit</span>
-        </div>
+<!-- Pipeline Flow -->
+<div class="hud-card p-4 mb-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-arrow-down-circle me-2 hud-text-primary"></i>INGESTION PIPELINE FLOW
+    </div>
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+        <span class="hud-flow-node" style="background:rgba(0,229,255,0.15); border-color:var(--hud-primary); color:var(--hud-primary);">PUBLIC WEB PAGES</span>
+        <i class="bi bi-arrow-right hud-muted"></i>
+        <span class="hud-flow-node" style="background:rgba(124,58,237,0.15); border-color:#7C3AED; color:#7C3AED;">REQUESTS / SELENIUM</span>
+        <i class="bi bi-arrow-right hud-muted"></i>
+        <span class="hud-flow-node" style="background:rgba(0,255,178,0.15); border-color:#00FFB2; color:#00FFB2;">BEAUTIFULSOUP PARSER</span>
+        <i class="bi bi-arrow-right hud-muted"></i>
+        <span class="hud-flow-node" style="background:rgba(255,200,87,0.15); border-color:#FFC857; color:#FFC857;">INSERT_DATA.PY</span>
+        <i class="bi bi-arrow-right hud-muted"></i>
+        <span class="hud-flow-node" style="background:rgba(255,77,109,0.15); border-color:#FF4D6D; color:#FF4D6D;">MYSQL STARTUP_DB</span>
+        <i class="bi bi-arrow-right hud-muted"></i>
+        <span class="hud-flow-node" style="background:rgba(148,163,184,0.1); border-color:#94A3B8; color:#94A3B8;">SCRAPING_LOGS AUDIT</span>
     </div>
 </div>
 
-<!-- Top Startups Table -->
-<div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-building me-2 text-primary"></i>Collected Startups Sample</h5>
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th>Company</th><th>Industry</th><th>Country</th><th>Founded</th>
-                        <th>Status</th><th>Total Funding</th><th>Rounds</th>
-                    </tr>
-                </thead>
-                <tbody id="dc-table">
-                    <tr><td colspan="7" class="text-center text-muted py-3">Loading data...</td></tr>
-                </tbody>
-            </table>
-        </div>
+<!-- Startup Sample Table -->
+<div class="hud-card p-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-building me-2 hud-text-primary"></i>COLLECTED STARTUPS SAMPLE
+    </div>
+    <div class="table-responsive hud-table-wrapper">
+        <table class="table hud-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>COMPANY</th><th>INDUSTRY</th><th>COUNTRY</th><th>FOUNDED</th>
+                    <th>STATUS</th><th>TOTAL FUNDING</th><th>ROUNDS</th>
+                </tr>
+            </thead>
+            <tbody id="dc-table">
+                <tr><td colspan="7" class="text-center hud-muted py-4">
+                    <div class="hud-spinner mx-auto mb-2"></div>Loading data...
+                </td></tr>
+            </tbody>
+        </table>
     </div>
 </div>
-
-<style>
-.icon-box{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;}
-</style>
 
 <script>
-function fmtMoney(v){
-    if(!v||v===0) return '$0';
-    if(v>=1e9) return '$'+(v/1e9).toFixed(2)+'B';
-    if(v>=1e6) return '$'+(v/1e6).toFixed(2)+'M';
-    if(v>=1e3) return '$'+(v/1e3).toFixed(1)+'K';
-    return '$'+parseFloat(v).toFixed(0);
+function fmtMoney(v) {
+    if (!v || v === 0) return '$0';
+    if (v >= 1e9) return '$' + (v / 1e9).toFixed(2) + 'B';
+    if (v >= 1e6) return '$' + (v / 1e6).toFixed(2) + 'M';
+    if (v >= 1e3) return '$' + (v / 1e3).toFixed(1) + 'K';
+    return '$' + parseFloat(v).toFixed(0);
 }
-function statusBadge(s){
-    const m={operating:'success',acquired:'primary',closed:'danger',ipo:'warning'};
-    const c=m[s]||'secondary';
-    return `<span class="badge bg-${c}-subtle text-${c} text-capitalize">${s}</span>`;
+function statusBadge(s) {
+    const m = { operating: '#00FFB2', acquired: '#00E5FF', closed: '#FF4D6D', ipo: '#FFC857' };
+    const c = m[s] || '#94A3B8';
+    return `<span class="hud-badge text-uppercase" style="color:${c}; border-color:${c};">${s}</span>`;
 }
 
-fetch('/api/kpis').then(r=>r.json()).then(({data})=>{
+fetch('/api/kpis').then(r => r.json()).then(({ data }) => {
     document.getElementById('dc-startups').textContent = data.total_startups;
     document.getElementById('dc-rounds').textContent = data.total_rounds;
     document.getElementById('dc-investors').textContent = data.total_investors;
@@ -166,17 +196,17 @@ fetch('/api/kpis').then(r=>r.json()).then(({data})=>{
     document.getElementById('dc-links').textContent = '297';
 });
 
-fetch('/api/startups').then(r=>r.json()).then(({data})=>{
-    const tbody=document.getElementById('dc-table');
-    tbody.innerHTML = data.slice(0,15).map(s=>`
+fetch('/api/startups').then(r => r.json()).then(({ data }) => {
+    const tbody = document.getElementById('dc-table');
+    tbody.innerHTML = data.slice(0, 15).map(s => `
         <tr>
-            <td class="fw-medium">${s.name}</td>
-            <td><span class="badge bg-secondary-subtle text-secondary">${s.industry}</span></td>
-            <td>${s.country||'—'}</td>
-            <td>${s.founding_year||'—'}</td>
+            <td class="fw-medium" style="color:var(--hud-text);">${s.name}</td>
+            <td><span class="hud-tag">${s.industry}</span></td>
+            <td class="hud-muted">${s.country || '—'}</td>
+            <td class="hud-muted">${s.founding_year || '—'}</td>
             <td>${statusBadge(s.operating_status)}</td>
-            <td class="text-success fw-medium">${fmtMoney(s.total_funding_usd)}</td>
-            <td><span class="badge bg-info-subtle text-info">${s.funding_rounds_count}</span></td>
+            <td class="fw-medium" style="color:#00FFB2;">${fmtMoney(s.total_funding_usd)}</td>
+            <td><span class="hud-badge" style="color:var(--hud-primary); border-color:var(--hud-primary);">${s.funding_rounds_count}</span></td>
         </tr>
     `).join('');
 });

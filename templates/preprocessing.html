@@ -1,38 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Page Header -->
+<div class="hud-page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1">Data Preprocessing</h2>
-        <p class="text-muted mb-0">Cleaning, Imputation, and Feature Engineering Pipeline</p>
+        <h2 class="hud-title mb-1" style="font-size:1.4rem;">
+            <span class="hud-text-primary">DATA</span> PREPROCESSING
+        </h2>
+        <p class="hud-muted mb-0 small">Cleaning, Imputation, and Feature Engineering Pipeline</p>
+    </div>
+    <div class="hud-status-pill">
+        <span class="hud-dot hud-dot-green"></span>
+        <span class="small">PIPELINE CLEAN</span>
     </div>
 </div>
 
 <!-- Steps -->
-<div class="row g-4 mb-4">
+<div class="row g-3 mb-4">
     {% set steps = [
-        ('1','bi-funnel','bg-primary-subtle text-primary','Missing Value Handling',
-         'Null imputation strategies applied across all numeric and categorical fields.','<code>legal_name</code> ← <code>name</code>, <code>country</code> ← "Unknown", <code>founding_year</code> ← 2018 median'),
-        ('2','bi-exclamation-triangle','bg-warning-subtle text-warning','Outlier Detection',
-         'Funding amounts clipped and log-transformed to reduce skew and stabilize distributions.','<code>log_total_funding = log1p(total_funding_usd)</code>'),
-        ('3','bi-gear','bg-success-subtle text-success','Feature Engineering',
-         'Domain features derived from raw fields to enrich model inputs and BI queries.','<code>years_active</code>, <code>funding_per_round</code>, <code>annual_funding_velocity</code>'),
-        ('4','bi-check2-circle','bg-info-subtle text-info','Type Normalization',
-         'All numeric columns coerced to consistent dtypes; boolean flags encoded as integers.','<code>is_closed</code>, <code>is_acquired</code>, <code>is_ipo</code>, <code>is_operating</code>')
+        ('01','bi-funnel','var(--hud-primary)','rgba(0,229,255,0.08)','Missing Value Handling',
+         'Null imputation strategies applied across all numeric and categorical fields.','<code class="hud-code">legal_name</code> ← <code class="hud-code">name</code>, <code class="hud-code">country</code> ← "Unknown", <code class="hud-code">founding_year</code> ← 2018 median'),
+        ('02','bi-exclamation-triangle','#FFC857','rgba(255,200,87,0.06)','Outlier Detection',
+         'Funding amounts clipped and log-transformed to reduce skew and stabilize distributions.','<code class="hud-code">log_total_funding = log1p(total_funding_usd)</code>'),
+        ('03','bi-gear','#00FFB2','rgba(0,255,178,0.06)','Feature Engineering',
+         'Domain features derived from raw fields to enrich model inputs and BI queries.','<code class="hud-code">years_active</code>, <code class="hud-code">funding_per_round</code>, <code class="hud-code">annual_funding_velocity</code>'),
+        ('04','bi-check2-circle','#7C3AED','rgba(124,58,237,0.06)','Type Normalization',
+         'All numeric columns coerced to consistent dtypes; boolean flags encoded as integers.','<code class="hud-code">is_closed</code>, <code class="hud-code">is_acquired</code>, <code class="hud-code">is_ipo</code>, <code class="hud-code">is_operating</code>')
     ] %}
-    {% for num, icon, cls, title, desc, detail in steps %}
+    {% for num, icon, color, bg, title, desc, detail in steps %}
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <div class="d-flex align-items-start gap-3">
-                    <div class="icon-box {{ cls }}">
-                        <i class="bi {{ icon }} fs-4"></i>
-                    </div>
-                    <div>
-                        <h6 class="fw-bold mb-1">Step {{ num }}: {{ title }}</h6>
-                        <p class="text-muted small mb-2">{{ desc }}</p>
-                        <p class="mb-0 small">{{ detail }}</p>
-                    </div>
+        <div class="hud-card h-100 p-4" style="border-color:{{ color }}44; background:{{ bg }};">
+            <div class="hud-corner hud-corner-tl" style="border-color:{{ color }};"></div>
+            <div class="d-flex align-items-start gap-3">
+                <span class="hud-step-badge flex-shrink-0" style="color:{{ color }}; border-color:{{ color }}; font-size:1rem; width:40px; height:40px;">{{ num }}</span>
+                <div>
+                    <h6 class="fw-bold mb-2" style="color:var(--hud-text);">{{ title }}</h6>
+                    <p class="hud-muted small mb-2">{{ desc }}</p>
+                    <p class="mb-0 small">{{ detail }}</p>
                 </div>
             </div>
         </div>
@@ -40,80 +44,139 @@
     {% endfor %}
 </div>
 
-<!-- Feature Engineering Table -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-table me-2 text-primary"></i>Engineered Features</h5>
-        <div class="table-responsive">
-            <table class="table table-bordered table-sm align-middle mb-0">
-                <thead class="table-light">
-                    <tr><th>Feature</th><th>Source Formula</th><th>Type</th><th>Purpose</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>years_active</code></td><td><code>current_year − founding_year</code></td><td>Numeric</td><td>Company age / operational maturity</td></tr>
-                    <tr><td><code>funding_per_round</code></td><td><code>total_funding / rounds_count</code></td><td>Numeric</td><td>Average capital per round event</td></tr>
-                    <tr><td><code>annual_funding_velocity</code></td><td><code>total_funding / years_active</code></td><td>Numeric</td><td>Capital accumulation rate (annualised)</td></tr>
-                    <tr><td><code>log_total_funding</code></td><td><code>log1p(total_funding_usd)</code></td><td>Numeric</td><td>Stabilised input for K-Means clustering</td></tr>
-                    <tr><td><code>is_closed</code></td><td><code>status == 'closed'</code></td><td>Binary</td><td>Failure prediction target indicator</td></tr>
-                    <tr><td><code>is_acquired</code></td><td><code>status == 'acquired'</code></td><td>Binary</td><td>M&amp;A outcome flag</td></tr>
-                    <tr><td><code>is_ipo</code></td><td><code>status == 'ipo'</code></td><td>Binary</td><td>Public listing flag</td></tr>
-                    <tr><td><code>is_operating</code></td><td><code>status == 'operating'</code></td><td>Binary</td><td>Active business flag</td></tr>
-                </tbody>
-            </table>
-        </div>
+<!-- Engineered Features Table -->
+<div class="hud-card p-4 mb-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-table me-2 hud-text-primary"></i>ENGINEERED FEATURES
+    </div>
+    <div class="table-responsive hud-table-wrapper">
+        <table class="table hud-table align-middle mb-0">
+            <thead>
+                <tr><th>FEATURE</th><th>SOURCE FORMULA</th><th>TYPE</th><th>PURPOSE</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="hud-code">years_active</code></td>
+                    <td><code class="hud-code">current_year − founding_year</code></td>
+                    <td><span class="hud-tag">Numeric</span></td>
+                    <td class="hud-muted">Company age / operational maturity</td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">funding_per_round</code></td>
+                    <td><code class="hud-code">total_funding / rounds_count</code></td>
+                    <td><span class="hud-tag">Numeric</span></td>
+                    <td class="hud-muted">Average capital per round event</td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">annual_funding_velocity</code></td>
+                    <td><code class="hud-code">total_funding / years_active</code></td>
+                    <td><span class="hud-tag">Numeric</span></td>
+                    <td class="hud-muted">Capital accumulation rate (annualised)</td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">log_total_funding</code></td>
+                    <td><code class="hud-code">log1p(total_funding_usd)</code></td>
+                    <td><span class="hud-tag">Numeric</span></td>
+                    <td class="hud-muted">Stabilised input for K-Means clustering</td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">is_closed</code></td>
+                    <td><code class="hud-code">status == 'closed'</code></td>
+                    <td><span class="hud-tag" style="color:#FF4D6D; border-color:#FF4D6D;">Binary</span></td>
+                    <td class="hud-muted">Failure prediction target indicator</td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">is_acquired</code></td>
+                    <td><code class="hud-code">status == 'acquired'</code></td>
+                    <td><span class="hud-tag" style="color:#00E5FF; border-color:#00E5FF;">Binary</span></td>
+                    <td class="hud-muted">M&amp;A outcome flag</td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">is_ipo</code></td>
+                    <td><code class="hud-code">status == 'ipo'</code></td>
+                    <td><span class="hud-tag" style="color:#FFC857; border-color:#FFC857;">Binary</span></td>
+                    <td class="hud-muted">Public listing flag</td>
+                </tr>
+                <tr>
+                    <td><code class="hud-code">is_operating</code></td>
+                    <td><code class="hud-code">status == 'operating'</code></td>
+                    <td><span class="hud-tag" style="color:#00FFB2; border-color:#00FFB2;">Binary</span></td>
+                    <td class="hud-muted">Active business flag</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- Distribution Chart -->
-<div class="row g-4">
+<!-- Distribution Charts -->
+<div class="row g-3">
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Funding Distribution by Status</h5>
-                <p class="text-muted small mb-3">Total capital per operational outcome category</p>
-                <div id="chart-status-funding" style="min-height:280px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-bar-chart me-2 hud-text-primary"></i>FUNDING DISTRIBUTION BY STATUS
             </div>
+            <p class="hud-muted small mb-3">Total capital per operational outcome category</p>
+            <div id="chart-status-funding" style="min-height:280px;"></div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Startups by Operating Status</h5>
-                <p class="text-muted small mb-3">Breakdown of active, closed, acquired and IPO companies</p>
-                <div id="chart-status-count" style="min-height:280px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-pie-chart me-2 hud-text-primary"></i>STARTUPS BY OPERATING STATUS
             </div>
+            <p class="hud-muted small mb-3">Breakdown of active, closed, acquired and IPO companies</p>
+            <div id="chart-status-count" style="min-height:280px;"></div>
         </div>
     </div>
 </div>
-
-<style>
-.icon-box{width:48px;height:48px;min-width:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
-</style>
 
 <script>
-fetch('/api/kpis').then(r=>r.json()).then(({data})=>{
-    const labels=['Operating','Acquired','Closed','IPO'];
-    const counts=[data.operating_startups,data.acquired_startups,data.closed_startups,data.ipo_startups];
-    const colors=['#10b981','#6366f1','#f43f5e','#f59e0b'];
-    const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-        font:{family:'Inter,sans-serif',size:12},margin:{t:10,r:10,b:30,l:10},showlegend:true};
-    Plotly.newPlot('chart-status-count',[{type:'pie',hole:0.45,labels,values:counts,
-        marker:{colors},textinfo:'label+percent',hovertemplate:'<b>%{label}</b><br>Count: %{value}<extra></extra>'}],
-        {...layout,margin:{t:10,r:10,b:10,l:10}},{responsive:true,displayModeBar:false});
+fetch('/api/kpis').then(r => r.json()).then(({ data }) => {
+    const labels = ['Operating', 'Acquired', 'Closed', 'IPO'];
+    const counts = [data.operating_startups, data.acquired_startups, data.closed_startups, data.ipo_startups];
+    const colors = ['#00FFB2', '#00E5FF', '#FF4D6D', '#FFC857'];
+    const hudLayout = {
+        paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { family: 'Inter,sans-serif', size: 12, color: '#94A3B8' },
+        margin: { t: 10, r: 10, b: 30, l: 10 }, showlegend: true
+    };
 
-    // Funding by status bar
-    const fundAmts=[
+    Plotly.newPlot('chart-status-count', [{
+        type: 'pie', hole: 0.45, labels, values: counts,
+        marker: { colors, line: { color: '#050816', width: 2 } },
+        textinfo: 'label+percent',
+        textfont: { color: '#FFFFFF' },
+        hovertemplate: '<b>%{label}</b><br>Count: %{value}<extra></extra>'
+    }], {
+        ...hudLayout,
+        margin: { t: 10, r: 10, b: 10, l: 10 },
+        legend: { font: { color: '#94A3B8' }, orientation: 'h', y: -0.15 }
+    }, { responsive: true, displayModeBar: false });
+
+    const fundAmts = [
         data.operating_startups * data.avg_funding_per_startup_usd * 0.6,
-        data.acquired_startups  * data.avg_funding_per_startup_usd * 1.8,
-        data.closed_startups    * data.avg_funding_per_startup_usd * 0.4,
-        data.ipo_startups       * data.avg_funding_per_startup_usd * 3.2
+        data.acquired_startups * data.avg_funding_per_startup_usd * 1.8,
+        data.closed_startups * data.avg_funding_per_startup_usd * 0.4,
+        data.ipo_startups * data.avg_funding_per_startup_usd * 3.2
     ];
-    Plotly.newPlot('chart-status-funding',[{type:'bar',x:labels,y:fundAmts,
-        marker:{color:colors},hovertemplate:'<b>%{x}</b><br>$%{y:,.0f}<extra></extra>',
-        text:fundAmts.map(v=>v>=1e6?'$'+(v/1e6).toFixed(1)+'M':'$'+v.toFixed(0)),
-        textposition:'outside'}],
-        {...layout,xaxis:{title:'Status'},yaxis:{title:'Funding (USD)',tickformat:'$.2s'},margin:{t:20,r:10,b:40,l:60}},
-        {responsive:true,displayModeBar:false});
+    Plotly.newPlot('chart-status-funding', [{
+        type: 'bar', x: labels, y: fundAmts,
+        marker: { color: colors, opacity: 0.85 },
+        hovertemplate: '<b>%{x}</b><br>$%{y:,.0f}<extra></extra>',
+        text: fundAmts.map(v => v >= 1e6 ? '$' + (v / 1e6).toFixed(1) + 'M' : '$' + v.toFixed(0)),
+        textposition: 'outside', textfont: { color: '#94A3B8' }
+    }], {
+        ...hudLayout,
+        xaxis: { title: 'Status', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { title: 'Funding (USD)', tickformat: '$.2s', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        margin: { t: 20, r: 10, b: 40, l: 60 }
+    }, { responsive: true, displayModeBar: false });
 });
 </script>
 

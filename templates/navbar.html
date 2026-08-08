@@ -1,59 +1,69 @@
-<!-- Top Navbar Component -->
+<!-- Top HUD Command Navbar Component -->
 <nav class="top-navbar d-flex align-items-center justify-content-between">
     <!-- Left Section: Branding & Mobile Toggle -->
     <div class="navbar-left d-flex align-items-center">
         <!-- Mobile Sidebar Toggle -->
-        <button id="mobileSidebarToggle" class="btn btn-link text-dark d-md-none me-2 p-1 navbar-icon-btn">
+        <button id="mobileSidebarToggle" class="btn btn-link text-white d-md-none me-2 p-1 navbar-icon-btn">
             <i class="bi bi-list fs-3"></i>
         </button>
 
         <div class="brand-info d-flex flex-column">
-            <h5 class="mb-0 text-truncate fw-bold d-flex align-items-center text-dark brand-title">
-                <i class="bi bi-bar-chart-fill me-2 fs-4 brand-icon"></i>StartupIQ
+            <h5 class="mb-0 text-truncate fw-bold d-flex align-items-center brand-title">
+                <i class="bi bi-cpu-fill me-2 fs-4 brand-icon"></i>STARTUP<span style="color: var(--hud-primary);">IQ</span>
             </h5>
-            <small class="text-muted text-truncate mt-1 brand-subtitle">Startup Funding Intelligence</small>
+            <div class="d-flex align-items-center gap-2">
+                <small class="brand-subtitle">Startup Intelligence Core</small>
+                <span class="badge bg-success-subtle py-0 px-2" style="font-size: 0.6rem;">
+                    <i class="bi bi-broadcast me-1"></i>ONLINE
+                </span>
+            </div>
         </div>
     </div>
 
-    <!-- Center Section: Search Bar -->
+    <!-- Center Section: Futuristic Search Command Input -->
     <div class="navbar-center d-none d-md-flex align-items-center flex-grow-1 px-4">
-        <div class="search-container position-relative w-100 mx-auto" style="max-width: 500px;">
+        <div class="search-container position-relative w-100 mx-auto">
             <i class="bi bi-search position-absolute search-icon"></i>
-            <input type="text" class="form-control search-input w-100" placeholder="Search startups, investors, industries...">
+            <input type="text" class="form-control search-input w-100" placeholder="Search startups, investors, funding telemetry, ML clusters...">
         </div>
     </div>
 
-    <!-- Right Section: Actions & Profile -->
+    <!-- Right Section: System Actions & Profile -->
     <div class="navbar-right d-flex align-items-center gap-3">
+        <!-- HUD Status Telemetry Badge -->
+        <div class="d-none d-xl-flex align-items-center gap-2 px-3 py-1 rounded-pill" style="background: rgba(0,229,255,0.08); border: 1px solid var(--hud-border);">
+            <span class="hud-pulse-dot"></span>
+            <small style="font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--hud-primary);">AI MODEL: READY</small>
+        </div>
+
         <!-- Theme Toggle -->
-        <button class="btn btn-link text-dark p-1 navbar-icon-btn" id="themeToggleBtn" title="Toggle Theme">
-            <i class="bi bi-moon fs-5"></i>
+        <button class="btn btn-link text-white p-1 navbar-icon-btn" id="themeToggleBtn" title="Toggle Theme HUD">
+            <i class="bi bi-moon-stars-fill fs-6"></i>
         </button>
 
-        <!-- Notification -->
+        <!-- Notification Bell -->
         <div class="position-relative">
-            <button class="btn btn-link text-dark p-1 navbar-icon-btn" id="notificationBtn" title="Notifications">
-                <i class="bi bi-bell fs-5"></i>
+            <button class="btn btn-link text-white p-1 navbar-icon-btn" id="notificationBtn" title="Telemetry Alerts">
+                <i class="bi bi-bell-fill fs-6"></i>
             </button>
-            <!-- Red Notification Badge -->
-            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle notification-badge">
+            <span class="position-absolute top-0 start-100 translate-middle p-1 rounded-circle notification-badge">
                 <span class="visually-hidden">New alerts</span>
             </span>
         </div>
 
         <!-- User Profile Dropdown -->
         <div class="dropdown">
-            <button class="btn btn-link text-dark text-decoration-none dropdown-toggle d-flex align-items-center gap-2 profile-btn p-1 border-0" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-link text-white text-decoration-none dropdown-toggle d-flex align-items-center gap-2 profile-btn p-1 border-0" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="avatar-circle">
-                    <i class="bi bi-person-fill"></i>
+                    <i class="bi bi-person-badge-fill"></i>
                 </div>
-                <span class="d-none d-sm-inline fw-medium text-dark profile-name">Developer</span>
+                <span class="d-none d-sm-inline fw-medium profile-name">CMD / DEV</span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" aria-labelledby="profileDropdown">
-                <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2 text-muted"></i>Profile</a></li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2 text-muted"></i>Settings</a></li>
+            <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="profileDropdown">
+                <li><a class="dropdown-item" href="#"><i class="bi bi-person-gear me-2"></i>Operator Profile</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-sliders me-2"></i>AI Settings</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Disconnect Session</a></li>
             </ul>
         </div>
     </div>

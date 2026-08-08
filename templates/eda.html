@@ -1,180 +1,236 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Page Header -->
+<div class="hud-page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1">Exploratory Data Analysis</h2>
-        <p class="text-muted mb-0">Statistical Profiling, Distribution Analysis &amp; Correlation Insights</p>
+        <h2 class="hud-title mb-1" style="font-size:1.4rem;">
+            <span class="hud-text-primary">EXPLORATORY</span> DATA ANALYSIS
+        </h2>
+        <p class="hud-muted mb-0 small">Statistical Profiling, Distribution Analysis &amp; Correlation Insights</p>
+    </div>
+    <div class="hud-status-pill">
+        <span class="hud-dot hud-dot-green"></span>
+        <span class="small">ANALYSIS LIVE</span>
     </div>
 </div>
 
 <!-- KPI Summary Row -->
-<div class="row g-4 mb-4">
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <h4 class="fw-bold text-primary" id="eda-total">--</h4>
-            <small class="text-muted">Total Records</small>
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <h4 class="metric-number hud-text-primary mb-1" id="eda-total">--</h4>
+            <div class="hud-label">TOTAL RECORDS</div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <h4 class="fw-bold text-success" id="eda-avg-funding">--</h4>
-            <small class="text-muted">Avg Funding / Startup</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color:rgba(0,255,178,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#00FFB2;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#00FFB2;"></div>
+            <h4 class="metric-number mb-1" style="color:#00FFB2;" id="eda-avg-funding">--</h4>
+            <div class="hud-label">AVG FUNDING / STARTUP</div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <h4 class="fw-bold text-warning" id="eda-avg-round">--</h4>
-            <small class="text-muted">Avg Round Size</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color:rgba(255,200,87,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FFC857;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#FFC857;"></div>
+            <h4 class="metric-number mb-1" style="color:#FFC857;" id="eda-avg-round">--</h4>
+            <div class="hud-label">AVG ROUND SIZE</div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <h4 class="fw-bold text-danger" id="eda-failure">--</h4>
-            <small class="text-muted">Failure Rate</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color:rgba(255,77,109,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FF4D6D;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#FF4D6D;"></div>
+            <h4 class="metric-number mb-1" style="color:#FF4D6D;" id="eda-failure">--</h4>
+            <div class="hud-label">FAILURE RATE</div>
         </div>
     </div>
 </div>
 
-<div class="row g-4 mb-4">
-    <!-- Industry Count -->
+<!-- Industry Count + Country -->
+<div class="row g-3 mb-4">
     <div class="col-xl-8">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Startup Count by Industry</h5>
-                <p class="text-muted small mb-3">Company frequency distribution across sectors</p>
-                <div id="chart-eda-industry-count" style="min-height:320px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-bar-chart me-2 hud-text-primary"></i>STARTUP COUNT BY INDUSTRY
             </div>
+            <p class="hud-muted small mb-3">Company frequency distribution across sectors</p>
+            <div id="chart-eda-industry-count" style="min-height:320px;"></div>
         </div>
     </div>
-    <!-- Country Breakdown -->
     <div class="col-xl-4">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Startups by Country</h5>
-                <p class="text-muted small mb-3">Geographic spread of portfolio</p>
-                <div id="chart-eda-country" style="min-height:320px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-globe me-2 hud-text-primary"></i>STARTUPS BY COUNTRY
             </div>
+            <p class="hud-muted small mb-3">Geographic spread of portfolio</p>
+            <div id="chart-eda-country" style="min-height:320px;"></div>
         </div>
     </div>
 </div>
 
-<div class="row g-4 mb-4">
-    <!-- Avg Funding by Industry -->
+<!-- Avg Funding + Stage -->
+<div class="row g-3 mb-4">
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Average Funding per Industry</h5>
-                <p class="text-muted small mb-3">Mean capital raised across sectors</p>
-                <div id="chart-eda-avg-funding" style="min-height:300px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-cash-stack me-2 hud-text-primary"></i>AVERAGE FUNDING PER INDUSTRY
             </div>
+            <p class="hud-muted small mb-3">Mean capital raised across sectors</p>
+            <div id="chart-eda-avg-funding" style="min-height:300px;"></div>
         </div>
     </div>
-    <!-- Funding by Stage Bar -->
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Avg Amount by Funding Stage</h5>
-                <p class="text-muted small mb-3">Median deal size at each investment stage</p>
-                <div id="chart-eda-stage-avg" style="min-height:300px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-layers me-2 hud-text-primary"></i>AVG AMOUNT BY FUNDING STAGE
             </div>
+            <p class="hud-muted small mb-3">Median deal size at each investment stage</p>
+            <div id="chart-eda-stage-avg" style="min-height:300px;"></div>
         </div>
     </div>
 </div>
 
-<!-- Statistical Summary Table -->
-<div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-calculator me-2 text-primary"></i>Descriptive Statistics Summary</h5>
-        <div class="table-responsive">
-            <table class="table table-bordered table-sm align-middle mb-0">
-                <thead class="table-light">
-                    <tr><th>Metric</th><th>Total Startups</th><th>Total Funding</th><th>Avg Funding</th><th>Failure Rate</th><th>Success Rate</th><th>Total Rounds</th><th>Total Investors</th></tr>
-                </thead>
-                <tbody id="eda-stats-row">
-                    <tr><td colspan="8" class="text-center text-muted">Loading...</td></tr>
-                </tbody>
-            </table>
-        </div>
+<!-- Descriptive Stats Table -->
+<div class="hud-card p-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-calculator me-2 hud-text-primary"></i>DESCRIPTIVE STATISTICS SUMMARY
+    </div>
+    <div class="table-responsive hud-table-wrapper">
+        <table class="table hud-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>METRIC</th><th>TOTAL STARTUPS</th><th>TOTAL FUNDING</th>
+                    <th>AVG FUNDING</th><th>FAILURE RATE</th><th>SUCCESS RATE</th>
+                    <th>TOTAL ROUNDS</th><th>TOTAL INVESTORS</th>
+                </tr>
+            </thead>
+            <tbody id="eda-stats-row">
+                <tr><td colspan="8" class="text-center hud-muted py-4">
+                    <div class="hud-spinner mx-auto mb-2"></div>Loading...
+                </td></tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-const PALETTE=['#6366f1','#22d3ee','#f59e0b','#10b981','#f43f5e','#a78bfa','#34d399','#fb923c','#60a5fa','#e879f9'];
-const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-    font:{family:'Inter,sans-serif',size:12,color:'#555'},showlegend:false};
-const cfg={responsive:true,displayModeBar:false};
+const PALETTE = ['#00E5FF', '#7C3AED', '#00FFB2', '#FFC857', '#FF4D6D', '#A78BFA', '#34D399', '#FB923C', '#60A5FA', '#E879F9'];
+const hudLayout = {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: 'Inter,sans-serif', size: 12, color: '#94A3B8' },
+    showlegend: false
+};
+const hudCfg = { responsive: true, displayModeBar: false };
 
-function fmt(v){
-    if(!v) return '$0';
-    if(v>=1e9) return '$'+(v/1e9).toFixed(2)+'B';
-    if(v>=1e6) return '$'+(v/1e6).toFixed(2)+'M';
-    if(v>=1e3) return '$'+(v/1e3).toFixed(1)+'K';
-    return '$'+parseFloat(v).toFixed(0);
+function fmt(v) {
+    if (!v) return '$0';
+    if (v >= 1e9) return '$' + (v / 1e9).toFixed(2) + 'B';
+    if (v >= 1e6) return '$' + (v / 1e6).toFixed(2) + 'M';
+    if (v >= 1e3) return '$' + (v / 1e3).toFixed(1) + 'K';
+    return '$' + parseFloat(v).toFixed(0);
 }
 
-fetch('/api/kpis').then(r=>r.json()).then(({data})=>{
+fetch('/api/kpis').then(r => r.json()).then(({ data }) => {
     document.getElementById('eda-total').textContent = data.total_startups;
     document.getElementById('eda-avg-funding').textContent = fmt(data.avg_funding_per_startup_usd);
     document.getElementById('eda-avg-round').textContent = fmt(data.avg_round_amount_usd);
-    document.getElementById('eda-failure').textContent = data.failure_rate_percent+'%';
+    document.getElementById('eda-failure').textContent = data.failure_rate_percent + '%';
 
     const tbody = document.getElementById('eda-stats-row');
     tbody.innerHTML = `<tr>
-        <td class="fw-medium">Values</td>
-        <td>${data.total_startups}</td>
-        <td>${fmt(data.grand_total_funding_usd)}</td>
-        <td>${fmt(data.avg_funding_per_startup_usd)}</td>
-        <td class="text-danger">${data.failure_rate_percent}%</td>
-        <td class="text-success">${data.success_rate_percent}%</td>
-        <td>${data.total_rounds}</td>
-        <td>${data.total_investors}</td>
+        <td class="fw-medium hud-muted">Values</td>
+        <td class="hud-text-primary fw-medium">${data.total_startups}</td>
+        <td class="fw-medium" style="color:#00FFB2;">${fmt(data.grand_total_funding_usd)}</td>
+        <td class="fw-medium" style="color:#00FFB2;">${fmt(data.avg_funding_per_startup_usd)}</td>
+        <td class="fw-medium" style="color:#FF4D6D;">${data.failure_rate_percent}%</td>
+        <td class="fw-medium" style="color:#00FFB2;">${data.success_rate_percent}%</td>
+        <td class="hud-muted">${data.total_rounds}</td>
+        <td class="hud-muted">${data.total_investors}</td>
     </tr>`;
 });
 
-fetch('/api/charts/industry').then(r=>r.json()).then(({data})=>{
-    // Industry count chart
-    Plotly.newPlot('chart-eda-industry-count',[{
-        type:'bar', x:data.map(d=>d.industry), y:data.map(d=>d.startup_count),
-        marker:{color:PALETTE}, hovertemplate:'<b>%{x}</b><br>Startups: %{y}<extra></extra>',
-        text:data.map(d=>d.startup_count), textposition:'outside'
-    }],{...layout,xaxis:{tickangle:-20},yaxis:{title:'Number of Startups'},margin:{t:20,r:10,b:80,l:50}},cfg);
+fetch('/api/charts/industry').then(r => r.json()).then(({ data }) => {
+    Plotly.newPlot('chart-eda-industry-count', [{
+        type: 'bar',
+        x: data.map(d => d.industry),
+        y: data.map(d => d.startup_count),
+        marker: { color: PALETTE, opacity: 0.85 },
+        hovertemplate: '<b>%{x}</b><br>Startups: %{y}<extra></extra>',
+        text: data.map(d => d.startup_count),
+        textposition: 'outside',
+        textfont: { color: '#94A3B8' }
+    }], {
+        ...hudLayout,
+        xaxis: { tickangle: -20, gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { title: 'Number of Startups', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        margin: { t: 20, r: 10, b: 80, l: 50 }
+    }, hudCfg);
 
-    // Avg funding chart
-    Plotly.newPlot('chart-eda-avg-funding',[{
-        type:'bar', orientation:'h',
-        y:data.map(d=>d.industry), x:data.map(d=>d.avg_funding_usd),
-        marker:{color:'#6366f1'},
-        hovertemplate:'<b>%{y}</b><br>Avg Funding: $%{x:,.0f}<extra></extra>'
-    }],{...layout,xaxis:{title:'Avg Funding (USD)',tickformat:'$.2s'},yaxis:{automargin:true},margin:{t:20,r:20,b:50,l:130}},cfg);
-
-    // Country breakdown
-    const countryMap={};
-    data.forEach(d=>{/* country not in industry API, so we skip */});
+    Plotly.newPlot('chart-eda-avg-funding', [{
+        type: 'bar', orientation: 'h',
+        y: data.map(d => d.industry),
+        x: data.map(d => d.avg_funding_usd),
+        marker: { color: 'rgba(0,229,255,0.75)', line: { color: '#00E5FF', width: 1 } },
+        hovertemplate: '<b>%{y}</b><br>Avg Funding: $%{x:,.0f}<extra></extra>'
+    }], {
+        ...hudLayout,
+        xaxis: { title: 'Avg Funding (USD)', tickformat: '$.2s', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { automargin: true, color: '#94A3B8' },
+        margin: { t: 20, r: 20, b: 50, l: 130 }
+    }, hudCfg);
 });
 
-// Country chart from startups
-fetch('/api/startups').then(r=>r.json()).then(({data})=>{
-    const countMap={};
-    data.forEach(s=>{ countMap[s.country]=(countMap[s.country]||0)+1; });
-    const sorted=Object.entries(countMap).sort((a,b)=>b[1]-a[1]);
-    Plotly.newPlot('chart-eda-country',[{
-        type:'pie', hole:0.3,
-        labels:sorted.map(e=>e[0]), values:sorted.map(e=>e[1]),
-        marker:{colors:PALETTE}, textinfo:'label+percent',
-        hovertemplate:'<b>%{label}</b><br>Startups: %{value}<extra></extra>'
-    }],{...layout,margin:{t:10,r:10,b:10,l:10},showlegend:false},{responsive:true,displayModeBar:false});
+fetch('/api/startups').then(r => r.json()).then(({ data }) => {
+    const countMap = {};
+    data.forEach(s => { countMap[s.country] = (countMap[s.country] || 0) + 1; });
+    const sorted = Object.entries(countMap).sort((a, b) => b[1] - a[1]);
+    Plotly.newPlot('chart-eda-country', [{
+        type: 'pie', hole: 0.3,
+        labels: sorted.map(e => e[0]),
+        values: sorted.map(e => e[1]),
+        marker: { colors: PALETTE, line: { color: '#050816', width: 2 } },
+        textinfo: 'label+percent',
+        textfont: { color: '#FFFFFF' },
+        hovertemplate: '<b>%{label}</b><br>Startups: %{value}<extra></extra>'
+    }], {
+        ...hudLayout,
+        margin: { t: 10, r: 10, b: 10, l: 10 },
+        showlegend: false
+    }, hudCfg);
 });
 
-fetch('/api/charts/funding_stages').then(r=>r.json()).then(({data})=>{
-    Plotly.newPlot('chart-eda-stage-avg',[{
-        type:'bar', x:data.map(d=>d.round_type.replace(/_/g,' ').toUpperCase()),
-        y:data.map(d=>d.avg_amount_raised),
-        marker:{color:PALETTE},
-        hovertemplate:'<b>%{x}</b><br>Avg: $%{y:,.0f}<extra></extra>',
-        text:data.map(d=>{const v=d.avg_amount_raised; return v>=1e6?'$'+(v/1e6).toFixed(1)+'M':'$'+v.toFixed(0);}),
-        textposition:'outside'
-    }],{...layout,xaxis:{tickangle:-20},yaxis:{title:'Avg Amount (USD)',tickformat:'$.2s'},margin:{t:30,r:10,b:80,l:60}},cfg);
+fetch('/api/charts/funding_stages').then(r => r.json()).then(({ data }) => {
+    Plotly.newPlot('chart-eda-stage-avg', [{
+        type: 'bar',
+        x: data.map(d => d.round_type.replace(/_/g, ' ').toUpperCase()),
+        y: data.map(d => d.avg_amount_raised),
+        marker: { color: PALETTE, opacity: 0.85 },
+        hovertemplate: '<b>%{x}</b><br>Avg: $%{y:,.0f}<extra></extra>',
+        text: data.map(d => { const v = d.avg_amount_raised; return v >= 1e6 ? '$' + (v / 1e6).toFixed(1) + 'M' : '$' + v.toFixed(0); }),
+        textposition: 'outside',
+        textfont: { color: '#94A3B8' }
+    }], {
+        ...hudLayout,
+        xaxis: { tickangle: -20, gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { title: 'Avg Amount (USD)', tickformat: '$.2s', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        margin: { t: 30, r: 10, b: 80, l: 60 }
+    }, hudCfg);
 });
 </script>
 

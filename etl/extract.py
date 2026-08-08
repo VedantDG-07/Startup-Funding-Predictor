@@ -30,102 +30,50 @@ class BaseExtractorSource(ABC):
         pass
 
 
-class SeedExtractorSource(BaseExtractorSource):
+class HackerNewsAPIExtractorSource(BaseExtractorSource):
     """
-    Source for initial seed loading from local Kaggle / synthetic generation engine.
-    Only triggered if the database is completely empty.
+    Real-time Extractor Source querying HackerNews Algolia REST API for startup launches and funding stories.
     """
-    def __init__(self, target_num: int = 100):
-        self.target_num = target_num
+    def __init__(self, limit: int = 30, query: str = "funding"):
+        self.limit = limit
+        self.query = query
+        self.scraper = StartupScraper(delay=0.2)
 
     def extract(self) -> List[Dict[str, Any]]:
-        logger.info("Executing extraction from Seed Data Source...")
-        # Simulating seed collection (which matches load_kaggle.py logic)
-        seed_records = []
-        startup_prefixes = ["Apex", "Nova", "Cyber", "Bio", "Eco", "Data", "Quantum", "Nexus", "Zenith", "Omni", "Velo", "Pulse", "Strat", "Aero", "Hyper"]
-        startup_suffixes = ["Tech", "Labs", "AI", "Health", "Pay", "Grid", "Secure", "Logic", "Dynamics", "Systems", "Flow", "IQ", "Wave", "Hub", "Scale"]
-        
-        for i in range(1, self.target_num + 1):
-            name = f"{random.choice(startup_prefixes)}{random.choice(startup_suffixes)} {i}"
-            ind = random.choice(INDUSTRIES)
-            country = random.choice(COUNTRIES)
-            status = random.choices(STATUSES, weights=[0.65, 0.15, 0.15, 0.05])[0]
-            desc = f"Innovative platform in {ind} targeting global expansion. Founded to solve industry bottlenecks."
-            seed_records.append({
-                "name": name,
-                "legal_name": f"{name} Inc.",
-                "domain": f"https://www.{name.lower().replace(' ', '')}.io",
-                "industry": ind,
-                "sub_industry": "General",
-                "country": country,
-                "state": "State Region",
-                "city": "Metro City",
-                "founding_year": random.randint(2012, 2023),
-                "operating_status": status,
-                "short_description": desc,
-                "long_description": f"{desc} Operating in {country}.",
-                "employee_count_range": random.choice(["1-10", "11-50", "51-200"]),
-                "total_funding_usd": float(random.randint(10000, 50000000)),
-                "funding_rounds_count": random.randint(1, 5),
-                "is_active": True if status == "operating" else False,
-                "source_url": "seed_source"
-            })
-        logger.info(f"Seed Data Source extracted {len(seed_records)} records.")
-        return seed_records
+        logger.info(f"Executing real online extraction from HackerNews API (Query: '{self.query}', Limit: {self.limit})...")
+        records = self.scraper.fetch_hn_funding_stories(query=self.query, limit=self.limit)
+        logger.info(f"HackerNews API Extractor retrieved {len(records)} real records.")
+        return records
 
 
 class WebDirectoryScraperSource(BaseExtractorSource):
     """
-    Live Scraper Source that paginates through target startup directories.
-    Respects rate limits and uses StartupScraper for BeautifulSoup parsing.
+    Live Scraper Source that fetches real online startup profiles and news via TechCrunch Startups feed.
     """
-    def __init__(self, start_page: int = 1, end_page: int = 5, page_size: int = 100):
-        self.start_page = start_page
-        self.end_page = end_page
-        self.page_size = page_size
-        self.scraper = StartupScraper(delay=0.1) # low delay since we crawl mock pages locally, high delay for web
+    def __init__(self, limit: int = 30, start_page: int = 1, end_page: int = 1, page_size: int = 30):
+        self.limit = limit
+        self.scraper = StartupScraper(delay=0.5)
 
     def extract(self) -> List[Dict[str, Any]]:
-        logger.info(f"Executing extraction from Web Directory Scraper (Pages {self.start_page} to {self.end_page})...")
-        extracted_data = []
-        
-        # Paginate
-        for page in range(self.start_page, self.end_page + 1):
-            logger.info(f"Scraping directory page {page}...")
-            # Simulate paging through a public directory endpoint
-            # In a production environment, this fetches real paginated URLs.
-            # To ensure 100% stability, we generate synthetic listing targets that the scraper parses.
-            for i in range(1, self.page_size + 1):
-                idx = (page - 1) * self.page_size + i
-                name = f"ScrapedStartup {idx}"
-                ind = random.choice(INDUSTRIES)
-                country = random.choice(COUNTRIES)
-                status = random.choices(STATUSES, weights=[0.70, 0.10, 0.15, 0.05])[0]
-                desc = f"Next-gen automated software solutions for {ind}. Optimized for performance and scale."
-                extracted_data.append({
-                    "name": name,
-                    "legal_name": f"{name} Corporation",
-                    "domain": f"https://www.{name.lower().replace(' ', '')}.com",
-                    "industry": ind,
-                    "sub_industry": "Automation",
-                    "country": country,
-                    "state": "District",
-                    "city": "Capital City",
-                    "founding_year": random.randint(2015, 2024),
-                    "operating_status": status,
-                    "short_description": desc,
-                    "long_description": f"{desc} Expanding operations globally.",
-                    "employee_count_range": random.choice(["1-10", "11-50", "51-200"]),
-                    "total_funding_usd": float(random.randint(50000, 20000000)),
-                    "funding_rounds_count": random.randint(1, 3),
-                    "is_active": True if status == "operating" else False,
-                    "source_url": f"https://startupranking.com/page/{page}/{name.lower().replace(' ', '')}"
-                })
-            # Respect rate limit
-            time.sleep(0.1)
-            
-        logger.info(f"Web Directory Scraper extracted {len(extracted_data)} records.")
-        return extracted_data
+        logger.info(f"Executing real online extraction from TechCrunch Web Directory Scraper...")
+        records = self.scraper.fetch_techcrunch_feed(limit=self.limit)
+        logger.info(f"Web Directory Scraper retrieved {len(records)} real records.")
+        return records
+
+
+class SeedExtractorSource(BaseExtractorSource):
+    """
+    Fallback Extractor Source combining real HackerNews launches and tech directory articles.
+    """
+    def __init__(self, target_num: int = 30):
+        self.target_num = target_num
+        self.scraper = StartupScraper(delay=0.2)
+
+    def extract(self) -> List[Dict[str, Any]]:
+        logger.info("Executing extraction from Seed Data Source (HackerNews Show HN)...")
+        records = self.scraper.fetch_hn_funding_stories(query="startup", limit=self.target_num)
+        logger.info(f"Seed Data Source extracted {len(records)} real records.")
+        return records
 
 
 class ExtractorOrchestrator:
@@ -152,7 +100,8 @@ class ExtractorOrchestrator:
 
 if __name__ == "__main__":
     orchestrator = ExtractorOrchestrator()
-    orchestrator.add_source(SeedExtractorSource(target_num=10))
-    orchestrator.add_source(WebDirectoryScraperSource(start_page=1, end_page=2, page_size=5))
+    orchestrator.add_source(HackerNewsAPIExtractorSource(limit=10))
+    orchestrator.add_source(WebDirectoryScraperSource(limit=10))
     res = orchestrator.run_all()
-    print(f"Sample records extracted: {len(res)}")
+    print(f"Total real online records extracted: {len(res)}")
+

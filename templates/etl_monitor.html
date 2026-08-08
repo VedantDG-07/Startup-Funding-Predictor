@@ -1,108 +1,133 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Page Header -->
+<div class="hud-page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1">ETL Pipeline Monitor</h2>
-        <p class="text-muted mb-0">Manage and monitor background data collection, cleaning, and model updates.</p>
+        <h2 class="hud-title mb-1" style="font-size:1.4rem;">
+            <span class="hud-text-primary">ETL</span> PIPELINE MONITOR
+        </h2>
+        <p class="hud-muted mb-0 small">Manage and monitor background data collection, cleaning, and model updates</p>
     </div>
-    <div>
-        <button id="btn-trigger-etl" class="btn btn-primary btn-lg shadow-sm fw-semibold">
-            <i class="bi bi-play-fill me-1"></i> Collect New Data
-        </button>
-    </div>
+    <button id="btn-trigger-etl" class="hud-btn-primary">
+        <i class="bi bi-play-fill me-2"></i>COLLECT NEW DATA
+    </button>
 </div>
 
-<!-- Current Status Alert / In-Progress Indicator -->
-<div id="etl-status-card" class="card border-0 shadow-sm mb-4 d-none">
-    <div class="card-body p-4 text-center">
-        <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
-            <span class="visually-hidden">Loading...</span>
+<!-- Active Run Status -->
+<div id="etl-status-card" class="hud-card p-4 mb-4 d-none" style="border-color: rgba(0,229,255,0.5); background: rgba(0,229,255,0.04);">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="d-flex align-items-center gap-4">
+        <div class="hud-pulse-ring">
+            <div class="hud-pulse-dot"></div>
         </div>
-        <h5 class="fw-bold mb-1" id="etl-status-title">ETL Pipeline Running</h5>
-        <p class="text-muted small mb-0" id="etl-status-text">Extracting paginated listings, executing transformations, performing duplicate checks and reloading downstream analytics models...</p>
-    </div>
-</div>
-
-<!-- Main Stats Row -->
-<div class="row g-4 mb-4">
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4">
-            <h3 class="fw-bold text-primary" id="stat-total-startups">--</h3>
-            <small class="text-muted">Total Startups in DB</small>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-success">
-            <h3 class="fw-bold text-success" id="stat-last-inserted">--</h3>
-            <small class="text-muted">Last Ingested (New)</small>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-warning">
-            <h3 class="fw-bold text-warning" id="stat-last-updated">--</h3>
-            <small class="text-muted">Last Updated</small>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-info">
-            <h3 class="fw-bold text-info" id="stat-last-duration">--</h3>
-            <small class="text-muted">Last Ingestion Time</small>
+        <div>
+            <div class="hud-label mb-1" id="etl-status-title">ETL PIPELINE RUNNING</div>
+            <p class="hud-muted small mb-0" id="etl-status-text">Extracting paginated listings, executing transformations, performing duplicate checks and reloading downstream analytics models...</p>
         </div>
     </div>
 </div>
 
-<!-- Last Run Details Card -->
-<div class="card border-0 shadow-sm mb-4" id="last-run-card">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-activity me-2 text-primary"></i>Latest Execution Summary</h5>
-        <div class="row g-3 text-center">
-            <div class="col-6 col-md-3 border-end">
-                <h4 class="fw-bold text-dark" id="summary-extracted">--</h4>
-                <small class="text-muted">Records Extracted</small>
+<!-- KPI Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <h3 class="metric-number hud-text-primary mb-1" id="stat-total-startups">--</h3>
+            <div class="hud-label">TOTAL STARTUPS IN DB</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color: rgba(0,255,178,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#00FFB2;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#00FFB2;"></div>
+            <h3 class="metric-number mb-1" id="stat-last-inserted" style="color:#00FFB2;">--</h3>
+            <div class="hud-label">LAST INGESTED (NEW)</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color: rgba(255,200,87,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FFC857;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#FFC857;"></div>
+            <h3 class="metric-number mb-1" id="stat-last-updated" style="color:#FFC857;">--</h3>
+            <div class="hud-label">LAST UPDATED</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color: rgba(124,58,237,0.4);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#7C3AED;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#7C3AED;"></div>
+            <h3 class="metric-number mb-1" id="stat-last-duration" style="color:#7C3AED;">--</h3>
+            <div class="hud-label">LAST INGESTION TIME</div>
+        </div>
+    </div>
+</div>
+
+<!-- Last Run Summary -->
+<div class="hud-card p-4 mb-4" id="last-run-card">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-activity me-2 hud-text-primary"></i>LATEST EXECUTION SUMMARY
+    </div>
+    <div class="row g-3 text-center">
+        <div class="col-6 col-md-3">
+            <div class="hud-metric-mini">
+                <h4 class="metric-number hud-text-primary" id="summary-extracted">--</h4>
+                <div class="hud-label">RECORDS EXTRACTED</div>
             </div>
-            <div class="col-6 col-md-3 border-end">
-                <h4 class="fw-bold text-dark" id="summary-transformed">--</h4>
-                <small class="text-muted">Transformed</small>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="hud-metric-mini">
+                <h4 class="metric-number" style="color:#00FFB2;" id="summary-transformed">--</h4>
+                <div class="hud-label">TRANSFORMED</div>
             </div>
-            <div class="col-6 col-md-3 border-end">
-                <h4 class="fw-bold text-dark" id="summary-skipped">--</h4>
-                <small class="text-muted">Duplicates Skipped</small>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="hud-metric-mini">
+                <h4 class="metric-number" style="color:#FFC857;" id="summary-skipped">--</h4>
+                <div class="hud-label">DUPLICATES SKIPPED</div>
             </div>
-            <div class="col-6 col-md-3">
-                <h4 class="fw-bold text-danger" id="summary-failed">--</h4>
-                <small class="text-muted">Failed / Errors</small>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="hud-metric-mini">
+                <h4 class="metric-number" style="color:#FF4D6D;" id="summary-failed">--</h4>
+                <div class="hud-label">FAILED / ERRORS</div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Ingestion Log Table -->
-<div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-clock-history me-2 text-primary"></i>Ingestion Execution History</h5>
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th>Run ID</th>
-                        <th>Started At</th>
-                        <th>Status</th>
-                        <th>Source</th>
-                        <th>Extracted</th>
-                        <th>Inserted</th>
-                        <th>Updated</th>
-                        <th>Skipped</th>
-                        <th>Duration</th>
-                    </tr>
-                </thead>
-                <tbody id="etl-history-table">
-                    <tr>
-                        <td colspan="9" class="text-center text-muted py-3">Loading history logs...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<!-- Ingestion History Table -->
+<div class="hud-card p-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-clock-history me-2 hud-text-primary"></i>INGESTION EXECUTION HISTORY
+    </div>
+    <div class="table-responsive hud-table-wrapper">
+        <table class="table hud-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>RUN ID</th>
+                    <th>STARTED AT</th>
+                    <th>STATUS</th>
+                    <th>SOURCE</th>
+                    <th>EXTRACTED</th>
+                    <th>INSERTED</th>
+                    <th>UPDATED</th>
+                    <th>SKIPPED</th>
+                    <th>DURATION</th>
+                </tr>
+            </thead>
+            <tbody id="etl-history-table">
+                <tr><td colspan="9" class="text-center hud-muted py-4">
+                    <div class="hud-spinner mx-auto mb-2"></div>Loading history logs...
+                </td></tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -112,99 +137,72 @@ let pollInterval = null;
 function loadETLHistory() {
     fetch('/api/etl/runs')
         .then(r => r.json())
-        .then(({data, active_run}) => {
+        .then(({ data, active_run }) => {
             const tableBody = document.getElementById('etl-history-table');
-            
-            // Check active running task
             const triggerBtn = document.getElementById('btn-trigger-etl');
             const statusCard = document.getElementById('etl-status-card');
-            
+
             if (active_run && active_run.running) {
                 triggerBtn.disabled = true;
-                triggerBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> Processing...`;
+                triggerBtn.innerHTML = `<span class="hud-spinner-sm me-2"></span>PROCESSING...`;
                 statusCard.classList.remove('d-none');
-                
-                // Keep polling
-                if (!pollInterval) {
-                    pollInterval = setInterval(loadETLHistory, 2000);
-                }
+                if (!pollInterval) pollInterval = setInterval(loadETLHistory, 2000);
             } else {
                 triggerBtn.disabled = false;
-                triggerBtn.innerHTML = `<i class="bi bi-play-fill me-1"></i> Collect New Data`;
+                triggerBtn.innerHTML = `<i class="bi bi-play-fill me-2"></i>COLLECT NEW DATA`;
                 statusCard.classList.add('d-none');
-                
-                if (pollInterval) {
-                    clearInterval(pollInterval);
-                    pollInterval = null;
-                }
+                if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
             }
-            
-            // Render table records
+
             if (!data || data.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">No execution logs found. Run the pipeline to seed data.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="9" class="text-center hud-muted py-4">No execution logs found. Run the pipeline to seed data.</td></tr>`;
                 return;
             }
-            
+
             tableBody.innerHTML = data.map(r => {
-                let badgeClass = "secondary";
-                if (r.status === "success") badgeClass = "success";
-                if (r.status === "failed") badgeClass = "danger";
-                if (r.status === "running") badgeClass = "primary";
-                
-                return `
-                    <tr>
-                        <td class="fw-medium">#${r.run_id}</td>
-                        <td><small class="text-muted">${r.started_at}</small></td>
-                        <td><span class="badge bg-${badgeClass}-subtle text-${badgeClass} text-capitalize">${r.status}</span></td>
-                        <td><span class="badge bg-light text-dark border">${r.source}</span></td>
-                        <td>${r.records_extracted}</td>
-                        <td class="text-success fw-medium">+${r.records_inserted}</td>
-                        <td class="text-warning fw-medium">${r.records_updated}</td>
-                        <td class="text-muted">${r.duplicates_skipped}</td>
-                        <td><small>${r.execution_time || '—'}</small></td>
-                    </tr>
-                `;
+                let col = '#94A3B8';
+                if (r.status === 'success') col = '#00FFB2';
+                if (r.status === 'failed') col = '#FF4D6D';
+                if (r.status === 'running') col = '#00E5FF';
+                return `<tr>
+                    <td class="fw-medium hud-text-primary">#${r.run_id}</td>
+                    <td><small class="hud-muted">${r.started_at}</small></td>
+                    <td><span class="hud-badge text-uppercase" style="color:${col}; border-color:${col};">${r.status}</span></td>
+                    <td><span class="hud-tag">${r.source}</span></td>
+                    <td class="hud-muted">${r.records_extracted}</td>
+                    <td style="color:#00FFB2;" class="fw-medium">+${r.records_inserted}</td>
+                    <td style="color:#FFC857;" class="fw-medium">${r.records_updated}</td>
+                    <td class="hud-muted">${r.duplicates_skipped}</td>
+                    <td><small class="hud-muted">${r.execution_time || '—'}</small></td>
+                </tr>`;
             }).join('');
-            
-            // Update KPIs from last completed run
-            const lastRun = data.find(r => r.status === "success");
+
+            const lastRun = data.find(r => r.status === 'success');
             if (lastRun) {
                 document.getElementById('stat-last-inserted').textContent = `+${lastRun.records_inserted}`;
                 document.getElementById('stat-last-updated').textContent = lastRun.records_updated;
                 document.getElementById('stat-last-duration').textContent = lastRun.execution_time;
-                
                 document.getElementById('summary-extracted').textContent = lastRun.records_extracted;
                 document.getElementById('summary-transformed').textContent = lastRun.records_transformed;
                 document.getElementById('summary-skipped').textContent = lastRun.duplicates_skipped;
                 document.getElementById('summary-failed').textContent = lastRun.failed_records;
             }
-        })
-        .catch(err => console.error('[ETL History Error]', err));
-        
-    // Update startups total count
-    fetch('/api/kpis')
-        .then(r => r.json())
-        .then(({data}) => {
-            document.getElementById('stat-total-startups').textContent = data.total_startups || '--';
-        })
-        .catch(err => console.error('[KPI Fetch Error]', err));
+        }).catch(err => console.error('[ETL History Error]', err));
+
+    fetch('/api/kpis').then(r => r.json()).then(({ data }) => {
+        document.getElementById('stat-total-startups').textContent = data.total_startups || '--';
+    }).catch(err => console.error('[KPI Fetch Error]', err));
 }
 
 document.getElementById('btn-trigger-etl').addEventListener('click', () => {
     fetch('/api/etl/run', { method: 'POST' })
         .then(r => r.json())
         .then(res => {
-            if (res.status === "success") {
-                // Immediately reload/update to show loading state
-                loadETLHistory();
-            } else {
-                alert(res.message || "Failed to trigger ETL run.");
-            }
-        })
-        .catch(err => console.error('[ETL Trigger Error]', err));
+            if (res.status === 'success') loadETLHistory();
+            else alert(res.message || 'Failed to trigger ETL run.');
+        }).catch(err => console.error('[ETL Trigger Error]', err));
 });
 
-// Initial load
 document.addEventListener('DOMContentLoaded', loadETLHistory);
 </script>
 

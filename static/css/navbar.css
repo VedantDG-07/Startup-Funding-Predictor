@@ -1,137 +1,155 @@
-/* Navbar Variables */
-:root {
-    --nav-bg: #ffffff;
-    --nav-border: #E5E7EB;
-    --nav-text: #111827;
-    --nav-primary: #2563EB;
-    --nav-secondary: #3B82F6;
-    --nav-hover-bg: #F3F4F6;
-    --nav-height: 70px;
-}
+/* ==========================================================================
+   STARTUPIQ - FUTURISTIC HUD NAVBAR STYLESHEET (static/css/navbar.css)
+   ========================================================================== */
 
-/* Navbar Base */
 .top-navbar {
-    height: var(--nav-height);
-    background-color: var(--nav-bg);
-    border-bottom: 1px solid var(--nav-border);
-    padding: 0 20px;
+    height: 70px;
+    background: rgba(13, 18, 36, 0.80) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--hud-border) !important;
+    padding: 0 24px;
     position: sticky;
     top: 0;
     z-index: 1030;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Very light modern shadow */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* Brand Section */
 .brand-title {
-    color: var(--nav-text);
-    font-size: 1.15rem;
+    color: #FFFFFF !important;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
 }
+
 .brand-icon {
-    /* Blue gradient icon */
-    background: linear-gradient(135deg, var(--nav-primary), var(--nav-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--hud-primary) !important;
+    text-shadow: 0 0 10px var(--hud-primary);
 }
+
 .brand-subtitle {
     font-size: 0.7rem;
-    color: #6B7280;
+    color: var(--hud-muted) !important;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
-/* Search Bar */
+/* Glass Search Input */
 .search-container {
-    transition: transform 0.3s ease;
+    max-width: 460px;
 }
+
 .search-input {
-    border-radius: 20px;
-    padding-left: 2.5rem;
-    background-color: #F9FAFB;
-    border: 1px solid transparent;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    height: 40px;
+    border-radius: 25px !important;
+    padding-left: 2.75rem !important;
+    background-color: rgba(5, 8, 22, 0.6) !important;
+    border: 1px solid var(--hud-border) !important;
+    color: #FFFFFF !important;
+    transition: var(--hud-transition) !important;
+    font-size: 0.85rem;
+    height: 42px;
 }
+
 .search-icon {
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #9CA3AF;
+    color: var(--hud-primary) !important;
     z-index: 5;
+    font-size: 0.95rem;
 }
+
 .search-input:focus {
-    background-color: #ffffff;
-    border-color: var(--nav-secondary);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-    outline: none;
+    background-color: rgba(13, 18, 36, 0.95) !important;
+    border-color: var(--hud-primary) !important;
+    box-shadow: 0 0 20px var(--hud-primary-glow) !important;
 }
 
-/* Icon Buttons (Theme & Notifications) */
+/* Icon Buttons */
 .navbar-icon-btn {
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    color: var(--nav-text) !important;
-}
-.navbar-icon-btn:hover {
-    background-color: var(--nav-hover-bg);
-    color: var(--nav-primary) !important;
-}
-
-/* Notification Badge */
-.notification-badge {
-    width: 10px;
-    height: 10px;
-    border: 2px solid var(--nav-bg) !important;
-    padding: 0 !important;
-}
-
-/* Profile Dropdown */
-.profile-btn {
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-.profile-btn:hover {
-    background-color: var(--nav-hover-bg);
-}
-.avatar-circle {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #DBEAFE; /* Light blue bg */
-    color: var(--nav-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
-/* Dropdown Animation */
-.dropdown-menu {
-    border-radius: 8px;
-    animation: dropdownFade 0.2s ease-out;
-}
-@keyframes dropdownFade {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Navbar Responsiveness */
-@media (max-width: 991.98px) {
-    /* Tablet */
-    .search-container {
-        max-width: 250px !important;
-    }
-}
-@media (max-width: 767.98px) {
-    /* Mobile */
-    .navbar-center {
-        display: none !important;
-    }
-}
-
-/* Accessibility / Touch Targets */
-.navbar-icon-btn, .profile-btn {
-    min-height: 44px;
-    min-width: 44px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px !important;
+    background: rgba(18, 24, 38, 0.6) !important;
+    border: 1px solid var(--hud-border) !important;
+    color: var(--hud-muted) !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: var(--hud-transition);
+}
+
+.navbar-icon-btn:hover {
+    color: var(--hud-primary) !important;
+    border-color: var(--hud-primary) !important;
+    box-shadow: 0 0 15px var(--hud-primary-glow);
+    background: rgba(0, 229, 255, 0.1) !important;
+}
+
+.notification-badge {
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--hud-surface) !important;
+    background-color: var(--hud-danger) !important;
+    box-shadow: 0 0 8px var(--hud-danger);
+}
+
+/* Developer Profile Dropdown */
+.profile-btn {
+    border-radius: 14px !important;
+    padding: 4px 12px !important;
+    background: rgba(18, 24, 38, 0.6) !important;
+    border: 1px solid var(--hud-border) !important;
+    transition: var(--hud-transition);
+}
+
+.profile-btn:hover {
+    border-color: var(--hud-primary) !important;
+    box-shadow: 0 0 15px var(--hud-primary-glow);
+}
+
+.avatar-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--hud-primary) 0%, var(--hud-secondary) 100%);
+    color: #050816;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 0 10px var(--hud-primary-glow);
+}
+
+.profile-name {
+    color: #FFFFFF !important;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+}
+
+.dropdown-menu {
+    background: rgba(13, 18, 36, 0.95) !important;
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--hud-border) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    padding: 8px;
+}
+
+.dropdown-item {
+    color: var(--hud-muted) !important;
+    border-radius: 8px;
+    padding: 8px 14px;
+    transition: var(--hud-transition);
+    font-size: 0.85rem;
+}
+
+.dropdown-item:hover {
+    background: rgba(0, 229, 255, 0.12) !important;
+    color: var(--hud-primary) !important;
+}
+
+.dropdown-divider {
+    border-color: var(--hud-border) !important;
 }

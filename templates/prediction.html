@@ -1,131 +1,176 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Page Header -->
+<div class="hud-page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1">Risk Profiling</h2>
-        <p class="text-muted mb-0">K-Means Cluster-Based Failure Risk Assessment</p>
+        <h2 class="hud-title mb-1" style="font-size:1.4rem;">
+            <span class="hud-text-primary">RISK</span> PROFILING
+        </h2>
+        <p class="hud-muted mb-0 small">K-Means Cluster-Based Failure Risk Assessment Engine</p>
+    </div>
+    <div class="hud-status-pill">
+        <span class="hud-dot hud-dot-green"></span>
+        <span class="small">MODEL ACTIVE</span>
     </div>
 </div>
 
-<!-- Risk Legend -->
-<div class="row g-4 mb-4">
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-danger">
-            <h4 class="fw-bold text-danger" id="pred-high">--</h4>
-            <small class="text-muted">High Risk (&gt;60%)</small>
+<!-- Risk Legend KPI Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color: rgba(255,77,109,0.5);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FF4D6D;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#FF4D6D;"></div>
+            <h3 class="metric-number mb-1" id="pred-high" style="color:#FF4D6D;">--</h3>
+            <div class="hud-label">HIGH RISK <span class="hud-muted">(>60%)</span></div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-warning">
-            <h4 class="fw-bold text-warning" id="pred-medium">--</h4>
-            <small class="text-muted">Medium Risk (30–60%)</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color: rgba(255,200,87,0.5);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FFC857;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#FFC857;"></div>
+            <h3 class="metric-number mb-1" id="pred-medium" style="color:#FFC857;">--</h3>
+            <div class="hud-label">MEDIUM RISK <span class="hud-muted">(30–60%)</span></div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-success">
-            <h4 class="fw-bold text-success" id="pred-low">--</h4>
-            <small class="text-muted">Low Risk (&lt;30%)</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4" style="border-color: rgba(0,255,178,0.5);">
+            <div class="hud-corner hud-corner-tl" style="border-color:#00FFB2;"></div>
+            <div class="hud-corner hud-corner-br" style="border-color:#00FFB2;"></div>
+            <h3 class="metric-number mb-1" id="pred-low" style="color:#00FFB2;">--</h3>
+            <div class="hud-label">LOW RISK <span class="hud-muted">(<30%)</span></div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card border-0 shadow-sm text-center p-4 border-start border-5 border-primary">
-            <h4 class="fw-bold text-primary" id="pred-total">--</h4>
-            <small class="text-muted">Total Profiled</small>
+    <div class="col-6 col-md-3">
+        <div class="hud-card text-center p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <h3 class="metric-number hud-text-primary mb-1" id="pred-total">--</h3>
+            <div class="hud-label">TOTAL PROFILED</div>
         </div>
     </div>
 </div>
 
-<div class="row g-4 mb-4">
-    <!-- Risk Distribution Chart -->
+<!-- Charts Row -->
+<div class="row g-3 mb-4">
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Risk Score Distribution</h5>
-                <p class="text-muted small mb-3">Failure probability across all startups</p>
-                <div id="chart-pred-hist" style="min-height:300px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-3">
+                <i class="bi bi-activity me-2 hud-text-primary"></i>RISK SCORE DISTRIBUTION
             </div>
+            <p class="hud-muted small mb-3">Failure probability across all profiled startups</p>
+            <div id="chart-pred-hist" style="min-height:300px;"></div>
         </div>
     </div>
-    <!-- Cluster Risk Comparison -->
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Avg Failure Risk by Cluster</h5>
-                <p class="text-muted small mb-3">Which strategic segment carries highest risk?</p>
-                <div id="chart-pred-cluster-risk" style="min-height:300px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-3">
+                <i class="bi bi-bar-chart me-2 hud-text-primary"></i>AVG FAILURE RISK BY CLUSTER
             </div>
+            <p class="hud-muted small mb-3">Which strategic segment carries highest risk?</p>
+            <div id="chart-pred-cluster-risk" style="min-height:300px;"></div>
         </div>
     </div>
 </div>
 
 <!-- Methodology Card -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>Risk Profiling Methodology</h5>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="p-3 bg-light rounded h-100">
-                    <h6 class="fw-bold mb-2"><i class="bi bi-diagram-3 me-2 text-primary"></i>Clustering (K-Means)</h6>
-                    <p class="text-muted small mb-0">Startups segmented into 4 strategic clusters using funding magnitude, rounds, age, and velocity. Each cluster receives a derived risk profile.</p>
+<div class="hud-card p-4 mb-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-cpu me-2 hud-text-primary"></i>RISK PROFILING METHODOLOGY
+    </div>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="hud-method-block p-3" style="border:1px solid var(--hud-border); border-radius:8px; background:rgba(0,229,255,0.04);">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-diagram-3 hud-text-primary"></i>
+                    <span class="hud-label">CLUSTERING (K-MEANS)</span>
                 </div>
+                <p class="hud-muted small mb-0">Startups segmented into 4 strategic clusters using funding magnitude, rounds, age, and velocity. Each cluster receives a derived risk profile.</p>
             </div>
-            <div class="col-md-4">
-                <div class="p-3 bg-light rounded h-100">
-                    <h6 class="fw-bold mb-2"><i class="bi bi-percent me-2 text-danger"></i>Failure Probability Score</h6>
-                    <p class="text-muted small mb-0">Score = <code>1 − (total_funding / max_funding)</code> for active startups. Closed startups receive 0.80–0.95. Acquired/IPO receive 0.05–0.15.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="hud-method-block p-3" style="border:1px solid var(--hud-border); border-radius:8px; background:rgba(255,77,109,0.04);">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-percent" style="color:#FF4D6D;"></i>
+                    <span class="hud-label">FAILURE PROBABILITY SCORE</span>
                 </div>
+                <p class="hud-muted small mb-0">Score = <code class="hud-code">1 − (total_funding / max_funding)</code> for active startups. Closed startups receive 0.80–0.95. Acquired/IPO receive 0.05–0.15.</p>
             </div>
-            <div class="col-md-4">
-                <div class="p-3 bg-light rounded h-100">
-                    <h6 class="fw-bold mb-2"><i class="bi bi-shield-check me-2 text-success"></i>Risk Interpretation</h6>
-                    <p class="text-muted small mb-0"><strong>&gt;60%</strong> → High Risk (underfunded, early-stage)<br><strong>30–60%</strong> → Medium Risk (moderate traction)<br><strong>&lt;30%</strong> → Low Risk (well-funded, scaling)</p>
+        </div>
+        <div class="col-md-4">
+            <div class="hud-method-block p-3" style="border:1px solid var(--hud-border); border-radius:8px; background:rgba(0,255,178,0.04);">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="bi bi-shield-check" style="color:#00FFB2;"></i>
+                    <span class="hud-label">RISK INTERPRETATION</span>
                 </div>
+                <p class="hud-muted small mb-0">
+                    <span style="color:#FF4D6D;">&gt;60%</span> → High Risk (underfunded, early-stage)<br>
+                    <span style="color:#FFC857;">30–60%</span> → Medium Risk (moderate traction)<br>
+                    <span style="color:#00FFB2;">&lt;30%</span> → Low Risk (well-funded, scaling)
+                </p>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Full Risk Table -->
-<div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-table me-2 text-primary"></i>Startup Risk Profiles</h5>
-        <div class="table-responsive" style="max-height:420px; overflow-y:auto;">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light sticky-top">
-                    <tr><th>Startup</th><th>Industry</th><th>Country</th><th>Status</th><th>Cluster</th><th>Failure Risk</th><th>Risk Level</th></tr>
-                </thead>
-                <tbody id="pred-table">
-                    <tr><td colspan="7" class="text-center text-muted py-3">Loading...</td></tr>
-                </tbody>
-            </table>
-        </div>
+<div class="hud-card p-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-table me-2 hud-text-primary"></i>STARTUP RISK PROFILES
+    </div>
+    <div class="table-responsive hud-table-wrapper" style="max-height:420px; overflow-y:auto;">
+        <table class="table hud-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>STARTUP</th><th>INDUSTRY</th><th>COUNTRY</th><th>STATUS</th>
+                    <th>CLUSTER</th><th>FAILURE RISK</th><th>LEVEL</th>
+                </tr>
+            </thead>
+            <tbody id="pred-table">
+                <tr><td colspan="7" class="text-center hud-muted py-4">
+                    <div class="hud-spinner mx-auto mb-2"></div>Scanning risk profiles...
+                </td></tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-    font:{family:'Inter,sans-serif',size:12,color:'#555'},showlegend:false};
-const cfg={responsive:true,displayModeBar:false};
-const PALETTE=['#6366f1','#10b981','#f59e0b','#f43f5e'];
+const hudLayout = {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: 'Inter,sans-serif', size: 12, color: '#94A3B8' },
+    showlegend: false
+};
+const hudCfg = { responsive: true, displayModeBar: false };
+const HUD_PALETTE = ['#00E5FF', '#7C3AED', '#00FFB2', '#FF4D6D'];
 
-function riskLabel(p){
-    if(p>0.6) return ['danger','High Risk'];
-    if(p>0.3) return ['warning','Medium Risk'];
-    return ['success','Low Risk'];
-}
-function statusBadge(s){
-    const m={operating:'success',acquired:'primary',closed:'danger',ipo:'warning'};
-    const c=m[s]||'secondary';
-    return `<span class="badge bg-${c}-subtle text-${c} text-capitalize">${s}</span>`;
+function riskLabel(p) {
+    if (p > 0.6) return ['#FF4D6D', 'HIGH RISK'];
+    if (p > 0.3) return ['#FFC857', 'MEDIUM RISK'];
+    return ['#00FFB2', 'LOW RISK'];
 }
 
-fetch('/api/startups').then(r=>r.json()).then(({data})=>{
-    let high=0, med=0, low=0;
-    data.forEach(s=>{
-        const p=parseFloat(s.failure_probability)||0;
-        if(p>0.6) high++;
-        else if(p>0.3) med++;
+function statusBadge(s) {
+    const m = { operating: 'var(--hud-accent)', acquired: 'var(--hud-primary)', closed: 'var(--hud-danger)', ipo: 'var(--hud-warning)' };
+    const c = m[s] || 'var(--hud-muted)';
+    return `<span class="hud-badge" style="color:${c}; border-color:${c};">${s.toUpperCase()}</span>`;
+}
+
+fetch('/api/startups').then(r => r.json()).then(({ data }) => {
+    let high = 0, med = 0, low = 0;
+    data.forEach(s => {
+        const p = parseFloat(s.failure_probability) || 0;
+        if (p > 0.6) high++;
+        else if (p > 0.3) med++;
         else low++;
     });
     document.getElementById('pred-high').textContent = high;
@@ -133,51 +178,64 @@ fetch('/api/startups').then(r=>r.json()).then(({data})=>{
     document.getElementById('pred-low').textContent = low;
     document.getElementById('pred-total').textContent = data.length;
 
-    // Histogram of failure probabilities
-    Plotly.newPlot('chart-pred-hist',[{
-        type:'histogram', x:data.map(s=>parseFloat(s.failure_probability)||0),
-        nbinsx:20, marker:{color:'#6366f1',opacity:0.8},
-        hovertemplate:'Risk: %{x:.2f}<br>Count: %{y}<extra></extra>'
-    }],{...layout,xaxis:{title:'Failure Probability',range:[0,1]},
-        yaxis:{title:'Number of Startups'},margin:{t:20,r:20,b:50,l:50}},cfg);
+    Plotly.newPlot('chart-pred-hist', [{
+        type: 'histogram',
+        x: data.map(s => parseFloat(s.failure_probability) || 0),
+        nbinsx: 20,
+        marker: { color: 'rgba(0,229,255,0.7)', line: { color: '#00E5FF', width: 1 } },
+        hovertemplate: 'Risk: %{x:.2f}<br>Count: %{y}<extra></extra>'
+    }], {
+        ...hudLayout,
+        xaxis: { title: 'Failure Probability', range: [0, 1], gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { title: 'Startups', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        margin: { t: 20, r: 20, b: 50, l: 50 }
+    }, hudCfg);
 
-    // Full table
+    const sorted = [...data].sort((a, b) => parseFloat(b.failure_probability) - parseFloat(a.failure_probability));
     const tbody = document.getElementById('pred-table');
-    const sorted=[...data].sort((a,b)=>parseFloat(b.failure_probability)-parseFloat(a.failure_probability));
-    tbody.innerHTML = sorted.map(s=>{
-        const p=parseFloat(s.failure_probability)||0;
-        const [cls,label]=riskLabel(p);
+    tbody.innerHTML = sorted.map(s => {
+        const p = parseFloat(s.failure_probability) || 0;
+        const [col, label] = riskLabel(p);
         return `<tr>
-            <td class="fw-medium">${s.name}</td>
-            <td><small class="text-muted">${s.industry}</small></td>
-            <td>${s.country||'—'}</td>
+            <td class="fw-medium" style="color:var(--hud-text);">${s.name}</td>
+            <td><span class="hud-tag">${s.industry}</span></td>
+            <td class="hud-muted">${s.country || '—'}</td>
             <td>${statusBadge(s.operating_status)}</td>
-            <td><small class="text-primary">${s.cluster_label||'—'}</small></td>
+            <td><span class="hud-tag" style="color:var(--hud-primary); border-color:var(--hud-primary);">${s.cluster_label || '—'}</span></td>
             <td>
                 <div class="d-flex align-items-center gap-2">
-                    <div class="progress flex-grow-1" style="height:6px;">
-                        <div class="progress-bar bg-${cls}" style="width:${(p*100).toFixed(0)}%"></div>
+                    <div class="hud-progress-bar flex-grow-1">
+                        <div class="hud-progress-fill" style="width:${(p * 100).toFixed(0)}%; background:${col};"></div>
                     </div>
-                    <small class="text-${cls}">${(p*100).toFixed(1)}%</small>
+                    <small style="color:${col}; min-width:40px;">${(p * 100).toFixed(1)}%</small>
                 </div>
             </td>
-            <td><span class="badge bg-${cls}-subtle text-${cls}">${label}</span></td>
+            <td><span class="hud-badge" style="color:${col}; border-color:${col};">${label}</span></td>
         </tr>`;
     }).join('');
 });
 
-fetch('/api/charts/clustering').then(r=>r.json()).then(({data})=>{
-    const clusters=data.clusters||[];
-    Plotly.newPlot('chart-pred-cluster-risk',[{
-        type:'bar',
-        x:clusters.map(c=>c.cluster_label),
-        y:clusters.map(c=>(c.avg_failure_risk*100).toFixed(1)),
-        marker:{color:PALETTE},
-        text:clusters.map(c=>(c.avg_failure_risk*100).toFixed(1)+'%'),
-        textposition:'outside',
-        hovertemplate:'<b>%{x}</b><br>Risk: %{y}%<extra></extra>'
-    }],{...layout,xaxis:{tickangle:-10},yaxis:{title:'Avg Failure Risk (%)',range:[0,100]},
-        margin:{t:30,r:20,b:80,l:50}},cfg);
+fetch('/api/charts/clustering').then(r => r.json()).then(({ data }) => {
+    const clusters = data.clusters || [];
+    Plotly.newPlot('chart-pred-cluster-risk', [{
+        type: 'bar',
+        x: clusters.map(c => c.cluster_label),
+        y: clusters.map(c => (c.avg_failure_risk * 100).toFixed(1)),
+        marker: {
+            color: HUD_PALETTE,
+            line: { color: HUD_PALETTE, width: 1 },
+            opacity: 0.8
+        },
+        text: clusters.map(c => (c.avg_failure_risk * 100).toFixed(1) + '%'),
+        textposition: 'outside',
+        textfont: { color: '#94A3B8' },
+        hovertemplate: '<b>%{x}</b><br>Risk: %{y}%<extra></extra>'
+    }], {
+        ...hudLayout,
+        xaxis: { tickangle: -10, gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { title: 'Avg Failure Risk (%)', range: [0, 100], gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        margin: { t: 30, r: 20, b: 80, l: 50 }
+    }, hudCfg);
 });
 </script>
 

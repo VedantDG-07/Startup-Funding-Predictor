@@ -7,7 +7,7 @@ from typing import Dict, Any, List
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from etl.logger import logger
-from etl.extract import ExtractorOrchestrator, SeedExtractorSource, WebDirectoryScraperSource
+from etl.extract import ExtractorOrchestrator, SeedExtractorSource, WebDirectoryScraperSource, HackerNewsAPIExtractorSource
 from etl.transform import TransformOrchestrator
 from etl.load import DatabaseLoader
 from database.db_helper import get_connection, close_connection
@@ -42,7 +42,7 @@ def run_pipeline(source: str = "manual") -> Dict[str, Any]:
     }
     
     try:
-        # 1. EXTRACT
+        # 1. EXTRACT REAL DATA
         orchestrator = ExtractorOrchestrator()
         
         # Check if database is empty to decide if seed loading is required
@@ -55,14 +55,16 @@ def run_pipeline(source: str = "manual") -> Dict[str, Any]:
             close_connection(conn)
             
             if count == 0:
-                logger.info("Database is empty. Adding SeedExtractorSource to pipeline.")
-                orchestrator.add_source(SeedExtractorSource(target_num=60))
+                logger.info("Database is empty. Adding real SeedExtractorSource to pipeline.")
+                orchestrator.add_source(SeedExtractorSource(target_num=30))
         
-        # Add primary paginated scraper source (targetting page 1 to 3, yielding ~300 records)
-        orchestrator.add_source(WebDirectoryScraperSource(start_page=1, end_page=3, page_size=150))
+        # Add real live extractor sources (TechCrunch RSS & HackerNews API)
+        orchestrator.add_source(HackerNewsAPIExtractorSource(limit=30, query="funding"))
+        orchestrator.add_source(WebDirectoryScraperSource(limit=30))
         
         raw_records = orchestrator.run_all()
         stats["extracted"] = len(raw_records)
+
         
         # 2. TRANSFORM
         transformer = TransformOrchestrator()

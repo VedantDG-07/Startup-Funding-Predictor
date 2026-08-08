@@ -1,192 +1,250 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- Page Header -->
+<div class="hud-page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="fw-bold mb-1">BI Investment Insights</h2>
-        <p class="text-muted mb-0">Pattern-Driven Business Intelligence &amp; Strategic Recommendations</p>
+        <h2 class="hud-title mb-1" style="font-size:1.4rem;">
+            <span class="hud-text-primary">BI</span> INVESTMENT INSIGHTS
+        </h2>
+        <p class="hud-muted mb-0 small">Pattern-Driven Business Intelligence &amp; Strategic Recommendations</p>
+    </div>
+    <div class="hud-status-pill">
+        <span class="hud-dot hud-dot-green"></span>
+        <span class="small">INSIGHTS COMPUTED</span>
     </div>
 </div>
 
 <!-- Top 4 Insight Cards -->
-<div class="row g-4 mb-4">
+<div class="row g-3 mb-4">
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100 border-start border-5 border-primary">
-            <div class="card-body p-4">
-                <div class="icon-box bg-primary-subtle text-primary mb-3"><i class="bi bi-lightning-charge fs-4"></i></div>
-                <h6 class="fw-bold mb-2">Funding Velocity Signal</h6>
-                <p class="text-muted small mb-0">Startups raising follow-on rounds within 18 months show <strong>3.4× higher acquisition probability</strong>. Rapid velocity is a strong leading indicator of market traction.</p>
+        <div class="hud-card h-100 p-4" style="border-color:rgba(0,229,255,0.5); border-left:3px solid var(--hud-primary);">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-icon-circle mb-3" style="background:rgba(0,229,255,0.1); width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,229,255,0.3);">
+                <i class="bi bi-lightning-charge fs-5 hud-text-primary"></i>
             </div>
+            <h6 class="fw-bold mb-2" style="color:var(--hud-text);">Funding Velocity Signal</h6>
+            <p class="hud-muted small mb-0">Startups raising follow-on rounds within 18 months show <strong style="color:var(--hud-primary);">3.4× higher acquisition probability</strong>. Rapid velocity is a strong leading indicator of market traction.</p>
         </div>
     </div>
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100 border-start border-5 border-success">
-            <div class="card-body p-4">
-                <div class="icon-box bg-success-subtle text-success mb-3"><i class="bi bi-cpu fs-4"></i></div>
-                <h6 class="fw-bold mb-2">Fintech &amp; AI Dominance</h6>
-                <p class="text-muted small mb-0">Fintech and AI sectors together account for <strong>&gt;40% of total capital</strong> deployed. These sectors consistently attract the highest average round sizes.</p>
+        <div class="hud-card h-100 p-4" style="border-color:rgba(0,255,178,0.5); border-left:3px solid #00FFB2;">
+            <div class="hud-corner hud-corner-tl" style="border-color:#00FFB2;"></div>
+            <div class="hud-icon-circle mb-3" style="background:rgba(0,255,178,0.1); width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(0,255,178,0.3);">
+                <i class="bi bi-cpu fs-5" style="color:#00FFB2;"></i>
             </div>
+            <h6 class="fw-bold mb-2" style="color:var(--hud-text);">Fintech &amp; AI Dominance</h6>
+            <p class="hud-muted small mb-0">Fintech and AI sectors together account for <strong style="color:#00FFB2;">&gt;40% of total capital</strong> deployed. These sectors consistently attract the highest average round sizes.</p>
         </div>
     </div>
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100 border-start border-5 border-warning">
-            <div class="card-body p-4">
-                <div class="icon-box bg-warning-subtle text-warning mb-3"><i class="bi bi-diagram-3 fs-4"></i></div>
-                <h6 class="fw-bold mb-2">Investor Syndicate Pattern</h6>
-                <p class="text-muted small mb-0">Apriori rules show <strong>confidence &gt;75%</strong> for Tier-1 VCs co-investing with accelerators at Seed stage. Syndicate membership is a quality signal.</p>
+        <div class="hud-card h-100 p-4" style="border-color:rgba(255,200,87,0.5); border-left:3px solid #FFC857;">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FFC857;"></div>
+            <div class="hud-icon-circle mb-3" style="background:rgba(255,200,87,0.1); width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,200,87,0.3);">
+                <i class="bi bi-diagram-3 fs-5" style="color:#FFC857;"></i>
             </div>
+            <h6 class="fw-bold mb-2" style="color:var(--hud-text);">Investor Syndicate Pattern</h6>
+            <p class="hud-muted small mb-0">Apriori rules show <strong style="color:#FFC857;">confidence &gt;75%</strong> for Tier-1 VCs co-investing with accelerators at Seed stage. Syndicate membership is a quality signal.</p>
         </div>
     </div>
     <div class="col-md-6 col-xl-3">
-        <div class="card border-0 shadow-sm h-100 border-start border-5 border-danger">
-            <div class="card-body p-4">
-                <div class="icon-box bg-danger-subtle text-danger mb-3"><i class="bi bi-shield-exclamation fs-4"></i></div>
-                <h6 class="fw-bold mb-2">Early-Stage Failure Risk</h6>
-                <p class="text-muted small mb-0">Startups in the <em>Early-Stage Seed</em> cluster have the <strong>highest failure rate (</strong>based on cluster risk profiling). Funding velocity below $100K/year is a key warning signal.</p>
+        <div class="hud-card h-100 p-4" style="border-color:rgba(255,77,109,0.5); border-left:3px solid #FF4D6D;">
+            <div class="hud-corner hud-corner-tl" style="border-color:#FF4D6D;"></div>
+            <div class="hud-icon-circle mb-3" style="background:rgba(255,77,109,0.1); width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,77,109,0.3);">
+                <i class="bi bi-shield-exclamation fs-5" style="color:#FF4D6D;"></i>
             </div>
+            <h6 class="fw-bold mb-2" style="color:var(--hud-text);">Early-Stage Failure Risk</h6>
+            <p class="hud-muted small mb-0">Startups in the <em>Early-Stage Seed</em> cluster have the <strong style="color:#FF4D6D;">highest failure rate</strong> based on cluster risk profiling. Funding velocity below $100K/year is a key warning signal.</p>
         </div>
     </div>
 </div>
 
 <!-- Market Insights Charts -->
-<div class="row g-4 mb-4">
+<div class="row g-3 mb-4">
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Top Industries by Total Capital</h5>
-                <p class="text-muted small mb-3">Where global venture money is flowing</p>
-                <div id="chart-insights-industry" style="min-height:300px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-bar-chart-line me-2 hud-text-primary"></i>TOP INDUSTRIES BY TOTAL CAPITAL
             </div>
+            <p class="hud-muted small mb-3">Where global venture money is flowing</p>
+            <div id="chart-insights-industry" style="min-height:300px;"></div>
         </div>
     </div>
     <div class="col-lg-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Cluster Risk vs Funding Matrix</h5>
-                <p class="text-muted small mb-3">Strategic positioning of startup segments</p>
-                <div id="chart-insights-scatter" style="min-height:300px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-scatter-chart me-2 hud-text-primary"></i>CLUSTER RISK VS FUNDING MATRIX
             </div>
+            <p class="hud-muted small mb-3">Strategic positioning of startup segments</p>
+            <div id="chart-insights-scatter" style="min-height:300px;"></div>
         </div>
     </div>
 </div>
 
 <!-- Top Investors -->
-<div class="card border-0 shadow-sm mb-4">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-3"><i class="bi bi-trophy me-2 text-warning"></i>Top Investors by Portfolio &amp; Capital</h5>
-        <div id="chart-insights-investors" style="min-height:300px;"></div>
+<div class="hud-card p-4 mb-4">
+    <div class="hud-corner hud-corner-tl"></div>
+    <div class="hud-corner hud-corner-br"></div>
+    <div class="hud-section-label mb-4">
+        <i class="bi bi-trophy me-2" style="color:#FFC857;"></i>TOP INVESTORS BY PORTFOLIO &amp; CAPITAL
     </div>
+    <div id="chart-insights-investors" style="min-height:300px;"></div>
 </div>
 
-<!-- Stage Analysis -->
-<div class="row g-4">
+<!-- Stage Analysis + Key Findings -->
+<div class="row g-3">
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-1">Funding Stage Capital Flow</h5>
-                <p class="text-muted small mb-3">Total capital across each stage of startup maturity</p>
-                <div id="chart-insights-stages" style="min-height:280px;"></div>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-2">
+                <i class="bi bi-pie-chart me-2 hud-text-primary"></i>FUNDING STAGE CAPITAL FLOW
             </div>
+            <p class="hud-muted small mb-3">Total capital across each stage of startup maturity</p>
+            <div id="chart-insights-stages" style="min-height:280px;"></div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body p-4">
-                <h5 class="fw-bold mb-3"><i class="bi bi-journal-text me-2 text-primary"></i>Key Findings Summary</h5>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-3 d-flex gap-3">
-                        <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
-                        <span><strong>60 startups</strong> profiled across 10 industry verticals and 7 countries, with 151 discrete financing events mapped.</span>
-                    </li>
-                    <li class="mb-3 d-flex gap-3">
-                        <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
-                        <span><strong>4 K-Means clusters</strong> identified — ranging from Early-Stage Seed Ventures to Capital-Intensive Unicorns.</span>
-                    </li>
-                    <li class="mb-3 d-flex gap-3">
-                        <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
-                        <span><strong>38 Apriori rules</strong> mined from 297 investment transactions, revealing strong geo-sector-stage associations.</span>
-                    </li>
-                    <li class="mb-3 d-flex gap-3">
-                        <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
-                        <span><strong>NLP Text Mining</strong> on 60 company descriptions yielded 60 sentiment profiles and top-5 TF-IDF keyword sets.</span>
-                    </li>
-                    <li class="d-flex gap-3">
-                        <i class="bi bi-check-circle-fill text-success fs-5 mt-1"></i>
-                        <span><strong>Failure rate of ~21.7%</strong> observed across the portfolio, consistent with real-world startup survival benchmarks.</span>
-                    </li>
-                </ul>
+        <div class="hud-card h-100 p-4">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="hud-section-label mb-4">
+                <i class="bi bi-journal-text me-2 hud-text-primary"></i>KEY FINDINGS SUMMARY
             </div>
+            <ul class="list-unstyled mb-0">
+                <li class="mb-3 d-flex gap-3">
+                    <i class="bi bi-check-circle-fill flex-shrink-0 fs-5 mt-1" style="color:#00FFB2;"></i>
+                    <span class="hud-muted small"><strong style="color:var(--hud-text);">60 startups</strong> profiled across 10 industry verticals and 7 countries, with 151 discrete financing events mapped.</span>
+                </li>
+                <li class="mb-3 d-flex gap-3">
+                    <i class="bi bi-check-circle-fill flex-shrink-0 fs-5 mt-1" style="color:#00FFB2;"></i>
+                    <span class="hud-muted small"><strong style="color:var(--hud-text);">4 K-Means clusters</strong> identified — ranging from Early-Stage Seed Ventures to Capital-Intensive Unicorns.</span>
+                </li>
+                <li class="mb-3 d-flex gap-3">
+                    <i class="bi bi-check-circle-fill flex-shrink-0 fs-5 mt-1" style="color:#00FFB2;"></i>
+                    <span class="hud-muted small"><strong style="color:var(--hud-text);">38 Apriori rules</strong> mined from 297 investment transactions, revealing strong geo-sector-stage associations.</span>
+                </li>
+                <li class="mb-3 d-flex gap-3">
+                    <i class="bi bi-check-circle-fill flex-shrink-0 fs-5 mt-1" style="color:#00FFB2;"></i>
+                    <span class="hud-muted small"><strong style="color:var(--hud-text);">NLP Text Mining</strong> on 60 company descriptions yielded 60 sentiment profiles and top-5 TF-IDF keyword sets.</span>
+                </li>
+                <li class="d-flex gap-3">
+                    <i class="bi bi-check-circle-fill flex-shrink-0 fs-5 mt-1" style="color:#00FFB2;"></i>
+                    <span class="hud-muted small"><strong style="color:var(--hud-text);">Failure rate of ~21.7%</strong> observed across the portfolio, consistent with real-world startup survival benchmarks.</span>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
-
-<style>
-.icon-box{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
-</style>
 
 <script>
-const layout={paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
-    font:{family:'Inter,sans-serif',size:12,color:'#555'},showlegend:false};
-const cfg={responsive:true,displayModeBar:false};
-const PALETTE=['#6366f1','#22d3ee','#f59e0b','#10b981','#f43f5e','#a78bfa','#34d399','#fb923c','#60a5fa'];
+const hudLayout = {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: 'Inter,sans-serif', size: 12, color: '#94A3B8' },
+    showlegend: false
+};
+const hudCfg = { responsive: true, displayModeBar: false };
+const PALETTE = ['#00E5FF', '#7C3AED', '#00FFB2', '#FFC857', '#FF4D6D', '#A78BFA', '#34D399', '#FB923C', '#60A5FA'];
 
-function fmt(v){
-    if(!v||v===0) return '$0';
-    if(v>=1e9) return '$'+(v/1e9).toFixed(2)+'B';
-    if(v>=1e6) return '$'+(v/1e6).toFixed(2)+'M';
-    if(v>=1e3) return '$'+(v/1e3).toFixed(1)+'K';
-    return '$'+parseFloat(v).toFixed(0);
+function fmt(v) {
+    if (!v || v === 0) return '$0';
+    if (v >= 1e9) return '$' + (v / 1e9).toFixed(2) + 'B';
+    if (v >= 1e6) return '$' + (v / 1e6).toFixed(2) + 'M';
+    if (v >= 1e3) return '$' + (v / 1e3).toFixed(1) + 'K';
+    return '$' + parseFloat(v).toFixed(0);
 }
 
-fetch('/api/charts/industry').then(r=>r.json()).then(({data})=>{
-    const sorted=[...data].sort((a,b)=>b.total_funding_usd-a.total_funding_usd).slice(0,8);
-    Plotly.newPlot('chart-insights-industry',[{
-        type:'bar', x:sorted.map(d=>d.industry), y:sorted.map(d=>d.total_funding_usd),
-        marker:{color:PALETTE}, text:sorted.map(d=>fmt(d.total_funding_usd)),
-        textposition:'outside',
-        hovertemplate:'<b>%{x}</b><br>Total: $%{y:,.0f}<extra></extra>'
-    }],{...layout,xaxis:{tickangle:-20},yaxis:{title:'Total Funding (USD)',tickformat:'$.2s'},margin:{t:30,r:10,b:80,l:60}},cfg);
+fetch('/api/charts/industry').then(r => r.json()).then(({ data }) => {
+    const sorted = [...data].sort((a, b) => b.total_funding_usd - a.total_funding_usd).slice(0, 8);
+    Plotly.newPlot('chart-insights-industry', [{
+        type: 'bar',
+        x: sorted.map(d => d.industry),
+        y: sorted.map(d => d.total_funding_usd),
+        marker: { color: PALETTE, opacity: 0.85 },
+        text: sorted.map(d => fmt(d.total_funding_usd)),
+        textposition: 'outside', textfont: { color: '#94A3B8' },
+        hovertemplate: '<b>%{x}</b><br>Total: $%{y:,.0f}<extra></extra>'
+    }], {
+        ...hudLayout,
+        xaxis: { tickangle: -20, gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { title: 'Total Funding (USD)', tickformat: '$.2s', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        margin: { t: 30, r: 10, b: 80, l: 60 }
+    }, hudCfg);
 });
 
-fetch('/api/charts/clustering').then(r=>r.json()).then(({data})=>{
+fetch('/api/charts/clustering').then(r => r.json()).then(({ data }) => {
     const clusters = data.clusters || [];
-    Plotly.newPlot('chart-insights-scatter',[{
-        type:'scatter', mode:'markers+text',
-        x:clusters.map(c=>c.avg_funding_usd),
-        y:clusters.map(c=>(c.avg_failure_risk*100).toFixed(1)),
-        text:clusters.map(c=>c.cluster_label),
-        textposition:'top center',
-        marker:{size:clusters.map(c=>c.startup_count*3), color:PALETTE, opacity:0.8, line:{width:2,color:'white'}},
-        hovertemplate:'<b>%{text}</b><br>Avg Funding: $%{x:,.0f}<br>Risk: %{y}%<extra></extra>'
-    }],{...layout,xaxis:{title:'Avg Funding (USD)',tickformat:'$.2s'},yaxis:{title:'Failure Risk (%)'},margin:{t:30,r:30,b:60,l:60}},cfg);
+    Plotly.newPlot('chart-insights-scatter', [{
+        type: 'scatter', mode: 'markers+text',
+        x: clusters.map(c => c.avg_funding_usd),
+        y: clusters.map(c => (c.avg_failure_risk * 100).toFixed(1)),
+        text: clusters.map(c => c.cluster_label),
+        textposition: 'top center',
+        textfont: { color: '#FFFFFF', size: 10 },
+        marker: {
+            size: clusters.map(c => c.startup_count * 3),
+            color: PALETTE,
+            opacity: 0.85,
+            line: { width: 2, color: '#050816' }
+        },
+        hovertemplate: '<b>%{text}</b><br>Avg Funding: $%{x:,.0f}<br>Risk: %{y}%<extra></extra>'
+    }], {
+        ...hudLayout,
+        xaxis: { title: 'Avg Funding (USD)', tickformat: '$.2s', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { title: 'Failure Risk (%)', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        margin: { t: 30, r: 30, b: 60, l: 60 }
+    }, hudCfg);
 });
 
-fetch('/api/charts/investors').then(r=>r.json()).then(({data})=>{
-    const top8=data.slice(0,8);
-    Plotly.newPlot('chart-insights-investors',[{
-        type:'bar',x:top8.map(d=>d.investor_name),y:top8.map(d=>d.portfolio_startups_count),
-        name:'Portfolio Size',marker:{color:'#6366f1'},
-        hovertemplate:'<b>%{x}</b><br>Startups: %{y}<extra></extra>'
-    },{
-        type:'scatter',mode:'lines+markers',x:top8.map(d=>d.investor_name),
-        y:top8.map(d=>d.total_capital_deployed),name:'Capital Deployed',yaxis:'y2',
-        line:{color:'#10b981',width:3},marker:{size:8,color:'#10b981'},
-        hovertemplate:'<b>%{x}</b><br>Capital: $%{y:,.0f}<extra></extra>'
-    }],{...layout,showlegend:true,barmode:'group',
-        xaxis:{tickangle:-20},
-        yaxis:{title:'Portfolio Startups'},
-        yaxis2:{title:'Capital Deployed (USD)',overlaying:'y',side:'right',tickformat:'$.2s'},
-        legend:{orientation:'h',y:-0.35},margin:{t:20,r:80,b:90,l:50}},cfg);
+fetch('/api/charts/investors').then(r => r.json()).then(({ data }) => {
+    const top8 = data.slice(0, 8);
+    Plotly.newPlot('chart-insights-investors', [{
+        type: 'bar',
+        x: top8.map(d => d.investor_name),
+        y: top8.map(d => d.portfolio_startups_count),
+        name: 'Portfolio Size',
+        marker: { color: 'rgba(0,229,255,0.8)', line: { color: '#00E5FF', width: 1 } },
+        hovertemplate: '<b>%{x}</b><br>Startups: %{y}<extra></extra>'
+    }, {
+        type: 'scatter', mode: 'lines+markers',
+        x: top8.map(d => d.investor_name),
+        y: top8.map(d => d.total_capital_deployed),
+        name: 'Capital Deployed', yaxis: 'y2',
+        line: { color: '#00FFB2', width: 3 },
+        marker: { size: 8, color: '#00FFB2' },
+        hovertemplate: '<b>%{x}</b><br>Capital: $%{y:,.0f}<extra></extra>'
+    }], {
+        ...hudLayout,
+        showlegend: true,
+        barmode: 'group',
+        xaxis: { tickangle: -20, gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis: { title: 'Portfolio Startups', gridcolor: 'rgba(0,229,255,0.08)', color: '#94A3B8' },
+        yaxis2: { title: 'Capital Deployed (USD)', overlaying: 'y', side: 'right', tickformat: '$.2s', color: '#00FFB2' },
+        legend: { orientation: 'h', y: -0.35, font: { color: '#94A3B8' } },
+        margin: { t: 20, r: 80, b: 90, l: 50 }
+    }, hudCfg);
 });
 
-fetch('/api/charts/funding_stages').then(r=>r.json()).then(({data})=>{
-    Plotly.newPlot('chart-insights-stages',[{
-        type:'pie', hole:0.4,
-        labels:data.map(d=>d.round_type.replace(/_/g,' ').toUpperCase()),
-        values:data.map(d=>d.total_amount_raised),
-        marker:{colors:PALETTE}, textinfo:'label+percent',
-        hovertemplate:'<b>%{label}</b><br>Total: $%{value:,.0f}<extra></extra>'
-    }],{...layout,margin:{t:10,r:10,b:10,l:10},showlegend:true,legend:{orientation:'h',y:-0.2}},cfg);
+fetch('/api/charts/funding_stages').then(r => r.json()).then(({ data }) => {
+    Plotly.newPlot('chart-insights-stages', [{
+        type: 'pie', hole: 0.4,
+        labels: data.map(d => d.round_type.replace(/_/g, ' ').toUpperCase()),
+        values: data.map(d => d.total_amount_raised),
+        marker: { colors: PALETTE, line: { color: '#050816', width: 2 } },
+        textinfo: 'label+percent',
+        textfont: { color: '#FFFFFF' },
+        hovertemplate: '<b>%{label}</b><br>Total: $%{value:,.0f}<extra></extra>'
+    }], {
+        ...hudLayout,
+        margin: { t: 10, r: 10, b: 10, l: 10 },
+        showlegend: true,
+        legend: { orientation: 'h', y: -0.2, font: { color: '#94A3B8' } }
+    }, hudCfg);
 });
 </script>
 
